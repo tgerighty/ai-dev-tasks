@@ -34,11 +34,54 @@ Each user story should follow this format:
 **"As a [type of user], I want to [perform an action] so that [benefit]."**
 
 ### Creating Effective User Stories
+
+**User Story Creation Workflow:**
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│ Identify    │───▶│ Define      │───▶│ Clarify     │───▶│ Prioritize   │───▶│ Ensure      │
+│ User Types  │    │ Actions     │    │ Benefits    │    │ Stories     │    │ Testability │
+│             │    │             │    │             │    │             │    │             │
+│ • Who uses │    │ • What can  │    │ • Why want │    │ • Which are  │    │ • Can be   │
+│   feature? │    │   users do? │    │   to do it? │    │   most      │    │   tested?  │
+│ • Primary   │    │ • Specific   │    │ • What value│    │   critical?  │    │ • Measurable│
+│ • Secondary │    │   behaviors │    │   does it   │    │ • Nice to   │    │ • Verifiable│
+│ • Roles     │    │ • Capabilities│    │   provide?  │    │   have?     │    │             │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+```
+
+**User Story Creation Process:**
 1. **Identify User Types:** Determine who will benefit from this feature
 2. **Define Actions:** What specific actions can users perform?
 3. **Clarify Benefits:** Why would users want to perform these actions?
 4. **Prioritize Stories:** Help users prioritize which stories are most critical
 5. **Ensure Testability:** Each story should be testable and measurable
+
+**User Story Template Workflow:**
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     USER STORY TEMPLATE                      │
+├─────────────────────────────────────────────────────────────────┤
+│ As a [USER TYPE],                                                │
+│ I want to [SPECIFIC ACTION],                                   │
+│ so that [CLEAR BENEFIT].                                      │
+│                                                                 │
+│ ┌─────────────┐  ┌─────────────┐  ┌─────────────┐           │
+│ │   USER     │  │    ACTION   │  │   BENEFIT   │           │
+│ │   TYPE     │  │             │  │             │           │
+│ │ • Primary  │  │ • Specific  │  │ • Measurable│           │
+│ │ • Secondary│  │ • Achievable│  │ • User-focused│           │
+│ │ • Role     │  │ • Behavior  │  │ • Value     │           │
+│ └─────────────┘  └─────────────┘  └─────────────┘           │
+└─────────────────────────────────────────────────────────────────┘
+                               ↓
+                    ┌─────────────────┐
+                    │ VALIDATE STORY │
+                    │ • Clear user?  │
+                    │ • Specific action?│
+                    │ • Measurable benefit?│
+                    │ • Bounded scope?│
+                    └─────────────────┘
+```
 
 ### User Story Quality Criteria
 - **Specific:** Clear and unambiguous description of what's needed
@@ -80,12 +123,47 @@ As a marketing team, we want to increase engagement so that business metrics imp
 - **Technical Focus:** Stories written from implementation perspective rather than user perspective
 - **Missing Components:** Incomplete "As a [user], I want [action] so that [benefit]" structure
 
+**User Story Validation Workflow:**
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Story     │───▶│   Read      │───▶│   Identify   │───▶│   Clarify   │───▶│    Test     │
+│   Input     │    │   Aloud     │    │     User     │    │    Action   │    │ Independence│
+│             │    │             │    │   & Role     │    │   & Benefit  │    │             │
+│ • Raw story│    │ • Logical?  │    │ • Specific? │    │ • Specific? │    │ • Can be    │
+│ • Notes     │    │ • Makes sense│    │ • Identifiable│    │ • Measurable?│    │   implemented│
+│ • Context   │    │ • Clear flow │    │ • Clear role │    │ • Value add? │    │   separately? │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+       ↓                 ↓                 ↓                 ↓                 ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                    VALIDATION CHECKLIST                      │
+├─────────────────────────────────────────────────────────────────┤
+│ ✓ User Role: Is the user type clearly identified?             │
+│ ✓ Action: Is the action specific and achievable?               │
+│ ✓ Benefit: Is the benefit clear and measurable?               │
+│ ✓ Scope: Is the story bounded and not overly broad?           │
+│ ✓ Independence: Can the story be implemented independently?    │
+└─────────────────────────────────────────────────────────────────┘
+```
+
 **Validation Process:**
 1. **Read the story aloud:** Does it make logical sense?
 2. **Identify the user:** Can you name a specific user type?
 3. **Clarify the action:** What specific behavior change occurs?
 4. **Measure the benefit:** How would you know if this succeeds?
 5. **Test independence:** Could this be implemented separately from other stories?
+
+**User Story Validation Matrix:**
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   USER ROLE     │    │     ACTION      │    │     BENEFIT     │
+│   Analysis      │    │    Analysis      │    │    Analysis      │
+├─────────────────┤    ├─────────────────┤    ├─────────────────┤
+│ ✓ Specific?     │    │ ✓ Specific?      │    │ ✓ Measurable?    │
+│ ✓ Identifiable? │    │ ✓ Achievable?     │    │ ✓ User-focused?  │
+│ ✓ Not generic?  │    │ ✓ Clear behavior?│    │ ✓ Clear value?   │
+│ ✓ Clear role?   │    │ ✓ Single action?  │    │ ✓ Testable?      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
 **Acceptance Criteria for User Stories:**
 - Follows the standard format: "As a [user], I want [action] so that [benefit]"
@@ -95,12 +173,39 @@ As a marketing team, we want to increase engagement so that business metrics imp
 - Story scope is bounded and can be completed in 1-2 sprints
 - Multiple users can benefit from the same feature (unless truly specific)
 
+**User Story Prioritization Workflow:**
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Collect   │───▶│   Analyze   │───▶│   Prioritize │───▶│   Validate  │───▶│   Finalize  │
+│   Stories   │    │   Impact    │    │   Value     │    │   Quality    │    │   Stories   │
+│             │    │             │    │             │    │             │    │             │
+│ • Brainstorm│    │ • Business  │    │ • User value │    │ • Story     │    │ • Approved  │
+│ • Requirements│    │   impact    │    │ • Frequency  │    │   quality   │    │ • Ready for  │
+│ • Ideas     │    │ • User need  │    │ • Criticality│    │ • Completeness│    │ • development│
+│ • Feedback   │    │ • Technical  │    │ • Dependencies│    │ • Validation │    │ • Documented │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+```
+
 **User Story Anti-Patterns:**
 - **"System Stories":** "The system shall..." (focus on system, not user)
 - **"Technology Stories":** "Implement React component..." (implementation, not user need)
 - **"Feature Stories":** "Add search functionality..." (feature description, not user scenario)
 - **"Epic Stories":** Stories that span multiple development cycles
 - **"Dependency Stories":** Stories that require other stories to be complete first
+
+**Anti-Pattern Detection Workflow:**
+```
+┌─────────────────┐
+│ ANTI-PATTERN    │
+│    DETECTION     │
+├─────────────────┤
+│ ❌ "System shall"│ → Focus on user action
+│ ❌ "Implement"   │ → Focus on user benefit  
+│ ❌ "Add feature" │ → Describe user scenario
+│ ❌ Epic scope   │ → Break into smaller stories
+│ ❌ Dependencies  │ → Make independent
+└─────────────────┘
+```
 
 ## PRD Structure
 
