@@ -91,19 +91,37 @@ If you'd like to see this in action, I demonstrated it on [Claire Vo's "How I AI
 
 [![Demonstration of AI Dev Tasks on How I AI Podcast](https://img.youtube.com/vi/fD4ktSkNCw4/maxresdefault.jpg)](https://www.youtube.com/watch?v=fD4ktSkNCw4).
 
-## 🗂️ Files in this Repository
+## 🗂️ Repository Structure
 
-* **`create-prd.md`**: Guides the AI in generating a Product Requirement Document for your feature.
-* **`generate-tasks.md`**: Takes a PRD markdown file as input and helps the AI break it down into a detailed, step-by-step implementation task list.
-* **`process-task-list.md`**: Instructs the AI on how to process the generated task list, tackling one task at a time and waiting for your approval before proceeding. (This file also contains logic for the AI to mark tasks as complete).
+### Core Workflow Files
+* **`create-prd.md`**: Simplified PRD creation guide that references comprehensive documentation
+* **`generate-tasks.md`**: Task generation guide with risk assessment and complexity scoring
+* **`process-task-list.md`**: Implementation guide with risk-based testing protocols
+
+### Documentation Directory (`/docs`)
+* **`complexity-rubric.md`**: Comprehensive task complexity scoring framework (1-10 scale)
+* **`risk-assessment-framework.md`**: Detailed risk assessment protocols and quality gates
+* **`testing-guidelines.md`**: Risk-based testing requirements and evidence collection
+
+### Examples Directory (`/examples`)
+* **`workflow-integration-example.md`**: Complete end-to-end workflow demonstration
+* **Additional examples**: (coming soon) - More focused examples for specific use cases
+
+### Legacy Files
+* **`create-prd-simplified.md`**: Original detailed PRD creation guide (archived)
+* **`generate-tasks-simplified.md`**: Original detailed task generation guide (archived)
+* **`process-task-list-simplified.md`**: Original detailed implementation guide (archived)
 
 ## 🌟 Benefits
 
-* **Structured Development:** Enforces a clear process from idea to code.
-* **Step-by-Step Verification:** Allows you to review and approve AI-generated code at each small step, ensuring quality and control.
-* **Manages Complexity:** Breaks down large features into smaller, digestible tasks for the AI, reducing the chance of it getting lost or generating overly complex, incorrect code.
-* **Improved Reliability:** Offers a more dependable approach to leveraging AI for significant development work compared to single, large prompts.
-* **Clear Progress Tracking:** Provides a visual representation of completed tasks, making it easy to see how much has been done and what's next.
+* **Structured Development:** Enforces a clear process from idea to code
+* **Risk-Based Quality Assurance:** Applies appropriate testing and validation based on task complexity and risk level
+* **Step-by-Step Verification:** Review and approve AI-generated code at each small step with comprehensive evidence collection
+* **Manages Complexity:** Breaks down large features into smaller, digestible tasks with complexity scoring
+* **Improved Reliability:** More dependable approach to AI development with systematic quality gates
+* **Clear Progress Tracking:** Visual representation of completed tasks with risk-based progress metrics
+* **Comprehensive Documentation:** Centralized documentation ensures consistency and maintainability
+* **Evidence-Based Development:** Systematic evidence collection for audit and review purposes
 
 ## 🛠️ How to Use
 
@@ -175,11 +193,30 @@ For other AI-powered IDEs or CLIs:
 
 ## 💡 Tips for Success
 
-* **Be Specific:** The more context and clear instructions you provide (both in your initial feature description and any clarifications), the better the AI's output will be.
-* **Use a Capable Model:** The free version of Cursor currently uses less capable AI models that often struggle to follow the structured instructions in this workflow. For best results, consider upgrading to the Pro plan to ensure consistent, accurate task execution.
-* **MAX Mode for PRDs:** As mentioned, using MAX mode in Cursor for PRD creation (`create-prd.mdc`) can yield more thorough and higher-quality results if your budget supports it.
-* **Correct File Tagging:** Always ensure you're accurately tagging the PRD filename (e.g., `@MyFeature-PRD.md`) when generating tasks.
-* **Patience and Iteration:** AI is a powerful tool, but it's not magic. Be prepared to guide, correct, and iterate. This workflow is designed to make that iteration process smoother.
+### Workflow Best Practices
+* **Be Specific:** Provide clear context and instructions in your initial feature description
+* **Follow Risk-Based Approach:** Let the risk assessment guide testing and quality requirements
+* **Use Documentation:** Reference the comprehensive docs for detailed protocols and guidelines
+* **Review Evidence:** Systematically review collected evidence for each completed task
+* **Iterate When Needed:** Be prepared to guide and correct - the workflow supports iteration
+
+### Tool-Specific Recommendations
+* **Use Capable AI Models:** Free versions may struggle with complex instructions - consider upgrading for consistent results
+* **MAX Mode for PRDs:** Use MAX mode in Cursor for more thorough PRD creation if budget allows
+* **Correct File Tagging:** Ensure accurate PRD filename tagging when generating tasks
+* **Reference Documentation:** Use simplified workflow files with comprehensive docs references
+
+### Risk-Based Development
+* **Assess Early:** Evaluate risk during task planning phase
+* **Apply Appropriate Testing:** Use risk-based testing protocols for each task
+* **Collect Evidence:** Gather required evidence systematically for audit purposes
+* **Validate Quality Gates:** Ensure all quality requirements are met before proceeding
+
+### Quality Assurance
+* **Test-First Development:** Write tests alongside code implementation
+* **Follow Guidelines:** Use `docs/testing-guidelines.md` for comprehensive testing requirements
+* **Monitor Progress:** Track progress by risk level with appropriate metrics
+* **Document Decisions:** Record architectural decisions and risk assessments
 
 ## 🤝 Contributing
 
