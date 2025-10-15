@@ -1,25 +1,27 @@
-# Rule: Generating a Task List from a PRD with User Stories and Complexity Assessment
+# Rule: Generating a Task List from a PRD with User Stories, Risk Assessment, and Complexity Analysis
 
 ## Goal
 
-To guide an AI assistant in creating a **single** comprehensive task list in Markdown format based on an existing Product Requirements Document (PRD). The task list includes user stories, high-level tasks, subtasks, and complexity ratings with automatic breakdown for complex items.
+To guide an AI assistant in creating a **single** comprehensive task list in Markdown format based on an existing Product Requirements Document (PRD). The task list includes user stories, risk-based prioritization, high-level tasks, subtasks, complexity ratings, and testing requirements with automatic breakdown for complex items.
 
 ## Output
 
 - **Format:** Markdown (`.md`)
 - **Location:** `/tasks/`
 - **Filename:** `tasks-[prd-file-name].md` (e.g., `tasks-0001-prd-user-profile-editing.md`)
-- **Important:** This creates ONE task list file that contains everything (PRD content, user stories, tasks, and complexity assessment)
+- **Important:** This creates ONE task list file that contains everything (PRD content, user stories, risk assessment, tasks, complexity, and testing requirements)
 
 ## Process
 
 1. **Receive PRD Reference:** The user points the AI to a specific PRD file
-2. **Analyze PRD:** Read and analyze functional requirements, user stories, and technical requirements
+2. **Analyze PRD:** Read and analyze functional requirements, user stories, risk assessment, and technical requirements
 3. **Map User Stories to High-Level Tasks:** For each user story, create a corresponding high-level task
-4. **Generate Subtasks:** Break down each high-level task into specific implementation subtasks
-5. **Assess Complexity:** Rate each subtask using the complexity rubric (1-10 scale)
-6. **Break Down Complex Tasks:** Automatically break down any subtask with complexity > 4 into smaller subtasks (≤ 4)
-7. **Generate Final Output:** Create one comprehensive file with all content
+4. **Apply Risk Assessment:** Use the risk assessment from the PRD to prioritize tasks and determine testing requirements
+5. **Generate Subtasks:** Break down each high-level task into specific implementation subtasks
+6. **Assess Complexity:** Rate each subtask using the complexity rubric (1-10 scale)
+7. **Break Down Complex Tasks:** Automatically break down any subtask with complexity > 4 into smaller subtasks (≤ 4)
+8. **Assign Testing Requirements:** Based on risk level, assign appropriate testing requirements to each task
+9. **Generate Final Output:** Create one comprehensive file with all content organized by risk priority
 
 ## Complexity Rubric (1-10 overall; leaf ≤4)
 
@@ -78,6 +80,114 @@ To guide an AI assistant in creating a **single** comprehensive task list in Mar
 - Any single step needs >1 integration or cross-cutting change
 - Touches >3 modules/files in separate areas
 - Requires both UI and backend changes together
+
+## Risk-Based Task Prioritization
+
+Tasks must be prioritized based on the risk assessment from the PRD. This ensures high-risk items receive appropriate attention, resources, and testing.
+
+### Risk-Based Priority Matrix
+
+| Risk Score | Risk Level | Priority | Testing Required | Evidence Required | Review Process | Timeline Impact |
+|------------|------------|----------|------------------|---------------------|----------------|
+| 4.5-5.0 | Critical | P0 - Immediate | Unit + Integration + E2E + Security + Performance + Accessibility | All test reports + security audit + performance metrics | Security + Performance + Code Review | +50% |
+| 3.6-4.4 | High | P1 - High | Unit + Integration + E2E + Performance | All test reports + performance metrics | Code + Architectural Review | +30% |
+| 2.1-3.5 | Medium | P2 - Medium | Unit + Integration | Unit and integration test reports | Code Review | +15% |
+| 0.0-2.0 | Low | P3 - Low | Unit Tests Only | Unit test reports | Basic Validation | Standard |
+
+### Risk Assessment Integration
+
+1. **Extract Risk Assessment**: Read risk assessment from the PRD
+2. **Apply Risk Levels**: Assign risk levels based on functional area
+3. **Prioritize by Risk**: Organize tasks by risk level (Critical → High → Medium → Low)
+4. **Assign Testing**: Include specific testing requirements based on risk level
+5. **Determine Evidence**: Specify evidence collection requirements
+
+### Task Template with Risk Assessment
+
+```markdown
+## [PRIORITY] - [TASK TITLE]
+**Risk Level:** [Critical/High/Medium/Low] (Risk Score: X.X/5.0)
+**User Story:** As a [user type], I want to [action] so that [benefit]
+**Complexity:** [1-10]
+
+### Subtasks
+
+#### [Subtask 1] - [Complexity: X]
+- **Risk Level:** [Based on parent]
+- **Testing Requirements:** [Based on risk level]
+- **Evidence Required:** [Based on risk level]
+- **Estimated Hours:** [Based on complexity]
+- **Acceptance Criteria:** [Risk-specific criteria]
+
+#### [Subtask 2] - [Complexity: X]
+- **Risk Level:** [Based on parent]
+- **Testing Requirements:** [Based on risk level]
+- **Evidence Required:** [Based on risk level]
+- **Estimated Hours:** [Based on complexity]
+- **Acceptance Criteria:** [Risk-specific criteria]
+
+### Risk Mitigation Strategies
+- **Risk:** [Description]
+- **Mitigation:** [Approach]
+- **Contingency:** [Backup plan]
+- **Monitoring:** [How to monitor]
+```
+
+### Risk-Based Testing Matrix
+
+#### Critical Risk (4.5-5.0)
+- **Testing:** Unit + Integration + E2E + Security + Performance + Accessibility (95%+ coverage)
+- **Evidence:** All test reports + security audit + performance benchmarks
+- **Reviews:** Security + Performance + Code + Architectural reviews
+- **Timeline:** +50% buffer
+
+#### High Risk (3.6-4.4)
+- **Testing:** Unit + Integration + E2E + Performance (90%+ coverage)
+- **Evidence:** All test reports + performance benchmarks
+- **Reviews:** Performance + Code + Architectural reviews
+- **Timeline:** +30% buffer
+
+#### Medium Risk (2.1-3.5)
+- **Testing:** Unit + Integration (80%+ coverage)
+- **Evidence:** Unit + Integration test reports
+- **Reviews:** Code review
+- **Timeline:** +15% buffer
+
+#### Low Risk (0.0-2.0)
+- **Testing:** Unit Tests (70%+ coverage)
+- **Evidence:** Unit test reports
+- **Reviews:** Basic validation
+- **Timeline:** Standard
+
+### Risk-Based Progress Tracking
+
+Track progress by risk level with specific metrics:
+
+```markdown
+### Progress Tracking by Risk Level
+
+#### Critical Risk Tasks
+- **Status:** [Not Started/In Progress/Testing/Review/Completed]
+- **Testing Progress:** [0-100%] - All test types required
+- **Evidence Collected:** [List of evidence]
+- **Reviews Completed:** [List of reviews]
+- **Risk Indicators:** [Monitoring status]
+
+#### High Risk Tasks  
+- **Status:** [Not Started/In Progress/Testing/Review/Completed]
+- **Testing Progress:** [0-100%] - Required test types required
+- **Evidence Collected:** [List of evidence]
+- **Reviews Completed:** [List of reviews]
+
+#### Medium Risk Tasks
+- **Status:** [Not Started/In Progress/Testing/Completed]
+- **Testing Progress:** [0-100%] - Unit and integration tests
+- **Evidence Collected:** [Test reports]
+
+#### Low Risk Tasks
+- **Status:** [Not Started/In Progress/Completed]
+- **Testing Progress:** [0-100%] - Unit tests only
+```
 - Unclear acceptance criteria or high uncertainty
 
 ### Breakdown Rules
