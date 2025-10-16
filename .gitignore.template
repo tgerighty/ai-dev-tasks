@@ -1,0 +1,127 @@
+# AI Dev Tasks - Generated Files and Working Directories
+
+# Task Management
+tasks-*.md                     # Generated task lists from PRDs
+*-prd-*.md                    # Generated Product Requirements Documents
+progress-*.md                  # Progress tracking files
+completed-*.md                 # Completed task archives
+blocked-*.md                   # Blocked task records
+deferred-*.md                  # Deferred task records
+
+# Evidence and Testing Artifacts
+evidence/                       # Testing evidence and reports
+coverage/                       # Code coverage reports
+test-reports/                   # Test execution reports
+security-audit/                 # Security scan results
+performance-benchmarks/         # Performance testing results
+accessibility-reports/          # Accessibility testing results
+screenshots/                   # UI testing screenshots
+
+# AI Development Artifacts
+.ai-dev-cache/                 # AI tool cache and temporary files
+.ai-dev-temp/                  # Temporary working files
+.ai-dev-backup/                # Backup files
+.ai-dev-logs/                  # AI development logs
+
+# Generated Documentation
+docs/generated-*.md             # Auto-generated documentation
+examples/generated-*.md          # Generated examples
+
+# Node.js and Package Management
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+package-lock.json
+yarn.lock
+
+# Build Outputs and Distribution
+dist/
+build/
+out/
+.next/
+.nuxt/
+coverage/
+.nyc_output/
+
+# Dependencies
+.pnp-store/
+.yarn-integrity/
+.eslintcache
+.parcel-cache/
+.cache/
+
+# Development Tools
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and Runtime Data
+logs/
+*.log
+*.pid
+*.seed
+*.pid.lock
+pids/
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+
+# Environment Files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env.local
+
+# Editor and IDE Files
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+*.sublime-workspace
+
+# Backup Files
+*.bak
+*.backup
+*.old
+
+# Archive Files
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# AI Tool Specific Files
+.cursor/
+.claude/
+.windsurf/
+.anthropic/
+
+# Large Binary Files (Optional - Uncomment if needed)
+# *.mp4
+# *.mov
+# *.avi
+# *.zip
+
+# Database Files (Optional - Uncomment if needed)
+# *.sqlite
+# *.db
+# *.sql
+
+# End of AI Dev Tasks .gitignore

@@ -1,15 +1,17 @@
-# Migration Guide: Enhanced AI Dev Tasks Workflow
+# Migration Guide: Enhanced AI Dev Tasks Workflow with Risk Assessment
 
 ## Overview
 
-This guide helps you migrate existing PRDs to the enhanced ai-dev-tasks workflow that includes user stories, complexity assessment, and automated task breakdown.
+This guide helps you migrate existing PRDs to the enhanced ai-dev-tasks workflow that includes user stories, complexity assessment, risk-based testing, and the "All Roads to Rome" cross-functional risk assessment methodology.
 
 ## When to Use This Guide
 
 Use this migration guide when:
 - You have existing PRDs without user stories
-- You want to adopt the enhanced workflow with complexity assessment
+- You want to adopt the enhanced workflow with complexity assessment and risk-based testing
 - You need to process legacy PRDs with the new system
+- You want to implement the "All Roads to Rome" risk assessment approach
+- You need to set up cross-functional risk workshops for complex features
 
 ## Migration Process
 
@@ -174,6 +176,72 @@ US-FB-001: As a user, I want to access the [feature name] so that I can [primary
 - Original content was limited, assumptions documented in migration
 ```
 
+## Risk Assessment Integration
+
+### Step 7: Add Risk Assessment Section
+
+For the enhanced workflow, add a comprehensive risk assessment section:
+
+```markdown
+## Risk Assessment ("All Roads to Rome" Approach)
+
+### 7.1 Initial Risk Screening
+[Conduct preliminary risk assessment for all major features]
+
+### 7.2 Cross-Functional Risk Workshop Planning
+[Required participants, schedule, and deliverables]
+
+### 7.3 User Impact Assessment
+[Frequency of use, affected users, user-facing impact analysis]
+
+### 7.4 Technical Complexity Assessment
+[Algorithm complexity, dependencies, software maturity analysis]
+
+### 7.5 Process Complexity Assessment
+[Logical steps, process layers, integration points]
+
+### 7.6 Data and Impact Assessment
+[Data volume, expected defect rate assessment]
+
+### 7.7 Legal and Compliance Assessment
+[Regulatory requirements, legal impact, data privacy analysis]
+
+### 7.8 Risk Level Determination
+[Risk levels for each major feature with justification]
+
+### 7.9 Risk Mitigation Strategies
+[Specific mitigation strategies for identified risks]
+```
+
+### Step 8: Risk Assessment Questions Integration
+
+Add enhanced risk assessment questions to your PRD:
+
+**User Impact Assessment:**
+- Frequency of Use: Seldom/Frequent/Very Frequent
+- Affected Users: Less (<100)/More (100-1000)/Many (>1000)
+- User-Facing Impact: UI Only/Process Changes/Data Changes
+
+**Technical Complexity Assessment:**
+- Algorithm Complexity: Simple/Complex/Very Complex
+- Dependencies: None/Internal Only/Internal + External
+- Software Maturity: High/Recent/Medium/Low/Old
+- Screens/Entities Affected: <2/2-4/>4
+
+**Process Complexity Assessment:**
+- Logical Steps: <2/2-3/>3
+- Process Layers: UI Only/Calculation-Validation/Data Change
+- Integration Points: Few/Moderate/Many
+
+**Data and Impact Assessment:**
+- Data Volume: Low/Medium/High
+- Expected Defect Rate: Less/Moderate/Many
+
+**Legal and Compliance Assessment:**
+- Regulatory Requirements: None/Basic/Complex
+- Legal Impact of Failure: Minimal/Moderate/High
+- Data Privacy Impact: Low/Medium/High
+
 ## Validation and Testing
 
 ### Test the Migrated PRD
@@ -181,18 +249,27 @@ US-FB-001: As a user, I want to access the [feature name] so that I can [primary
 1. **Run Enhanced Task Generation**
    ```bash
    # Use the enhanced workflow with your migrated PRD
-   # The AI should now recognize user stories and generate appropriate tasks
+   # The AI should now recognize user stories and generate risk-based tasks
    ```
 
 2. **Review Generated Tasks**
    - Verify tasks map correctly to user stories
    - Check complexity ratings seem reasonable
    - Ensure complex tasks are properly broken down
+   - Validate risk levels are assigned correctly
+   - Confirm testing requirements match risk levels
 
-3. **Adjust as Needed**
+3. **Conduct Risk Assessment Workshop**
+   - Schedule cross-functional workshop for major features
+   - Invite required participants: Development Team, Product Management, Design/UX, Legal/Compliance, DevOps/Infrastructure
+   - Use the 60-minute workshop agenda from the enhanced workflow
+   - Document risk assessment results with rationale
+
+4. **Adjust as Needed**
    - Refine user stories if tasks don't align
    - Add missing user stories for gaps
    - Adjust complexity assessment if needed
+   - Update risk levels based on workshop results
 
 ## Best Practices
 
@@ -218,8 +295,9 @@ US-FB-001: As a user, I want to access the [feature name] so that I can [primary
 - **Solution:** Ensure user stories are well-defined and actionable
 
 **Issue:** Complexity ratings seem incorrect
-- **Solution:** Use the concrete assessment criteria in the enhanced workflow
+- **Solution:** Use the concrete assessment criteria in `docs/complexity-rubric.md`
 - **Solution:** Adjust based on specific implementation details
+- **Solution:** Consider cross-functional team input during risk workshop
 
 **Issue:** Too few or too many user stories
 - **Solution:** Break down broad stories or combine related simple ones
@@ -229,15 +307,28 @@ US-FB-001: As a user, I want to access the [feature name] so that I can [primary
 - **Solution:** Always preserve original Functional Requirements section
 - **Solution:** Add cross-references between user stories and original requirements
 
+**Issue:** Risk assessment seems overwhelming
+- **Solution:** Start with initial risk screening before conducting full workshop
+- **Solution:** Use the visual decision tree from the risk assessment framework
+- **Solution:** Focus on highest-risk items first for maximum impact
+
+**Issue:** Cross-functional workshop scheduling is difficult
+- **Solution:** Use the 60-minute structured agenda for efficiency
+- **Solution:** Start with most critical features first
+- **Solution:** Document partial assessments and complete iteratively
+
 ## Support
 
 If you encounter issues during migration:
 1. Check this guide for specific scenarios
 2. Review the enhanced workflow documentation
 3. Validate against the user story quality criteria
-4. Consider the complexity assessment guidelines
+4. Consider the complexity assessment guidelines from `docs/complexity-rubric.md`
+5. Use the risk assessment framework in `docs/risk-assessment-framework.md`
+6. Reference testing guidelines in `docs/testing-guidelines.md`
+7. Consider scheduling a cross-functional workshop for complex features
 
-## Migration Checklist
+## Enhanced Migration Checklist
 
 Before completing migration, verify:
 - [ ] All user stories follow the standard format
@@ -248,10 +339,18 @@ Before completing migration, verify:
 - [ ] Story scope is appropriately bounded
 - [ ] Generated tasks align with user stories
 - [ ] Complexity assessments use concrete criteria
+- [ ] Risk assessment section is added with "All Roads to Rome" approach
+- [ ] Cross-functional stakeholders are identified
+- [ ] Legal and compliance considerations are documented
+- [ ] Risk assessment questions are answered for each major feature
+- [ ] Testing requirements are specified based on risk levels
 
 After completing migration:
 - [ ] Test the complete enhanced workflow
-- [ ] Validate task breakdown automation
+- [ ] Validate task breakdown automation with risk assessment
 - [ ] Review complexity ratings for consistency
+- [ ] Conduct cross-functional risk workshops for complex features
+- [ ] Validate risk-based testing requirements
 - [ ] Update team on new workflow if needed
 - [ ] Archive original process documentation
+- [ ] Document migration lessons learned for future improvements

@@ -1,386 +1,398 @@
-# Rule: Generating a Task List from a PRD with User Stories, Risk Assessment, and Complexity Analysis
+# Rule: Generating Tasks from PRD
 
 ## Goal
-
-To guide an AI assistant in creating a **single** comprehensive task list in Markdown format based on an existing Product Requirements Document (PRD). The task list includes user stories, risk-based prioritization, high-level tasks, subtasks, complexity ratings, and testing requirements with automatic breakdown for complex items.
-
-## Output
-
-- **Format:** Markdown (`.md`)
-- **Location:** `/tasks/`
-- **Filename:** `tasks-[prd-file-name].md` (e.g., `tasks-0001-prd-user-profile-editing.md`)
-- **Important:** This creates ONE task list file that contains everything (PRD content, user stories, risk assessment, tasks, complexity, and testing requirements)
+Guide an AI assistant in generating a detailed, actionable task list from a Product Requirements Document (PRD), with appropriate complexity scoring and risk assessment.
 
 ## Process
+1. **Load PRD:** Read and analyze the PRD file provided by the user
+2. **Analyze Requirements:** Break down functional requirements into implementable tasks
+3. **Assess Complexity:** Score each task using the complexity rubric
+4. **Assign Risk Levels:** Determine risk levels for quality gate planning
+5. **Generate Task List:** Create structured task list with subtasks and dependencies
+6. **Save Task List:** Save as `tasks-[n]-prd-[feature-name].md` in `/tasks` directory
 
-1. **Receive PRD Reference:** The user points the AI to a specific PRD file
-2. **Analyze PRD:** Read and analyze functional requirements, user stories, risk assessment, and technical requirements
-3. **Map User Stories to High-Level Tasks:** For each user story, create a corresponding high-level task
-4. **Apply Risk Assessment:** Use the risk assessment from the PRD to prioritize tasks and determine testing requirements
-5. **Generate Subtasks:** Break down each high-level task into specific implementation subtasks
-6. **Assess Complexity:** Rate each subtask using the complexity rubric (1-10 scale)
-7. **Break Down Complex Tasks:** Automatically break down any subtask with complexity > 4 into smaller subtasks (≤ 4)
-8. **Assign Testing Requirements:** Based on risk level, assign appropriate testing requirements to each task
-9. **Generate Final Output:** Create one comprehensive file with all content organized by risk priority
+## Documentation References
+- **Complexity Rubric:** Use `docs/complexity-rubric.md` for task scoring
+- **Risk Assessment:** Apply `docs/risk-assessment-framework.md` for risk levels
+- **Testing Guidelines:** Reference `docs/testing-guidelines.md` for testing requirements
+- **Workflow Examples:** See `examples/workflow-integration-example.md` for complete examples
 
-## Complexity Rubric (1-10 overall; leaf ≤4)
+## Enhanced Task Analysis Framework - "All Roads to Rome" Approach
 
-**Purpose:**
-- Provide consistent scoring for task sizing
-- Enable automatic decomposition for items scored >4 into leaf tasks ≤4
+### Cross-Functional Risk Assessment Process
 
-**Scoring Dimensions:**
-- **Implementation difficulty:** algorithmic complexity, edge cases, data model impact
-- **Time required:** estimated effort in hours/days for a typical contributor
-- **Dependencies/integration:** external services, cross-module coupling, sequencing
-- **Uncertainty/novelty:** unfamiliar tech, unclear requirements, experimentation needed
+#### Step 1: Multi-Criteria Evaluation
+For each major task, assess across all dimensions using the "All Roads to Rome" methodology:
 
-**Scale Definitions:**
+**User Impact Assessment:**
+- **Frequency of Use:** Seldom/Frequent/Very Frequent
+- **Affected Users:** Less (<100)/More (100-1000)/Many (>1000)
+- **User-Facing Impact:** UI Only/Process Changes/Data Changes
 
-**1: Trivial change**
-- Examples: typo, copy change, toggle config flag, add constant
-- Scope: single line/file, negligible risk
+**Technical Complexity Assessment:**
+- **Algorithm Complexity:** Simple/Complex/Very Complex
+- **Dependencies:** None/Internal Only/Internal + External
+- **Software Maturity:** High/Recent/Medium/Low/Old
+- **Screens/Entities Affected:** <2/2-4/>4
 
-**2: Small, localized change**
-- Examples: new small util, simple form validation, basic UI element, simple API endpoint
-- Scope: single file or couple files, low risk
+**Process Complexity Assessment:**
+- **Logical Steps:** <2/2-3/>3
+- **Process Layers:** UI Only/Calculation-Validation/Data Change
+- **Integration Points:** Few/Moderate/Many
 
-**3: Medium change**
-- Examples: modify data flow across component + service, non-trivial validation, integrate library
-- Scope: multiple files/modules, moderate risk, requires tests
+**Data and Impact Assessment:**
+- **Data Volume:** Low/Medium/High
+- **Expected Defect Rate:** Less/Moderate/Many
 
-**4: Large but bounded change**
-- Examples: new self-contained component/service, external API integration with retries
-- Scope: multiple modules, notable risk, tests + docs updates required
+**Legal and Compliance Assessment:**
+- **Regulatory Requirements:** None/Basic/Complex
+- **Legal Impact of Failure:** Minimal/Moderate/High
+- **Data Privacy Impact:** Low/Medium/High
 
-**5-10: Epic/high-level items (must decompose)**
-- Examples: "Implement SSO", "Build PRD engine", "Create DMS with versioning"
-- Action: Break down until all leaf tasks are ≤4
+#### Step 2: Path-Based Risk Determination
+Follow the visual decision tree to determine risk level:
 
-**Time Required Estimates:**
-- **1:** 1-2 hours (same day)
-- **2:** 2-4 hours (same day)
-- **3:** 4-6 hours (1-2 days)
-- **4:** 6-8 hours (1-2 days)
-- **5:** 8-12 hours (2-3 days)
-- **6:** 12-16 hours (2-3 days)
-- **7:** 16-24 hours (3-4 days)
-- **8:** 24-32 hours (4-5 days)
-- **9:** 32-40 hours (1 week)
-- **10:** 40+ hours (1+ weeks)
-
-## Automated Breakdown Rules
-
-- **Assign 1-10 at ideation; decompose anything >4 into smaller subtasks**
-- **Only leaf tasks carry complexity; parents are containers (no scores)**
-- **Use the same rubric across frontend, backend, data, and ops tasks**
-- **Re-evaluate scores after decomposition; adjust if scope changes**
-
-### Decomposition Triggers
-- Any single step needs >1 integration or cross-cutting change
-- Touches >3 modules/files in separate areas
-- Requires both UI and backend changes together
-
-## Risk-Based Task Prioritization
-
-Tasks must be prioritized based on the risk assessment from the PRD. This ensures high-risk items receive appropriate attention, resources, and testing.
-
-### Risk-Based Priority Matrix
-
-| Risk Score | Risk Level | Priority | Testing Required | Evidence Required | Review Process | Timeline Impact |
-|------------|------------|----------|------------------|---------------------|----------------|
-| 4.5-5.0 | Critical | P0 - Immediate | Unit + Integration + E2E + Security + Performance + Accessibility | All test reports + security audit + performance metrics | Security + Performance + Code Review | +50% |
-| 3.6-4.4 | High | P1 - High | Unit + Integration + E2E + Performance | All test reports + performance metrics | Code + Architectural Review | +30% |
-| 2.1-3.5 | Medium | P2 - Medium | Unit + Integration | Unit and integration test reports | Code Review | +15% |
-| 0.0-2.0 | Low | P3 - Low | Unit Tests Only | Unit test reports | Basic Validation | Standard |
-
-### Risk Assessment Integration
-
-1. **Extract Risk Assessment**: Read risk assessment from the PRD
-2. **Apply Risk Levels**: Assign risk levels based on functional area
-3. **Prioritize by Risk**: Organize tasks by risk level (Critical → High → Medium → Low)
-4. **Assign Testing**: Include specific testing requirements based on risk level
-5. **Determine Evidence**: Specify evidence collection requirements
-
-### Task Template with Risk Assessment
-
-```markdown
-## [PRIORITY] - [TASK TITLE]
-**Risk Level:** [Critical/High/Medium/Low] (Risk Score: X.X/5.0)
-**User Story:** As a [user type], I want to [action] so that [benefit]
-**Complexity:** [1-10]
-
-### Subtasks
-
-#### [Subtask 1] - [Complexity: X]
-- **Risk Level:** [Based on parent]
-- **Testing Requirements:** [Based on risk level]
-- **Evidence Required:** [Based on risk level]
-- **Estimated Hours:** [Based on complexity]
-- **Acceptance Criteria:** [Risk-specific criteria]
-
-#### [Subtask 2] - [Complexity: X]
-- **Risk Level:** [Based on parent]
-- **Testing Requirements:** [Based on risk level]
-- **Evidence Required:** [Based on risk level]
-- **Estimated Hours:** [Based on complexity]
-- **Acceptance Criteria:** [Risk-specific criteria]
-
-### Risk Mitigation Strategies
-- **Risk:** [Description]
-- **Mitigation:** [Approach]
-- **Contingency:** [Backup plan]
-- **Monitoring:** [How to monitor]
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   START TASK    │───▶│ASSESS CRITERIA │───▶│  MAP RISK PATH │───▶│DETERMINE LEVEL │
+│   ASSESSMENT    │    │   EVALUATION   │    │   TO RISK      │    │   & TESTING    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### Risk-Based Testing Matrix
+#### Step 3: Collaborative Risk Workshop
+Conduct cross-functional assessment:
 
-#### Critical Risk (4.5-5.0)
-- **Testing:** Unit + Integration + E2E + Security + Performance + Accessibility (95%+ coverage)
-- **Evidence:** All test reports + security audit + performance benchmarks
-- **Reviews:** Security + Performance + Code + Architectural reviews
-- **Timeline:** +50% buffer
+1. **Review Requirements (15 min):** Overview of feature/task
+2. **Individual Assessment (10 min):** Each expert scores their area
+   - Development Team: Technical factors
+   - Product Management: User impact factors
+   - Design/UX: User-facing and process factors
+   - Legal/Compliance: Regulatory and legal factors
+   - DevOps: Data and infrastructure factors
+3. **Discussion (20 min):** Discuss perspectives and reach consensus
+4. **Path Mapping (10 min):** Map risk path and determine final level
+5. **Documentation (5 min):** Record assessment with rationale
 
-#### High Risk (3.6-4.4)
-- **Testing:** Unit + Integration + E2E + Performance (90%+ coverage)
-- **Evidence:** All test reports + performance benchmarks
-- **Reviews:** Performance + Code + Architectural reviews
-- **Timeline:** +30% buffer
+### Enhanced Risk Level Classification
 
-#### Medium Risk (2.1-3.5)
-- **Testing:** Unit + Integration (80%+ coverage)
-- **Evidence:** Unit + Integration test reports
-- **Reviews:** Code review
-- **Timeline:** +15% buffer
+#### Critical Risk (Red Path) - Score: 4.5-5.0
+**Path Characteristics:**
+- Very Frequent + Many Users + Complex Algorithm
+- Data Changes + High Data Volume + High Defect Rate
+- Legal/Compliance requirements + High failure impact
+- External dependencies + Critical business impact
 
-#### Low Risk (0.0-2.0)
-- **Testing:** Unit Tests (70%+ coverage)
-- **Evidence:** Unit test reports
-- **Reviews:** Basic validation
-- **Timeline:** Standard
+#### High Risk (Orange Path) - Score: 3.6-4.4
+**Path Characteristics:**
+- Frequent + Many Users + Medium Algorithm
+- Process Changes + Medium Data Volume
+- External dependencies + Business impact
+- Moderate legal requirements
 
-### Risk-Based Progress Tracking
+#### Medium Risk (Yellow Path) - Score: 2.1-3.5
+**Path Characteristics:**
+- Seldom/Frequent + Less Users + Simple Algorithm
+- UI Only changes + Low data volume
+- Internal dependencies only
+- Basic legal compliance
 
-Track progress by risk level with specific metrics:
+#### Low Risk (Green Path) - Score: 0.0-2.0
+**Path Characteristics:**
+- Seldom + Less Users + Simple Algorithm
+- Minimal changes + No dependencies
+- No legal requirements
+- Low data impact
 
+### Complexity Assessment (Enhanced)
+Use the complexity rubric to score each task:
+- **1-2:** Small, localized changes
+- **3:** Medium changes with moderate risk
+- **4:** Large but bounded changes
+- **5+:** Must be decomposed into smaller subtasks (≤4)
+
+### Risk Level Integration
+Complexity and risk assessment work together:
+- High complexity + High user impact = Critical Risk
+- Medium complexity + Moderate impact = High Risk
+- Low complexity + Low impact = Medium/Low Risk
+- Legal requirements automatically elevate risk level
+
+## Enhanced Task Generation Process
+
+### 1. PRD Analysis and Risk Assessment
+- Read functional requirements section
+- Identify user stories and acceptance criteria
+- Review non-functional requirements
+- Consider technical constraints
+- **Conduct initial risk assessment** for each major requirement
+
+### 2. Cross-Functional Risk Workshop
+For each major requirement/feature:
+- **Schedule 60-minute risk assessment workshop**
+- **Invite cross-functional team:**
+  - Development Team (Technical assessment)
+  - Product Management (User impact assessment)
+  - Design/UX (User experience assessment)
+  - Legal/Compliance (Regulatory assessment)
+  - DevOps/Infrastructure (Data and performance assessment)
+
+**Workshop Agenda:**
+1. **Review Requirements (15 min):** Overview of feature
+2. **Individual Assessment (10 min):** Each expert scores their criteria
+3. **Discussion & Consensus (20 min):** Discuss perspectives and agree on risk path
+4. **Path Mapping (10 min):** Map to risk level and determine testing requirements
+5. **Documentation (5 min):** Record assessment with rationale
+
+### 3. Break Down Requirements with Risk Consideration
+For each functional requirement:
+- **Identify main implementation tasks** based on risk assessment
+- **Apply complexity scoring** using the complexity rubric
+- **Break down complex tasks** into subtasks (complexity ≤4)
+- **Inherit risk level** from parent major task
+- **Identify dependencies** between tasks
+
+### 4. Assign Priority Levels with Risk Weighting
+- **P0 (Critical):** Critical Risk tasks - immediate priority
+- **P1 (High):** High Risk tasks - high priority
+- **P2 (Medium):** Medium Risk tasks - standard priority
+- **P3 (Low):** Low Risk tasks - can be done later
+
+**Risk-based priority adjustments:**
+- Legal/compliance requirements automatically elevate priority
+- High user impact requirements get priority consideration
+- External dependencies may affect scheduling priority
+
+### 5. Enhanced Task Structure
 ```markdown
-### Progress Tracking by Risk Level
+## Tasks
 
-#### Critical Risk Tasks
-- **Status:** [Not Started/In Progress/Testing/Review/Completed]
-- **Testing Progress:** [0-100%] - All test types required
-- **Evidence Collected:** [List of evidence]
-- **Reviews Completed:** [List of reviews]
-- **Risk Indicators:** [Monitoring status]
+### Critical Risk Tasks (P0) - Immediate Priority
+- [ ] [Task Number] [Task Title] (Risk: Critical - [Score]/5.0)
+  - **Assessment Summary:** [Brief risk rationale]
+  - **Testing Requirements:** [Enhanced testing protocol]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
 
-#### High Risk Tasks  
-- **Status:** [Not Started/In Progress/Testing/Review/Completed]
-- **Testing Progress:** [0-100%] - Required test types required
-- **Evidence Collected:** [List of evidence]
-- **Reviews Completed:** [List of reviews]
-
-#### Medium Risk Tasks
-- **Status:** [Not Started/In Progress/Testing/Completed]
-- **Testing Progress:** [0-100%] - Unit and integration tests
-- **Evidence Collected:** [Test reports]
-
-#### Low Risk Tasks
-- **Status:** [Not Started/In Progress/Completed]
-- **Testing Progress:** [0-100%] - Unit tests only
+### High Risk Tasks (P1) - High Priority
+- [ ] [Task Number] [Task Title] (Risk: High - [Score]/5.0)
+  - **Assessment Summary:** [Brief risk rationale]
+  - **Testing Requirements:** [Enhanced testing protocol]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
 ```
-- Unclear acceptance criteria or high uncertainty
 
-### Breakdown Rules
-- **Any task with complexity > 4 must be broken down**
-- **Break down into 2-4 smaller subtasks with complexity ≤ 4**
-- **Each breakdown subtask should be logically distinct and actionable**
-- **Maintain the parent task as a summary/overview task**
-- **Size Appropriately:** Each subtask should be completable in 1-3 days
+### 4. Create Task Structure
+```markdown
+## Tasks
 
-## Quick Assessment Matrix
+### Critical Risk Tasks (P0) - Immediate Priority
+- [ ] [Task Number] [Task Title] (Risk: Critical - [Score]/5.0) (Maps to US-[Number])
+  - **Assessment Summary:** [Brief risk rationale from workshop]
+  - **Testing Requirements:** Unit + Integration + E2E + Security + Performance + Accessibility (95%+ coverage)
+  - **Legal Review Required:** Yes/No
+  - **Stakeholder Sign-off:** [Required stakeholders]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
 
-**Score 1-2 (Trivial/Simple):**
-- Single file change
-- No external dependencies
-- Well-established patterns
-- Minimal testing needed
+### High Risk Tasks (P1) - High Priority
+- [ ] [Task Number] [Task Title] (Risk: High - [Score]/5.0) (Maps to US-[Number])
+  - **Assessment Summary:** [Brief risk rationale from workshop]
+  - **Testing Requirements:** Unit + Integration + E2E + Performance + Security (90%+ coverage)
+  - **Legal Review Required:** Yes/No
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
 
-**Score 3-4 (Medium):**
-- Multiple files in same module
-- Simple API integration
-- Follows existing patterns
-- Unit + some integration tests
+### Medium Risk Tasks (P2) - Standard Priority
+- [ ] [Task Number] [Task Title] (Risk: Medium - [Score]/5.0) (Maps to US-[Number])
+  - **Assessment Summary:** [Brief risk rationale from workshop]
+  - **Testing Requirements:** Unit + Integration (80%+ coverage)
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
 
-**Score 5-6 (Complex → Breakdown Required):**
-- Cross-module changes
-- New API endpoints or database changes
-- Requires research
-- Comprehensive testing needed
+### Low Risk Tasks (P3) - Low Priority
+- [ ] [Task Number] [Task Title] (Risk: Low - [Score]/5.0) (Maps to US-[Number])
+  - **Assessment Summary:** [Brief risk rationale from workshop]
+  - **Testing Requirements:** Unit tests only (70%+ coverage)
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+```
 
-**Score 7-8 (Very Complex → Breakdown Required):**
-- Major architectural changes
-- Performance/security implementation
-- New technologies required
-- Full testing suite
-
-**Score 9-10 (Epic → Breakdown Required):**
-- System-wide changes
-- Multiple external systems
-- High-risk security/compliance
-- Extensive testing and monitoring
-
-## Output Format
-
-The generated task list **must** follow this structure:
+## Task List Template
 
 ```markdown
 # Task List: [Feature Name]
 
-## Relevant Files
-
-- `path/to/potential/file1.ts` - Brief description of relevance
-- `path/to/file1.test.ts` - Unit tests for file1.ts
-- `path/to/another/file.tsx` - Brief description
-- `path/to/another/file.test.tsx` - Unit tests
-- `lib/utils/helpers.ts` - Utility functions needed
-- `lib/utils/helpers.test.ts` - Unit tests for helpers
-
-### Notes
-- Unit tests should be placed alongside code files they test
-- Use `npx jest [optional/path/to/test/file]` to run tests
-
 ## User Stories
+- **US-[Number]:** [User Story Text] - **Complexity:** [Score] - **Mapped to Task:** [Task Number]
 
-- **US-001:** As a [type of user], I want to [perform an action] so that [benefit].
-  - **Complexity:** [Overall complexity rating 1-10]
-  - **Mapped to Task:** [Task number this story maps to]
-
-- **US-002:** As a [type of user], I want to [perform an action] so that [benefit].
-  - **Complexity:** [Overall complexity rating 1-10]
-  - **Mapped to Task:** [Task number this story maps to]
+## Risk Assessment Summary
+- **Highest Risk Level:** [Critical/High/Medium/Low]
+- **Total Tasks:** [Number]
+- **Critical Risk Tasks:** [Number]
+- **High Risk Tasks:** [Number]
+- **Medium Risk Tasks:** [Number]
+- **Low Risk Tasks:** [Number]
 
 ## Tasks
 
-- [ ] 1.0 Parent Task Title (Maps to US-001)
-  - [ ] 1.1 [Sub-task description 1.1] - **Complexity:** [1-10]
-  - [ ] 1.2 [Sub-task description 1.2] - **Complexity:** [1-10]
-  - [ ] 1.3 [Sub-task description 1.3] - **Complexity:** [5] → *[Complex task - see breakdown below]*
-    - [ ] 1.3.1 [Breakdown sub-task 1.3.1] - **Complexity:** [3]
-    - [ ] 1.3.2 [Breakdown sub-task 1.3.2] - **Complexity:** [2]
+### Critical Risk Tasks (P0) - Immediate Priority
+- [ ] [Task Number] [Task Title] (Maps to US-[Number])
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
 
-- [ ] 2.0 Parent Task Title (Maps to US-002)
-  - [ ] 2.1 [Sub-task description 2.1] - **Complexity:** [1-10]
-  - [ ] 2.2 [Sub-task description 2.2] - **Complexity:** [1-10]
+### High Risk Tasks (P1) - High Priority
+- [ ] [Task Number] [Task Title] (Maps to US-[Number])
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+
+### Medium Risk Tasks (P2) - Standard Priority
+- [ ] [Task Number] [Task Title] (Maps to US-[Number])
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
+
+### Low Risk Tasks (P3) - Low Priority
+- [ ] [Task Number] [Task Title] (Maps to US-[Number])
+  - [ ] [Subtask Number] [Subtask Title] - **Complexity:** [Score]
 
 ## Complexity Assessment Summary
+- **Total Tasks:** [Number]
+- **Total Subtasks:** [Number]
+- **Average Complexity:** [Score]
+- **Complex Tasks (>4):** [Number] (broken down into smaller tasks)
+- **Simple Tasks (≤4):** [Number]
 
-### Total Tasks: [number] high-level tasks
-### Total Subtasks: [number] (including breakdown subtasks)
-### Average Complexity: [number]
-### Complex Tasks (>4): [number] subtasks requiring breakdown
-### Simple Tasks (≤4): [number] subtasks
+## Risk Distribution
+- **Critical Risk:** [Number] tasks
+- **High Risk:** [Number] tasks
+- **Medium Risk:** [Number] tasks
+- **Low Risk:** [Number] tasks
 
-### Complexity Distribution:
-- **1-2 (Simple):** [number] subtasks
-- **3-4 (Moderate):** [number] subtasks
-- **5-6 (Complex):** [number] subtasks
-- **7-8 (Very Complex):** [number] subtasks
-- **9-10 (Extremely Complex):** [number] subtasks
+## Testing Requirements by Risk Level
+- **Critical Risk:** Unit + Integration + E2E + Security + Performance + Accessibility (95%+ coverage)
+- **High Risk:** Unit + Integration + E2E + Performance (90%+ coverage)
+- **Medium Risk:** Unit + Integration (80%+ coverage)
+- **Low Risk:** Unit Tests Only (70%+ coverage)
 
-### Automated Breakdown Applied:
-- [number] complex subtasks were automatically broken down into [number] smaller, manageable subtasks
-- All breakdown subtasks have complexity ≤ 4
-- Parent tasks retained as summary/overview tasks
+## Implementation Guidelines
+- Follow risk-based testing protocols from `docs/testing-guidelines.md`
+- Collect evidence according to risk level requirements
+- Use appropriate quality gates for each risk level
+- Reference `docs/risk-assessment-framework.md` for detailed protocols
+
+## Dependencies
+[List any task dependencies or sequencing requirements]
+
+## Estimated Timeline
+[Provide rough timeline estimates based on complexity and risk levels]
+
+## Notes
+[Any additional notes or considerations for implementation]
 ```
 
-## Example Output
+## Usage Examples
 
-```markdown
-# Task List: User Profile Creation System
+### Simple Example
+```
+AI: I'll generate tasks from your PRD. Let me analyze the requirements and create a structured task list.
 
-## Relevant Files
+[Analyzes PRD...]
 
-- `src/components/UserProfile.tsx` - Main user profile component
-- `src/components/UserProfile.test.tsx` - Unit tests for UserProfile
-- `src/api/user.ts` - User API endpoints
-- `src/api/user.test.ts` - Unit tests for user API
-- `lib/utils/validation.ts` - Form validation utilities
-- `lib/utils/validation.test.ts` - Tests for validation utilities
+Here's the task list I've generated:
 
-### Notes
-- Unit tests should be placed alongside code files they test
-- Use `npx jest [optional/path/to/test/file]` to run tests
+# Task List: User Login Page
 
 ## User Stories
+- **US-001:** As a user, I want to log in with email and password - **Complexity:** 3 - **Mapped to Task:** 1.0
 
-- **US-001:** As a user, I want to create a profile so that I can personalize my experience.
-  - **Complexity:** 6
-  - **Mapped to Task:** 1.0
-
-- **US-002:** As a user, I want to upload a profile picture so that others can recognize me.
-  - **Complexity:** 4
-  - **Mapped to Task:** 2.0
+## Risk Assessment Summary
+- **Highest Risk Level:** Medium
+- **Total Tasks:** 1
 
 ## Tasks
-
-- [ ] 1.0 Implement User Profile Creation System (Maps to US-001)
-  - [ ] 1.1 Create user profile database schema - **Complexity:** 3
-  - [ ] 1.2 Implement profile creation API endpoint - **Complexity:** 4
-  - [ ] 1.3 Build profile creation UI components - **Complexity:** 5 → *[Complex task - see breakdown below]*
-    - [ ] 1.3.1 Create profile form component - **Complexity:** 3
-    - [ ] 1.3.2 Implement form validation logic - **Complexity:** 2
-  - [ ] 1.4 Add profile editing functionality - **Complexity:** 4
-
-- [ ] 2.0 Implement Profile Picture Upload (Maps to US-002)
-  - [ ] 2.1 Set up file upload infrastructure - **Complexity:** 4
-  - [ ] 2.2 Create image upload API endpoint - **Complexity:** 3
-  - [ ] 2.3 Build file upload UI component - **Complexity:** 2
-
-## Complexity Assessment Summary
-
-### Total Tasks: 2 high-level tasks
-### Total Subtasks: 6 (including breakdown subtasks)
-### Average Complexity: 3.5
-### Complex Tasks (>4): 1 subtask requiring breakdown
-### Simple Tasks (≤4): 5 subtasks
-
-### Complexity Distribution:
-- **1-2 (Simple):** 1 subtask
-- **3-4 (Moderate):** 4 subtasks
-- **5-6 (Complex):** 1 subtask
-- **7-8 (Very Complex):** 0 subtasks
-- **9-10 (Extremely Complex):** 0 subtasks
-
-### Automated Breakdown Applied:
-- 1 complex subtask was automatically broken down into 2 smaller, manageable subtasks
-- All breakdown subtasks have complexity ≤ 4
-- Parent task retained as summary/overview task
+### Medium Risk Tasks (P2) - Standard Priority
+- [ ] 1.0 User Login Page (Maps to US-001)
+  - [ ] 1.1 Create login form component - **Complexity:** 2
+  - [ ] 1.2 Implement form validation - **Complexity:** 2
+  - [ ] 1.3 Add authentication service integration - **Complexity:** 3
+  - [ ] 1.4 Create error handling and user feedback - **Complexity:** 2
 ```
 
-## Task Generation Process
+### Complex Example
+```
+AI: I'll generate a comprehensive task list for your authentication system with risk assessment and complexity scoring.
 
-### Step 1: User Story Analysis
-1. Extract all user stories from the PRD
-2. For each user story, identify core functionality required
-3. Assign user story ID (US-001, US-002, etc.)
+[Analyzes PRD... breaks down complex requirements...]
 
-### Step 2: High-Level Task Creation
-1. Create one high-level task per user story
-2. Ensure task titles clearly reflect the user story goal
-3. Map each task to its corresponding user story
+# Task List: User Authentication System
 
-### Step 3: Subtask Generation
-1. Break down each high-level task into specific implementation steps
-2. Consider existing codebase patterns and conventions
-3. Ensure subtasks are specific, measurable, and actionable
+## User Stories
+- **US-001:** As a user, I want to log in with email and password - **Complexity:** 6 - **Mapped to Task:** 1.0
+- **US-002:** As a user, I want to use social login - **Complexity:** 8 - **Mapped to Task:** 2.0
+- **US-003:** As a user, I want to enable MFA - **Complexity:** 7 - **Mapped to Task:** 3.0
 
-### Step 4: Complexity Assessment
-1. Rate each subtask using the 1-10 scale rubric
-2. Document reasoning for high-complexity ratings
-3. Apply automated breakdown for tasks rated > 4
+## Risk Assessment Summary
+- **Highest Risk Level:** Critical
+- **Total Tasks:** 3
 
-### Step 5: Quality Review
-1. Verify all user stories are covered by tasks
-2. Check that complex tasks are properly broken down
-3. Ensure the task list follows the specified format
-4. Generate complexity assessment summary
+## Tasks
+### Critical Risk Tasks (P0) - Immediate Priority
+- [ ] 1.0 Authentication Core Engine (Maps to US-001)
+  - [ ] 1.1 Design secure authentication architecture - **Complexity:** 4
+  - [ ] 1.2 Implement password hashing and validation - **Complexity:** 3
+  - [ ] 1.3 Create JWT token management system - **Complexity:** 4
+  - [ ] 1.4 Implement session management - **Complexity:** 4
+
+- [ ] 2.0 Social Login Integration (Maps to US-002)
+  - [ ] 2.1 Create OAuth2 integration framework - **Complexity:** 5 → *Complex task - see breakdown*
+    - [ ] 2.1.1 Create OAuth2 configuration system - **Complexity:** 3
+    - [ ] 2.1.2 Implement Google OAuth2 provider - **Complexity:** 3
+    - [ ] 2.1.3 Implement Microsoft OAuth2 provider - **Complexity:** 3
+  - [ ] 2.2 Build SSO user mapping and synchronization - **Complexity:** 4
+```
+
+## Quality Checklist
+
+Before saving the task list, ensure:
+- [ ] All functional requirements are covered
+- [ ] Task complexity scores are appropriate (≤4 for leaf tasks)
+- [ ] Risk levels are assigned correctly
+- [ ] User stories are mapped to tasks
+- [ ] Dependencies are identified
+- [ ] Testing requirements are specified by risk level
+- [ ] File follows naming convention: `tasks-[n]-prd-[feature-name].md`
+- [ ] Task list is saved in `/tasks` directory
+
+## Integration with Workflow
+
+This task generation step feeds directly into:
+1. **Implementation** (`process-task-list.md`) - Guides step-by-step development
+2. **Risk-Based Testing** - Determines testing protocols and evidence collection
+3. **Quality Assurance** - Sets up appropriate quality gates and reviews
+
+## File Naming Convention
+
+Save task lists in the `/tasks` directory using this format:
+- `tasks-0001-prd-[feature-name].md`
+- `tasks-0002-prd-[feature-name].md`
+- etc. (matching the corresponding PRD number)
+
+## Common Patterns
+
+### Handling Complex Tasks
+- Any task with complexity >4 must be broken down
+- Use subtasks to reduce complexity to ≤4
+- Maintain logical flow and dependencies
+- Ensure each subtask is independently testable
+
+### Risk-Based Prioritization
+- Critical risk tasks get immediate attention
+- High risk tasks should be completed early
+- Medium and low risk tasks can be scheduled appropriately
+- Consider dependencies when planning implementation order
+
+### User Story Mapping
+- Ensure every user story has corresponding tasks
+- Map user stories to specific implementation tasks
+- Track progress against user story completion
+- Validate that all acceptance criteria are covered
