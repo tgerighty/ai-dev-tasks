@@ -381,7 +381,7 @@ describe('Authentication System - Critical Risk', () => {
     
     it('should meet response time requirements', async () => {
       const startTime = Date.now();
-      await authService.authenticate('user@example.com', '***REDACTED_PASSWORD**');
+      await authService.authenticate('user@example.com', 'ValidPassword123!');
       const responseTime = Date.now() - startTime;
       
       expect(responseTime).toBeLessThan(100); // <100ms for critical features
@@ -421,7 +421,7 @@ const createSecurityTestUser = () => ({
 const createSecurityTestSession = () => ({
   id: 'session-123',
   userId: 'test-user-123',
-  token: '***REDACTED_TOKEN**',
+  token: 'encrypted-jwt-token',
   expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
   ipAddress: '192.168.1.100'
 });
@@ -678,7 +678,7 @@ describe('AuthService', () => {
 
   it('should reject invalid credentials', async () => {
     // Arrange
-    const credentials = { email: 'test@example.com', password: '***REDACTED_PASSWORD**' };
+    const credentials = { email: 'test@example.com', password: 'wrongpassword' };
     
     // Act
     const result = await authService.authenticate(credentials);
