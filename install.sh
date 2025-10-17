@@ -192,19 +192,23 @@ copy_files() {
     local source_dir="$1"
     local target_dir="$2"
     
-    # Files to copy from ROOT directory
-    local files=(
+    # PROCESS workflow files to copy from ROOT directory
+    local process_files=(
         "create-prd.md"
         "generate-tasks.md"
         "process-task-list.md"
     )
     
-    # Files to move from ROOT directory to docs/
-    local files_to_move=(
-        "MIGRATION_GUIDE.md"
+    # Documentation files to copy from ROOT directory
+    local documentation_files=(
+        "README.md"
+        "INSTALLER.md"
+        "ENHANCED_WORKFLOW_SUMMARY.md"
+        "LICENSE"
+        "AGENTS.md"
     )
     
-    # Directories to copy from ROOT directory
+    # Directories to copy from ROOT directory (PROCESS docs only)
     local dirs=(
         "docs"
         "examples"
@@ -215,18 +219,30 @@ copy_files() {
         mkdir -p "$target_dir/ai-dev-tasks"
         
         if [[ "$VERBOSE" == "true" ]]; then
-            print_status "Creating AI Dev Tasks directory in: $target_dir/ai-dev-tasks"
+            print_status "Creating AI Dev Tasks PROCESS directory in: $target_dir/ai-dev-tasks"
         fi
         
-        # Copy files from ROOT directory to ai-dev-tasks subdirectory
-        for file in "${files[@]}"; do
+        # Copy PROCESS workflow files from ROOT directory to ai-dev-tasks subdirectory
+        for file in "${process_files[@]}"; do
             if [[ -f "$source_dir/$file" ]]; then
                 cp "$source_dir/$file" "$target_dir/ai-dev-tasks/"
                 if [[ "$VERBOSE" == "true" ]]; then
-                    print_success "Copied: $file to ai-dev-tasks/"
+                    print_success "Copied PROCESS file: $file to ai-dev-tasks/"
                 fi
             else
-                print_warning "File not found: $source_dir/$file"
+                print_warning "PROCESS file not found: $source_dir/$file"
+            fi
+        done
+        
+        # Copy documentation files from ROOT directory to ai-dev-tasks subdirectory
+        for file in "${documentation_files[@]}"; do
+            if [[ -f "$source_dir/$file" ]]; then
+                cp "$source_dir/$file" "$target_dir/ai-dev-tasks/"
+                if [[ "$VERBOSE" == "true" ]]; then
+                    print_success "Copied documentation: $file to ai-dev-tasks/"
+                fi
+            else
+                print_warning "Documentation file not found: $source_dir/$file"
             fi
         done
         
@@ -236,49 +252,34 @@ copy_files() {
                 # Copy directory to ai-dev-tasks subdirectory
                 cp -r "$source_dir/$dir" "$target_dir/ai-dev-tasks/"
                 if [[ "$VERBOSE" == "true" ]]; then
-                    print_success "Copied directory: $dir/ to ai-dev-tasks/"
+                    print_success "Copied documentation directory: $dir/ to ai-dev-tasks/"
                 fi
             else
-                print_warning "Directory not found: $source_dir/$dir"
-            fi
-        done
-        
-        # Move migration guide to docs subdirectory
-        for file in "${files_to_move[@]}"; do
-            if [[ -f "$source_dir/$file" ]]; then
-                # Ensure docs directory exists in ai-dev-tasks
-                mkdir -p "$target_dir/ai-dev-tasks/docs"
-                # Copy the file to docs directory
-                cp "$source_dir/$file" "$target_dir/ai-dev-tasks/docs/"
-                if [[ "$VERBOSE" == "true" ]]; then
-                    print_success "Moved: $file to ai-dev-tasks/docs/"
-                fi
-            else
-                print_warning "File not found: $source_dir/$file"
+                print_warning "Documentation directory not found: $source_dir/$dir"
             fi
         done
         
         if [[ "$VERBOSE" == "true" ]]; then
-            print_success "Copied AI Dev Tasks files to: $target_dir/ai-dev-tasks/"
+            print_success "Copied AI Dev Tasks PROCESS files to: $target_dir/ai-dev-tasks/"
         fi
     else
-        print_status "Would create AI Dev Tasks directory in: $target_dir/ai-dev-tasks"
-        print_status "Would copy files from ROOT directory: $source_dir"
-        print_status "Files to be copied to ai-dev-tasks/:"
-        for file in "${files[@]}"; do
+        print_status "Would create AI Dev Tasks PROCESS directory in: $target_dir/ai-dev-tasks"
+        print_status "Would copy PROCESS files from ROOT directory: $source_dir"
+        print_status "PROCESS workflow files to be copied to ai-dev-tasks/:"
+        for file in "${process_files[@]}"; do
             if [[ -f "$source_dir/$file" ]]; then
-                print_status "  - $file"
+                print_status "  - $file (PROCESS workflow)"
+            fi
+        done
+        print_status "Documentation files to be copied to ai-dev-tasks/:"
+        for file in "${documentation_files[@]}"; do
+            if [[ -f "$source_dir/$file" ]]; then
+                print_status "  - $file (documentation)"
             fi
         done
         for dir in "${dirs[@]}"; do
             if [[ -d "$source_dir/$dir" ]]; then
-                print_status "  - $dir/"
-            fi
-        done
-        print_status "Files to be moved to ai-dev-tasks/docs/:"
-        for file in "${files_to_move[@]}"; do
-            if [[ -f "$source_dir/$file" ]]; then
-                print_status "  - $file"
+                print_status "  - $dir/ (documentation directory)"
             fi
         done
     fi
@@ -295,12 +296,6 @@ create_gitignore() {
     fi
     
     local gitignore_content=$(cat << 'EOF'
-# AI Dev Tasks - Generated Files
-tasks-*.md
-*-prd-*.md
-evidence/
-docs/generated-*.md
-
 # AI Development Artifacts
 .ai-dev-cache/
 .ai-dev-temp/
@@ -508,12 +503,6 @@ if [[ ! -d "tasks" ]]; then
     print_status "Created tasks directory"
 fi
 
-# Create docs directory if it doesn't exist
-if [[ ! -d "docs" ]]; then
-    mkdir -p docs
-    print_status "Created docs directory"
-fi
-
 # Create evidence directory if it doesn't exist
 if [[ ! -d "evidence" ]]; then
     mkdir -p evidence
@@ -556,9 +545,13 @@ show_post_install_info() {
     echo "🚀 Quick Start:"
     echo "1. cd $ai_dev_tasks_dir"
     echo "2. Start using your AI tool with the workflow files:"
-    echo "   - create-prd.md    # Generate a PRD"
-    echo "   - generate-tasks.md  # Create tasks from PRD"
-    echo "   - process-task-list.md  # Implement tasks"
+    echo "   - create-prd.md    # Generate a PRD (saves in tasks/ as [n]-prd-[feature].md)"
+    echo "   - generate-tasks.md  # Create tasks from PRD (saves in tasks/ as tasks-[n]-prd-[feature].md)"
+    echo "   - process-task-list.md  # Implement tasks (creates files in tasks/ and evidence/)"
+    echo ""
+    echo "📁 Directories Created:"
+    echo "   - tasks/     # PRDs, task lists, and progress tracking (git tracked)"
+    echo "   - evidence/  # Testing artifacts and evidence (git tracked)"
     echo ""
     echo "📚 Documentation:"
     echo "   - README.md           # Comprehensive usage guide"
@@ -571,6 +564,7 @@ show_post_install_info() {
     echo "   - Collect evidence for all completed tasks"
     echo "   - Follow the testing guidelines for your AI tool"
     echo "   - Check examples/ for complete workflow demonstrations"
+    echo "   - All output files are tracked in git (not gitignored)"
 }
 
 # Parse command line arguments
