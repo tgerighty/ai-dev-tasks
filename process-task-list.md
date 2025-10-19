@@ -57,7 +57,105 @@ echo "Highest risk level: $HIGHEST_RISK"
 ### 2. Implementation Process
 For each task/subtask:
 
-#### A. Code Implementation
+#### A. Universal Micro-Task Delegation (All Complexity Levels 1-4)
+
+**Core Principle:** Every subtask (complexity 1, 2, 3, AND 4) must be broken down into micro-tasks of complexity 1-2 during execution. ALL micro-tasks are delegated to appropriate tools based on capability matching.
+
+**Process Flow:**
+```
+Load Subtask (Complexity 1-4) → Inventory Available Tools → Break Subtask into Micro-Tasks (Complexity 1-2) → Match Micro-Tasks to Tool Capabilities → Delegate All Micro-Tasks → Integration & Validation → Evidence Collection → Complete Subtask
+```
+
+**Tool Discovery and Matching Process:**
+
+1. **Tool Inventory:** List all available coding tools/agents and document their specialized capabilities
+2. **Capability Assessment:** Document each tool's expertise areas and complexity handling abilities
+3. **Micro-Task Matching:** Map micro-task types to appropriate tools based on capabilities
+4. **Validation:** Ensure selected tools can handle assigned complexity levels
+
+**Standard Micro-Task Types (Tool-Agnostic):**
+
+| Category | Micro-Task | Complexity | Required Tool Capability |
+|----------|------------|------------|--------------------------|
+| **Foundation** | Create interfaces/types | 1 | Strong typing support |
+| | Design component structure | 1 | UI framework expertise |
+| | Set up configuration | 1 | Environment management |
+| **Implementation** | Implement core logic | 2 | Domain-specific knowledge |
+| | Create API endpoints | 2 | API development expertise |
+| | Build database operations | 2 | Data persistence knowledge |
+| **Quality** | Add error handling | 1 | Code quality patterns |
+| | Write unit tests | 2 | Test automation knowledge |
+| | Create integration tests | 2 | Testing framework expertise |
+| **Review** | Code review | 1 | Code analysis capabilities |
+| | Security analysis | 1 | Security assessment skills |
+| | Performance analysis | 1 | Optimization expertise |
+| **Documentation** | Update documentation | 1 | Technical writing capabilities |
+
+**Micro-Task Breakdown by Subtask Complexity:**
+
+**Complexity 1 Subtask → 1-2 Micro-tasks**
+```
+Subtask: "Create user interface" (Complexity: 1)
+├── 1.1 Create component structure → [Tool with UI framework expertise]
+└── 1.2 Add type definitions → [Tool with strong typing capabilities]
+```
+
+**Complexity 2 Subtask → 2-4 Micro-tasks**
+```
+Subtask: "Implement form validation" (Complexity: 2)
+├── 2.1 Create validation rules → [Tool with validation expertise]
+├── 2.2 Implement validation logic → [Tool with form handling expertise]
+├── 2.3 Add error handling → [Tool with error handling patterns]
+└── 2.4 Write tests → [Tool with testing framework knowledge]
+```
+
+**Complexity 3 Subtask → 3-6 Micro-tasks**
+```
+Subtask: "Add authentication service" (Complexity: 3)
+├── 3.1 Create auth interfaces → [Tool with type system expertise]
+├── 3.2 Implement auth logic → [Tool with security/backend expertise]
+├── 3.3 Add middleware → [Tool with middleware expertise]
+├── 3.4 Write tests → [Tool with testing capabilities]
+├── 3.5 Security review → [Tool with security analysis capabilities]
+└── 3.6 Update documentation → [Tool with documentation generation]
+```
+
+**Complexity 4 Subtask → 4-8 Micro-tasks**
+```
+Subtask: "Implement OAuth2 integration" (Complexity: 4)
+├── 4.1 Design OAuth2 interfaces → [Tool with type system expertise]
+├── 4.2 Create configuration → [Tool with configuration expertise]
+├── 4.3 Implement provider 1 → [Tool with OAuth expertise]
+├── 4.4 Implement provider 2 → [Tool with OAuth expertise]
+├── 4.5 Create token management → [Tool with security expertise]
+├── 4.6 Write comprehensive tests → [Tool with testing expertise]
+├── 4.7 Security review → [Tool with security analysis]
+└── 4.8 Update documentation → [Tool with documentation capabilities]
+```
+
+**Delegation Execution Protocol:**
+
+1. **Parallel Execution:** Launch multiple tools simultaneously when micro-tasks are independent
+2. **Sequential Execution:** Wait for completion of dependent micro-tasks before launching next tools
+3. **Hybrid Execution:** Mix of parallel and sequential based on dependency analysis
+
+**Expected Execution Times:**
+- **Complexity 1:** 5-10 minutes (1-2 micro-tasks, 1-2 tools)
+- **Complexity 2:** 15-20 minutes (2-4 micro-tasks, 2-3 tools)
+- **Complexity 3:** 30-45 minutes (3-6 micro-tasks, 4-5 tools)
+- **Complexity 4:** 60-90 minutes (4-8 micro-tasks, 5-6 tools)
+
+**Integration and Quality Assurance:**
+
+After all micro-tasks are completed by delegated tools:
+- [ ] Validate compatibility between tool outputs
+- [ ] Test combined functionality end-to-end
+- [ ] Ensure requirements are fully met
+- [ ] Apply risk-based testing protocols (maintain original risk level requirements)
+- [ ] Collect evidence from all specialized tools
+- [ ] Aggregate evidence into comprehensive package
+
+#### B. Code Implementation
 - Write code following established patterns
 - Implement functionality according to requirements
 - Follow coding standards and best practices
@@ -123,7 +221,15 @@ Generate required evidence based on risk level:
 ### 3. Quality Gate Validation
 Before marking task complete, validate:
 
+**Universal Quality Gates (All Risk Levels with Micro-Task Delegation):**
+- [ ] All micro-tasks completed successfully by delegated tools
+- [ ] Integration testing passed with no conflicts between tool outputs
+- [ ] Risk-based testing requirements met (maintain original risk level protocols)
+- [ ] Evidence package complete from all specialized tools
+- [ ] Documentation updated and validated
+
 **Critical Risk Quality Gates:**
+- [ ] Universal quality gates validated
 - [ ] All tests passing (95%+ coverage)
 - [ ] Security audit passed
 - [ ] Performance benchmarks met
@@ -131,24 +237,30 @@ Before marking task complete, validate:
 - [ ] All required reviews completed
 - [ ] Evidence collected and archived
 - [ ] Documentation updated
+- [ ] Stakeholder sign-offs obtained
 
 **High Risk Quality Gates:**
+- [ ] Universal quality gates validated
 - [ ] All tests passing (90%+ coverage)
 - [ ] Performance benchmarks met
 - [ ] Required reviews completed
 - [ ] Evidence collected and validated
 - [ ] Documentation updated
+- [ ] Stakeholder approvals obtained
 
 **Medium Risk Quality Gates:**
+- [ ] Universal quality gates validated
 - [ ] All tests passing (80%+ coverage)
 - [ ] Code review completed
 - [ ] Evidence collected and validated
 - [ ] Documentation updated
 
 **Low Risk Quality Gates:**
+- [ ] Universal quality gates validated
 - [ ] All tests passing (70%+ coverage)
 - [ ] Basic validation completed
 - [ ] Evidence collected
+- [ ] Documentation updated
 
 ### 4. Git Workflow
 ```bash
@@ -372,36 +484,44 @@ Before proceeding to next task, ensure:
 ### Risk-Specific Quality Gates
 
 #### Critical Risk Tasks (Red Path)
+- [ ] All micro-tasks completed successfully by delegated tools
+- [ ] Integration testing passed with no conflicts between tool outputs
 - [ ] All tests passing (95%+ coverage)
 - [ ] Security audit passed
 - [ ] Legal compliance verified
 - [ ] Performance benchmarks met
 - [ ] Accessibility audit passed (WCAG AA)
 - [ ] All required reviews completed (Security, Legal, Performance, Accessibility, Code, Architectural)
-- [ ] Evidence collected and validated
+- [ ] Evidence package complete from all specialized tools
 - [ ] Documentation updated
 - [ ] Stakeholder sign-offs obtained
 
 #### High Risk Tasks (Orange Path)
+- [ ] All micro-tasks completed successfully by delegated tools
+- [ ] Integration testing passed with no conflicts between tool outputs
 - [ ] All tests passing (90%+ coverage)
 - [ ] Performance benchmarks met
 - [ ] Security testing passed
 - [ ] Required reviews completed (Performance, Code, Architectural)
-- [ ] Evidence collected and validated
+- [ ] Evidence package complete from all specialized tools
 - [ ] Documentation updated
 - [ ] Stakeholder approvals obtained
 
 #### Medium Risk Tasks (Yellow Path)
+- [ ] All micro-tasks completed successfully by delegated tools
+- [ ] Integration testing passed with no conflicts between tool outputs
 - [ ] All tests passing (80%+ coverage)
 - [ ] Code review completed
 - [ ] Basic security validation
-- [ ] Evidence collected and validated
+- [ ] Evidence package complete from specialized tools
 - [ ] Documentation updated
 
 #### Low Risk Tasks (Green Path)
+- [ ] All micro-tasks completed successfully by delegated tools
+- [ ] Integration testing passed with no conflicts between tool outputs
 - [ ] All tests passing (70%+ coverage)
 - [ ] Basic validation completed
-- [ ] Evidence collected
+- [ ] Evidence collected from delegated tools
 - [ ] Documentation updated (minimal)
 
 ## Integration with Workflow
