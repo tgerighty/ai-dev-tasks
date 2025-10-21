@@ -14,6 +14,7 @@ Guide an AI assistant in systematically implementing tasks from a generated task
 **NEW: Micro-Task Grinding Approach**
 - **Grind Through:** Complete ALL micro-task work (breakdown, delegation, testing, validation) before user interaction
 - **Batch Processing:** Split → Execute → Test → Validate → THEN ask for confirmation
+- **mark as done:** mark in task list as done once validated test passes
 - **No Interruptions:** Only stop to ask user after full micro-task completion and testing
 
 ## Documentation References
@@ -33,7 +34,7 @@ Before starting implementation, determine:
 
 ### Sequential Implementation Process (Updated - Micro-Task Grinding)
 ```
-Start Task → Break into Micro-Tasks → Delegate to Tools → Execute in Parallel/Sequence → Integrate Results → Test End-to-End → Validate Quality Gates → Collect Evidence → Present to User for Confirmation → Commit → Next Task
+Start Task → Break into Micro-Tasks → Delegate tdroids/agents → Execute in Parallel/Sequence → Integrate Results → Test End-to-End → Validate Quality Gates → Collect Evidence → Present to User for Confirmation → Commit → Next Task
 ```
 
 **Key Rules:**
@@ -66,7 +67,7 @@ For each task/subtask:
 
 **GRIND THROUGH APPROACH (Updated - Individual Micro-Task Quality Gates):**
 1. **Break down subtask into micro-tasks** (Complexity 1-2)
-2. **Match micro-tasks to appropriate tools** based on capabilities
+2. **Match micro-tasks to appropriate droid/agent** based on capabilities
 3. **Execute micro-tasks with individual quality gates**:
    - Execute micro-task
    - Test micro-task individually
@@ -85,19 +86,19 @@ For each task/subtask:
 
 **Process Flow:**
 ```
-Load Subtask (Complexity 1-4) → Inventory Available Tools → Break Subtask into Micro-Tasks (Complexity 1-2) → Match Micro-Tasks to Tool Capabilities → Delegate All Micro-Tasks → Integration & Validation → Evidence Collection → Complete Subtask
+Load Subtask (Complexity 1-4) → Inventory Available droids or Agents → Break Subtask into Micro-Tasks (Complexity 1-2) → Match Micro-Tasks to droid or Agent Capabilities → Delegate All Micro-Tasks → Integration & Validation → Evidence Collection → Complete Subtask
 ```
 
-**Tool Discovery and Matching Process:**
+**droid or Agent Discovery and Matching Process:**
 
-1. **Tool Inventory:** List all available coding tools/agents and document their specialized capabilities
-2. **Capability Assessment:** Document each tool's expertise areas and complexity handling abilities
-3. **Micro-Task Matching:** Map micro-task types to appropriate tools based on capabilities
-4. **Validation:** Ensure selected tools can handle assigned complexity levels
+1. **droid or Agent Inventory:** List all available coding droids or agents and document their specialized capabilities
+2. **Capability Assessment:** Document each droid or agent's expertise areas and complexity handling abilities
+3. **Micro-Task Matching:** Map micro-task types to appropriate droids or agents based on capabilities
+4. **Validation:** Ensure selected droids or agents can handle assigned complexity levels
 
-**Standard Micro-Task Types (Tool-Agnostic):**
+**Standard Micro-Task Types (droid or Agent-Agnostic):**
 
-| Category | Micro-Task | Complexity | Required Tool Capability |
+| Category | Micro-Task | Complexity | Required droid or Agent Capability |
 |----------|------------|------------|--------------------------|
 | **Foundation** | Create interfaces/types | 1 | Strong typing support |
 | | Design component structure | 1 | UI framework expertise |
@@ -118,65 +119,65 @@ Load Subtask (Complexity 1-4) → Inventory Available Tools → Break Subtask in
 **Complexity 1 Subtask → 1-2 Micro-tasks**
 ```
 Subtask: "Create user interface" (Complexity: 1)
-├── 1.1 Create component structure → [Tool with UI framework expertise]
-└── 1.2 Add type definitions → [Tool with strong typing capabilities]
+├── 1.1 Create component structure → [droid or Agent with UI framework expertise]
+└── 1.2 Add type definitions → [droid or Agent with strong typing capabilities]
 ```
 
 **Complexity 2 Subtask → 2-4 Micro-tasks**
 ```
 Subtask: "Implement form validation" (Complexity: 2)
-├── 2.1 Create validation rules → [Tool with validation expertise]
-├── 2.2 Implement validation logic → [Tool with form handling expertise]
-├── 2.3 Add error handling → [Tool with error handling patterns]
-└── 2.4 Write tests → [Tool with testing framework knowledge]
+├── 2.1 Create validation rules → [droid or Agent with validation expertise]
+├── 2.2 Implement validation logic → [droid or Agent with form handling expertise]
+├── 2.3 Add error handling → [droid or Agent with error handling patterns]
+└── 2.4 Write tests → [droid or Agent with testing framework knowledge]
 ```
 
 **Complexity 3 Subtask → 3-6 Micro-tasks**
 ```
 Subtask: "Add authentication service" (Complexity: 3)
-├── 3.1 Create auth interfaces → [Tool with type system expertise]
-├── 3.2 Implement auth logic → [Tool with security/backend expertise]
-├── 3.3 Add middleware → [Tool with middleware expertise]
-├── 3.4 Write tests → [Tool with testing capabilities]
-├── 3.5 Security review → [Tool with security analysis capabilities]
-└── 3.6 Update documentation → [Tool with documentation generation]
+├── 3.1 Create auth interfaces → [droid or Agent with type system expertise]
+├── 3.2 Implement auth logic → [droid or Agent with security/backend expertise]
+├── 3.3 Add middleware → [droid or Agent with middleware expertise]
+├── 3.4 Write tests → [droid or Agent with testing capabilities]
+├── 3.5 Security review → [droid or Agent with security analysis capabilities]
+└── 3.6 Update documentation → [droid or Agent with documentation generation]
 ```
 
 **Complexity 4 Subtask → 4-8 Micro-tasks**
 ```
 Subtask: "Implement OAuth2 integration" (Complexity: 4)
-├── 4.1 Design OAuth2 interfaces → [Tool with type system expertise]
-├── 4.2 Create configuration → [Tool with configuration expertise]
-├── 4.3 Implement provider 1 → [Tool with OAuth expertise]
-├── 4.4 Implement provider 2 → [Tool with OAuth expertise]
-├── 4.5 Create token management → [Tool with security expertise]
-├── 4.6 Write comprehensive tests → [Tool with testing expertise]
-├── 4.7 Security review → [Tool with security analysis]
-└── 4.8 Update documentation → [Tool with documentation capabilities]
+├── 4.1 Design OAuth2 interfaces → [droid or Agent with type system expertise]
+├── 4.2 Create configuration → [droid or Agent with configuration expertise]
+├── 4.3 Implement provider 1 → [droid or Agent with OAuth expertise]
+├── 4.4 Implement provider 2 → [droid or Agent with OAuth expertise]
+├── 4.5 Create token management → [droid or Agent with security expertise]
+├── 4.6 Write comprehensive tests → [droid or Agent with testing expertise]
+├── 4.7 Security review → [droid or Agent with security analysis]
+└── 4.8 Update documentation → [droid or Agent with documentation capabilities]
 ```
 
 **Delegation Execution Protocol (Updated - Individual Micro-Task Quality Gates):**
 
-1. **Continuous Execution with Quality Gates:** Launch tools and continue processing without user interruption
+1. **Continuous Execution with Quality Gates:** Launch droids or agents and continue processing without user interruption
 2. **Individual Micro-Task Validation:** Each micro-task must pass its own quality gate before completion:
    - **Execute micro-task** → **Test micro-task** → **Validate quality gate** → **Collect evidence** → **Mark complete**
-3. **Parallel Execution:** Launch multiple tools simultaneously when micro-tasks are independent
-4. **Sequential Execution:** Wait for completion and validation of dependent micro-tasks before launching next tools
+3. **Parallel Execution:** Launch multiple droids or agents simultaneously when micro-tasks are independent
+4. **Sequential Execution:** Wait for completion and validation of dependent micro-tasks before launching next droids or agents
 5. **Hybrid Execution:** Mix of parallel and sequential based on dependency analysis
 6. **Automated Integration:** Continuously integrate results as micro-tasks complete and pass validation
 
 **Expected Execution Times (Uninterrupted with Individual Quality Gates):**
-- **Complexity 1:** 5-10 minutes (1-2 micro-tasks, 1-2 tools) - GRIND THROUGH with individual quality gates
-- **Complexity 2:** 15-20 minutes (2-4 micro-tasks, 2-3 tools) - GRIND THROUGH with individual quality gates
-- **Complexity 3:** 30-45 minutes (3-6 micro-tasks, 4-5 tools) - GRIND THROUGH with individual quality gates
-- **Complexity 4:** 60-90 minutes (4-8 micro-tasks, 5-6 tools) - GRIND THROUGH with individual quality gates
+- **Complexity 1:** 5-10 minutes (1-2 micro-tasks, 1-2 droids or agents) - GRIND THROUGH with individual quality gates
+- **Complexity 2:** 15-20 minutes (2-4 micro-tasks, 2-3 droids or agents) - GRIND THROUGH with individual quality gates
+- **Complexity 3:** 30-45 minutes (3-6 micro-tasks, 4-5 droids or agents) - GRIND THROUGH with individual quality gates
+- **Complexity 4:** 60-90 minutes (4-8 micro-tasks, 5-6 droids or agents) - GRIND THROUGH with individual quality gates
 
 **Note:** Individual micro-task quality gates add ~2-5 minutes per micro-task for testing and validation
 
 **Automated Integration and Quality Assurance (Updated - Individual Micro-Task Validation):**
 
 **For Each Micro-Task (Must Pass Before Moving to Next):**
-- [ ] Execute micro-task with delegated tool
+- [ ] Execute micro-task with delegated droid or agent
 - [ ] Run micro-task specific tests (unit/integration based on micro-task type)
 - [ ] Validate micro-task quality gate (based on micro-task complexity and type)
 - [ ] Collect micro-task evidence (test results, coverage, performance if applicable)
@@ -194,14 +195,14 @@ Subtask: "Implement OAuth2 integration" (Complexity: 4)
 **Micro-Task Quality Gates (Each Micro-Task Must Pass):**
 
 **Complexity 1 Micro-Task Quality Gate:**
-- [ ] Micro-task executed successfully by delegated tool
+- [ ] Micro-task executed successfully by delegated droid or agent
 - [ ] Basic functionality test passes
 - [ ] Code quality check passes
 - [ ] Documentation updated (if required)
 - [ ] Evidence collected and logged
 
 **Complexity 2 Micro-Task Quality Gate:**
-- [ ] Micro-task executed successfully by delegated tool
+- [ ] Micro-task executed successfully by delegated droid or agent
 - [ ] Unit tests pass (80%+ coverage for micro-task)
 - [ ] Integration test with related components passes
 - [ ] Code quality and security check passes
@@ -288,10 +289,10 @@ Generate required evidence based on risk level:
 Before marking task complete, validate:
 
 **Universal Quality Gates (All Risk Levels with Micro-Task Delegation):**
-- [ ] All micro-tasks completed successfully by delegated tools
-- [ ] Integration testing passed with no conflicts between tool outputs
+- [ ] All micro-tasks completed successfully by delegated droids or agents
+- [ ] Integration testing passed with no conflicts between droid or agent outputs
 - [ ] Risk-based testing requirements met (maintain original risk level protocols)
-- [ ] Evidence package complete from all specialized tools
+- [ ] Evidence package complete from all specialized droids or agents
 - [ ] Documentation updated and validated
 
 **Critical Risk Quality Gates:**
@@ -634,44 +635,44 @@ Before starting any task:
 ### Risk-Specific Quality Gates
 
 #### Critical Risk Tasks (Red Path)
-- [ ] All micro-tasks completed successfully by delegated tools
-- [ ] Integration testing passed with no conflicts between tool outputs
+- [ ] All micro-tasks completed successfully by delegated droids or agents
+- [ ] Integration testing passed with no conflicts between droid or agent outputs
 - [ ] All tests passing (95%+ coverage)
 - [ ] Security audit passed
 - [ ] Legal compliance verified
 - [ ] Performance benchmarks met
 - [ ] Accessibility audit passed (WCAG AA)
 - [ ] All required reviews completed (Security, Legal, Performance, Accessibility, Code, Architectural)
-- [ ] Evidence package complete from all specialized tools
+- [ ] Evidence package complete from all specialized droids or agents
 - [ ] Documentation updated
 - [ ] Stakeholder sign-offs obtained
 
 #### High Risk Tasks (Orange Path)
-- [ ] All micro-tasks completed successfully by delegated tools
-- [ ] Integration testing passed with no conflicts between tool outputs
+- [ ] All micro-tasks completed successfully by delegated droids or agents
+- [ ] Integration testing passed with no conflicts between droid or agent outputs
 - [ ] All tests passing (90%+ coverage)
 - [ ] Performance benchmarks met
 - [ ] Security testing passed
 - [ ] Required reviews completed (Performance, Code, Architectural)
-- [ ] Evidence package complete from all specialized tools
+- [ ] Evidence package complete from all specialized droids or agents
 - [ ] Documentation updated
 - [ ] Stakeholder approvals obtained
 
 #### Medium Risk Tasks (Yellow Path)
-- [ ] All micro-tasks completed successfully by delegated tools
-- [ ] Integration testing passed with no conflicts between tool outputs
+- [ ] All micro-tasks completed successfully by delegated droids or agents
+- [ ] Integration testing passed with no conflicts between droid or agent outputs
 - [ ] All tests passing (80%+ coverage)
 - [ ] Code review completed
 - [ ] Basic security validation
-- [ ] Evidence package complete from specialized tools
+- [ ] Evidence package complete from specialized droids or agents
 - [ ] Documentation updated
 
 #### Low Risk Tasks (Green Path)
-- [ ] All micro-tasks completed successfully by delegated tools
-- [ ] Integration testing passed with no conflicts between tool outputs
+- [ ] All micro-tasks completed successfully by delegated droids or agents
+- [ ] Integration testing passed with no conflicts between droid or agent outputs
 - [ ] All tests passing (70%+ coverage)
 - [ ] Basic validation completed
-- [ ] Evidence collected from delegated tools
+- [ ] Evidence collected from delegated droids or agents
 - [ ] Documentation updated (minimal)
 
 ## Integration with Workflow

@@ -301,6 +301,9 @@ create_gitignore() {
 .ai-dev-temp/
 .ai-dev-backup/
 
+# AI Dev Tasks - generated workflow files
+ai-dev-tasks/
+
 # Node.js
 node_modules/
 npm-debug.log*
@@ -675,7 +678,7 @@ check_directory "$TARGET_DIR"
 create_directory "$TARGET_DIR"
 
 # Copy files
-copy_files "." "$TARGET_DIR"
+copy_files "$SCRIPT_DIR" "$TARGET_DIR"
 
 # Create .gitignore if requested
 if [[ "$CREATE_GITIGNORE" == "true" ]]; then
@@ -683,6 +686,7 @@ if [[ "$CREATE_GITIGNORE" == "true" ]]; then
 fi
 
 # Create setup script
+create_setup_script "$TARGET_DIR"
 
 
 # Show dry run results
