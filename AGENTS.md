@@ -1,18 +1,30 @@
-# AGENTS GUIDE
+# UNIFIED AGENTS GUIDE - AI DEV TASKS WITH MICROGRINDING
 
-**Version**: 2.0.0 - Ultra-Optimized
-**Target**: Factory.ai droids and custom coding agents
-**Last Updated**: 2025-10-31
+**Version**: 3.0.0 - Unified Microgrinding + AI Dev Tasks
+**Target**: All AI coding assistants (Claude Code, Factory.ai, Cursor, Windsurf)
+**Token Count**: ~8K optimized
+**Last Updated**: 2025-11-01
+
+---
+
+## 🎯 CORE PHILOSOPHY: 1:1:1:1 MICROGRINDING
+
+**The Foundation**: Every task follows the 1:1:1:1 pattern
+```
+1 Task → 1 Agent/Droid → 1 File → 1 Execution
+```
+
+This is NON-NEGOTIABLE. All work must be broken into atomic, surgical micro-tasks.
 
 ---
 
 ## 🚫 ABSOLUTE REQUIREMENTS
 
-**These rules are non-negotiable. Violation = task failure.**
-
 | Category | Rule | Details |
 |----------|------|---------|
+| **Microgrinding** | 1:1:1:1 Pattern | 1 task, 1 agent, 1 file, 1 execution ALWAYS |
 | **Reading** | Read thoroughly | Full files + all references before any changes |
+| **Context** | <500 lines | Ideal <200 lines per micro-task |
 | **Size** | Keep small | File ≤300 LOC, Function ≤50 LOC, Params ≤5 |
 | **Security** | No secrets | Never commit/log secrets; validate all inputs |
 | **Testing** | Test everything | New code = tests; bugs = regression tests first |
@@ -22,311 +34,309 @@
 
 ---
 
-## 📋 QUICK REFERENCE
+## 📊 AI DEV TASKS WORKFLOW
 
-### Code Limits
-| Item | Maximum |
-|------|---------|
-| File | 300 lines |
-| Function | 50 lines |
-| Parameters | 5 |
-| Complexity | 10 |
+### Phase 1: Discovery-Driven PRD Creation
+```
+User Intent → Discovery Questions (5-10) → Problem Understanding → Right-Sized PRD
+```
+- Use `create-prd.md` guide
+- Progressive questioning: 5 Whys, Day in Life, Magic Wand
+- Output: Micro (<1 page), Standard (2-3), or Full (5+) PRD
 
-### Tech Stack
-**Framework**: Next.js 15 + TypeScript + tRPC
-**Database**: PostgreSQL 18 + Drizzle ORM
-**Cache**: Valkey 8
-**Auth**: Better Auth
-**UI**: shadcn/ui + Tailwind
-**Testing**: Jest/Vitest + Playwright
+### Phase 2: Pattern-Based Task Generation
+```
+PRD Analysis → Pattern Recognition → Task Generation → Complexity Scoring → Dependency Mapping
+```
+- Use `generate-tasks.md` guide
+- Match patterns: CRUD, Forms, APIs, Reports, Auth (~70% match common patterns)
+- AI complexity scoring with reasoning (1-5 scale)
+- Time estimates with ranges
+
+### Phase 3: Universal Micro-Task Implementation
+```
+Task Selection → Micro-Task Breakdown → 1:1:1:1 Execution → Validation → Next
+```
+- Use `process-task-list.md` guide
+- EVERY task broken into micro-tasks:
+  - Complexity 1-2: 2-3 micro-tasks
+  - Complexity 3: 4-6 micro-tasks
+  - Complexity 4+: 6-10 micro-tasks
 
 ---
 
-## 🔧 CORE RULES
+## 🔧 1:1:1:1 MICROGRINDING IMPLEMENTATION
 
-### 1. Development Workflow
-```
-Problem → Small Change → Review → Refactor → Repeat
-```
+### The Pattern Explained
 
-**Before coding:**
-- Write problem 1-pager (Context/Problem/Goal/Constraints)
-- Evaluate multiple approaches
-- Choose simplest solution
+```javascript
+// CORRECT: 1:1:1:1 Pattern
+const microTask = {
+  task: "Add email validation",        // 1 specific task
+  agent: "validator",                  // 1 focused agent
+  file: "validators/email.ts",         // 1 target file
+  execution: "single focused change"   // 1 atomic operation
+};
 
-**During coding:**
-- Read entire context first
-- Search global references
-- Document assumptions
-- Keep changes minimal
-
-### 2. TypeScript Rules
-```typescript
-// ✅ DO
-import React from 'react';
-const items: string[] = [];
-const result: User = (() => {
-  if (!condition) return null;
-  return fetchUser();
-})();
-
-// ❌ DON'T
-const x: any = something;
-let user: User | undefined; // later assigned
-const path = baseUrl + '/api'; // use new URL()
+// WRONG: Multiple concerns
+const badTask = {
+  task: "Add validation and UI and tests",  // Multiple tasks!
+  agent: "general",                         // Unfocused agent!
+  files: ["multiple", "files"],             // Multiple files!
+  execution: "complex multi-step"           // Not atomic!
+};
 ```
 
-**Key patterns:**
-- Normal imports only (no dynamic/require)
-- Arrow functions with `{}` blocks
-- IIFE over late assignment
-- `new URL()` for path construction
-- `obj?.x || ''` over `'x' in obj`
+### Micro-Task Breakdown Examples
 
-### 3. Database (Drizzle/Prisma)
-```typescript
-// ✅ Simple authorized query
-const user = await db.user.findFirst({
-  where: {
-    id: userId,
-    orgId: currentOrgId
-  }
-});
-if (!user) throw new AppError('Not found');
+#### Simple Task (Complexity 1-2) → 2-3 Micro-tasks
+```markdown
+Task: "Add dark mode toggle"
+├── MT 1.1: Add toggle component (settings.tsx) - 15 min
+├── MT 1.2: Connect to theme context (theme.ts) - 10 min
+└── MT 1.3: Add localStorage (storage.ts) - 10 min
+```
 
-// ✅ Parallel queries
-const [user, posts] = await Promise.all([
-  db.user.findUnique({ where: { id } }),
-  db.post.findMany({ where: { userId: id } })
+#### Moderate Task (Complexity 3) → 4-6 Micro-tasks
+```markdown
+Task: "Implement form validation"
+├── MT 1.1: Create validation schema (schemas/form.ts) - 15 min
+├── MT 1.2: Add to form component (form.tsx) - 20 min
+├── MT 1.3: Create error component (errors.tsx) - 15 min
+├── MT 1.4: Add validation triggers (handlers.ts) - 15 min
+├── MT 1.5: Style error states (form.css) - 10 min
+└── MT 1.6: Add unit tests (form.test.ts) - 20 min
+```
+
+#### Complex Task (Complexity 4+) → 6-10 Micro-tasks
+```markdown
+Task: "Add authentication system"
+├── MT 1.1: Create auth types (types/auth.ts) - 15 min
+├── MT 1.2: Add auth context (contexts/auth.tsx) - 20 min
+├── MT 1.3: Create login component (login.tsx) - 25 min
+├── MT 1.4: Add auth API calls (api/auth.ts) - 20 min
+├── MT 1.5: Create middleware (middleware/auth.ts) - 20 min
+├── MT 1.6: Add protected routes (routes/protected.tsx) - 15 min
+├── MT 1.7: Update app router (app.tsx) - 10 min
+├── MT 1.8: Add auth utils (utils/auth.ts) - 15 min
+├── MT 1.9: Create auth tests (auth.test.ts) - 25 min
+└── MT 1.10: Update layout (layout.tsx) - 10 min
+```
+
+### Parallel Execution Strategy
+
+**Launch multiple agents simultaneously for independent tasks:**
+
+```javascript
+// PARALLEL EXECUTION (40% faster)
+await Promise.all([
+  launchAgent('code-implementer', 'MT 1.1: Schema creation'),
+  launchAgent('code-implementer', 'MT 1.2: UI component'),
+  launchAgent('test-writer', 'MT 1.3: Test structure')
 ]);
 
-// ❌ Deep nesting (>2 levels)
-// ❌ Schema mutations (never run push/migrate)
-```
-
-**Rules:**
-- Read schema first
-- Use upsert over update
-- Array transactions, not interactive
-- No `await` while building operations
-
-### 4. Testing
-```typescript
-// ✅ Test organization
-project/
-├── src/          # Source (NO tests here)
-├── tests/        # ALL tests here
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-
-// ✅ Every function
-describe('fetchUser', () => {
-  it('returns user on success', () => {});
-  it('throws on not found', () => {});
-});
-```
-
-**Requirements:**
-- ≥1 happy path + ≥1 failure per function
-- Mock external dependencies
-- Deterministic and independent
-- Security scanners exclude test folders
-
-**Configuration:**
-- `.snyk` → exclude test paths
-- `sonar-project.properties` → exclude test paths
-- `codeql-config.yml` → exclude test paths
-
-### 5. Security
-| Risk | Mitigation |
-|------|-----------|
-| Secrets | Environment variables only |
-| SQL Injection | Parameterized queries |
-| XSS | Encode outputs |
-| CSRF | Token validation |
-| Permissions | Least privilege |
-
-```typescript
-// ✅ Input validation
-const schema = z.object({
-  email: z.string().email(),
-  age: z.number().min(0).max(150)
-});
-const data = schema.parse(input);
-
-// ❌ Never
-const query = `SELECT * FROM users WHERE id = ${userId}`;
-```
-
-### 6. Styling (Tailwind)
-```typescript
-// ✅ Preferred patterns
-<div className="flex flex-col gap-4">
-<Icon className="size-4" /> // not w-4 h-4
-<div className={cn('base', isActive && 'active')} />
-
-// Spacing: multiples of 4 (p-4, gap-4, m-4)
-// Colors: shadcn theme colors
-// Layout: flex/grid with gap (not margin)
-```
-
-### 7. Error Handling
-```typescript
-// Expected errors
-throw new AppError('User not found');
-
-// HTTP responses
-throw new ResponseError(403, JSON.stringify({
-  message: 'Access denied'
-}));
-
-// No sensitive data in errors
-```
-
-### 8. Clean Code
-**Prefer:**
-- Guard clauses over nested ifs
-- Single responsibility per function
-- Intention-revealing names
-- Side effects at boundaries
-- Symbolic constants (no magic numbers)
-
-**Avoid:**
-- Premature abstraction
-- Ignoring errors/warnings
-- Broad exception types
-- Hidden "magic"
-
----
-
-## 🎯 MICRO-TASK DELEGATION
-
-**For sub-task droids:**
-- One specific task per droid
-- Limit to 3-5 files maximum
-- Provide only relevant context
-- Clear, focused objectives
-- Avoid scope creep
-
-**Claude Code droids:**
-- `frontend-engineer-droid-forge` - React/Next.js/UI
-- `backend-security-specialist-droid-forge` - API/security
-- `database-specialist-droid-forge` - PostgreSQL/Drizzle
-- `testing-droid-forge` - Tests/coverage
-- `typescript-specialist-droid-forge` - Type safety
-- `code-reviewer-droid-forge` - Quality review
-
-**Pattern:**
-```json
-{
-  "subagent_type": "frontend-engineer-droid-forge",
-  "description": "Create component",
-  "prompt": "Build responsive profile component with TypeScript interfaces and a11y"
-}
+// Then SEQUENTIAL for dependencies
+await launchAgent('code-implementer', 'MT 2.1: Connect UI to API');
 ```
 
 ---
 
-## 📖 REFERENCE FILES
+## 🤖 NANO-AGENTS FOR MICROGRINDING
 
-**Load on-demand for detailed examples:**
+### Claude Code Agents (.claude/agents/)
+| Agent | Purpose | Tokens |
+|-------|---------|--------|
+| `prd-discovery` | Progressive PRD creation | ~300 |
+| `task-generator` | Pattern-based task generation | ~400 |
+| `micro-task-breaker` | Break tasks into 1:1:1:1 units | ~250 |
+| `code-implementer` | Execute single micro-task | ~350 |
+| `test-writer` | Create focused tests | ~300 |
+| `validator` | Validate implementation | ~250 |
+| `documenter` | Auto-generate docs | ~300 |
+| `orchestrator` | Coordinate workflow | ~500 |
 
-### Code
-- [Component Interface](references/code/typescript-component-interface.ts)
-- [Error Patterns](references/patterns/error-handling-patterns.ts)
-- [API Response](references/patterns/api-response-patterns.ts)
+### Factory.ai Droids (.factory/droids/)
+Equivalent droids with same 1:1:1:1 focus
 
-### Testing
-- [Unit Test Template](references/testing/unit-test-template.ts)
-- [Testing Patterns](references/testing/testing-patterns-examples.ts)
+### Using Nano-Agents
+```bash
+# Claude Code
+Task tool with subagent_type: "micro-task-breaker"
 
-### Security
-- [Input Validation](references/security/input-validation-examples.ts)
-- [Security Checklist](references/security/security-checklist.md)
-- [Prisma Queries](references/prisma/prisma-query-examples.ts)
+# Cursor
+@micro-task-breaker.md implement MT 1.1
 
-### Patterns
-- [Naming Conventions](references/patterns/naming-conventions.md)
-- [Anti-Patterns](references/clean-code/anti-patterns-examples.ts)
+# Direct
+Load: .claude/agents/code-implementer.md
+```
 
-### Templates
-- [ADR Template](references/templates/adr-template.md)
-- [Project Structure](references/templates/project-structure.md)
+---
 
-### Git & Workflows
-- [Commit Guidelines](references/git/commit-message-guidelines.md)
-- [Validation Checklist](references/checklists/validation-checklist.md)
+## 📋 QUICK REFERENCE
+
+### Tech Stack
+**Frontend**: Next.js 15, TypeScript, React, shadcn/ui, Tailwind
+**Backend**: tRPC, PostgreSQL 18, Drizzle ORM, Valkey 8
+**Auth**: Better Auth v1
+**Test**: `npm test` | **Build**: `npm run build` | **Dev**: `npm run dev`
+
+### Code Limits
+| Item | Max | Ideal |
+|------|-----|-------|
+| File | 300 lines | <200 |
+| Function | 50 lines | <30 |
+| Params | 5 | ≤3 |
+| Context | 500 lines | <200 |
+| Micro-task | 30 min | 5-15 min |
+
+### Project Structure
+```
+src/
+├── app/           # Next.js app router
+├── components/    # React components
+├── server/
+│   ├── api/      # tRPC routers
+│   ├── db/       # Drizzle schema
+│   └── auth/     # Better Auth
+tests/            # ALL tests here
+├── unit/
+├── integration/
+└── e2e/
+```
+
+---
+
+## 🔍 VALIDATION CHECKLIST
+
+Before marking any micro-task complete:
+
+### Pre-Implementation
+- [ ] Target file exists (or confirm creating)
+- [ ] Dependencies installed
+- [ ] Context <500 lines
+- [ ] Single file focus (1:1:1:1)
+- [ ] Pattern identified
+
+### During Implementation
+- [ ] No `any` types
+- [ ] Function <50 lines
+- [ ] Inputs validated
+- [ ] No hardcoded secrets
+- [ ] Following existing patterns
+
+### Post-Implementation
+- [ ] Code compiles
+- [ ] Tests pass
+- [ ] Security validated
+- [ ] Documentation updated
+- [ ] 1:1:1:1 pattern maintained
 
 ---
 
 ## 🔗 LAZY-LOADING REFERENCES
 
-**Token-optimized references** - Load only what you need:
+Load only what you need for the specific micro-task:
 
-### Available References (~1-2K tokens each)
-- `/references/patterns/crud-operations.md` - Complete CRUD pattern
-- `/references/patterns/form-handling.md` - Form validation patterns
+### Pattern Libraries (~1-2K tokens each)
+- `/references/patterns/crud-operations.md` - Complete CRUD
+- `/references/patterns/form-handling.md` - Forms + validation
+- `/references/patterns/parallel-processing.md` - Parallel execution
 - `/references/security/security-checklist.md` - Security validation
-- `/references/testing/testing-patterns.md` - Testing examples
-- `/references/git/commit-guidelines.md` - Git conventions
-- `/references/README.md` - Complete index of all references
+- `/references/testing/test-templates.md` - Test generation
+- `/references/checklists/validation-checklist.md` - Quality gates
 
-**Usage**: Load specific files when implementing that feature type
+---
+
+## 📊 MICROGRINDING METRICS
+
+### Success Indicators
+- **Context per task**: <500 lines (✓ = success)
+- **Files per task**: 1 file (✓ = perfect)
+- **Time per task**: 5-30 minutes (✓ = optimal)
+- **Parallel tasks**: 2-5 concurrent (✓ = efficient)
+- **Test coverage**: Per micro-task (✓ = quality)
+
+### Quality Score Formula
+```
+Score = (Single_File × 25) + (Small_Context × 25) +
+        (Tests_Pass × 25) + (Pattern_Followed × 25)
+```
+
+---
+
+## 🚀 EXECUTION COMMANDS
+
+### Start Workflow
+```bash
+# 1. Create PRD
+@create-prd.md  # Cursor
+/create-prd     # Claude Code slash command
+
+# 2. Generate Tasks
+@generate-tasks.md @PRD-[date].md
+
+# 3. Process with Microgrinding
+@process-task-list.md @tasks-[date].md
+# This automatically breaks into 1:1:1:1 micro-tasks
+```
+
+### Track Progress
+```markdown
+Task 1.0: Add user profile [→] In Progress
+├── MT 1.1: Schema [x] Complete
+├── MT 1.2: API [→] In Progress
+├── MT 1.3: UI [ ] Pending
+└── MT 1.4: Tests [ ] Pending
+```
+
+---
+
+## 🎓 CORE PRINCIPLES
+
+### The Microgrinding Manifesto
+1. **One task, one focus** - Never mix concerns
+2. **Small context wins** - <500 lines prevents drift
+3. **Surgical precision** - One file, one change
+4. **Parallel when possible** - Independent tasks simultaneously
+5. **Validate immediately** - Test each micro-task
+6. **Document as you go** - Auto-generate from completions
+
+### Why 1:1:1:1 Works
+- **AI performs better** with constrained scope
+- **Fewer errors** with focused context
+- **Easier validation** of small changes
+- **Better parallelization** of independent work
+- **Clear progress tracking** with atomic tasks
 
 ---
 
 ## 📝 CHANGELOG FORMAT
 
-**Public packages** (have version in package.json):
+Track micro-task completions:
 ```markdown
-## 0.1.3
-
-### Patch Changes
-- fix authentication bug
-- improve error messages
+## [Unreleased]
+### Added
+- MT 1.1: User schema (15 min actual vs 20 min est)
+- MT 1.2: Profile API endpoint (18 min actual vs 20 min est)
+### Fixed
+- MT 2.1: Email validation (10 min actual vs 15 min est)
 ```
-
-**Private packages** (`private: true`):
-```markdown
-# Changelog
-
-## 2025-10-31 14:30
-- improve user experience
-- fix startup crash
-```
-
-**Style:**
-- Present tense (fix, improve, add)
-- Concise (omit "implement", "added")
-- No nesting
-- Include code when relevant
 
 ---
 
-## 🎓 GUIDING PRINCIPLES
+## 🔥 REMEMBER
 
-1. **Simplicity** - Choose the simplest solution
-2. **Iterative** - MVG first, refine later
-3. **Flexible** - Deviate when clearly better (document in ADR)
-4. **Clear** - Concrete examples over jargon
+**Every task MUST follow 1:1:1:1 pattern - NO EXCEPTIONS**
+
+This is how we achieve:
+- 40% faster development through parallelization
+- 60% fewer errors through focused context
+- 75% token reduction through nano-agents
+- 90% pattern reuse through microgrinding
+
+**The mantra**: Make it small → Make it work → Make it right → Make it fast
 
 ---
 
-## 📊 VERSION HISTORY
-
-### v2.0.0 (2025-10-31)
-- **Major refactor**: Further 60% token reduction
-- **Removed**: Duplication, verbose diagrams, incomplete sections
-- **Consolidated**: Related rules into tables
-- **Enhanced**: Quick reference format
-- Estimated tokens: ~7K (from ~17.5K in v1.1.0)
-
-### v1.1.0 (2025-06-18)
-- 85% token reduction (122K → 17.5K)
-- Moved mandatory rules first
-- Modular reference files
-
-### v1.0.0 (2025-06-17)
-- Initial monolithic version
-- ~122K tokens
+*For legacy patterns and verbose examples, see `/archive/`*
+*For quick reference without examples, use `Nano-AGENTS.md` (2K tokens)*
