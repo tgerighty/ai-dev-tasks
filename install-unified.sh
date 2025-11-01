@@ -397,6 +397,15 @@ perform_installation() {
                 copy_file "$agent_file" "$TARGET_DIR/.claude/agents/$basename_file" "Claude agent: $basename_file"
             fi
         done
+
+        # Install CLAUDE.md configuration for Claude Code
+        print_status "📄 Installing CLAUDE.md for Claude Code..."
+        if [[ -f "$SCRIPT_DIR/.claude/CLAUDE.md" ]]; then
+            copy_file "$SCRIPT_DIR/.claude/CLAUDE.md" "$TARGET_DIR/.claude/CLAUDE.md" "Claude Code configuration"
+        elif [[ -f "$SCRIPT_DIR/CLAUDE.md" ]]; then
+            create_dir "$TARGET_DIR/.claude" "Claude configuration directory"
+            copy_file "$SCRIPT_DIR/CLAUDE.md" "$TARGET_DIR/.claude/CLAUDE.md" "Claude Code configuration"
+        fi
     fi
 
     # Install Factory.ai droids
