@@ -1,0 +1,107 @@
+# GitLab CI/CD Security Scanning Configuration Example
+# Add this to your .gitlab-ci.yml file
+
+# Include GitLab security scanning templates
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
+# SAST (Static Application Security Testing) configuration
+sast:
+  stage: test
+  variables:
+    # Exclude test directories and files from security scanning
+    SAST_EXCLUDED_PATHS: >
+      tests/,
+      __tests__/,
+      test/,
+      e2e/,
+      cypress/,
+      spec/,
+      **/*.test.ts,
+      **/*.test.tsx,
+      **/*.test.js,
+      **/*.test.jsx,
+      **/*.spec.ts,
+      **/*.spec.tsx,
+      **/*.spec.js,
+      **/*.spec.jsx,
+      **/*.e2e.test.ts,
+      **/fixtures/**,
+      **/mocks/**,
+      **/__mocks__/**,
+      **/test-utils/**,
+      dist/,
+      build/,
+      coverage/,
+      node_modules/
+    
+    # Additional SAST configuration
+    SAST_DEFAULT_ANALYZERS: "eslint,nodejs-scan,semgrep"
+  
+  # Only run on specific branches
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_MERGE_REQUEST_ID
+
+# Dependency Scanning configuration
+dependency_scanning:
+  stage: test
+  variables:
+    # Exclude test dependencies from critical vulnerability checks
+    DS_EXCLUDED_PATHS: >
+      tests/,
+      __tests__/,
+      test/,
+      e2e/,
+      cypress/,
+      coverage/,
+      dist/,
+      build/
+    
+    # Set severity threshold
+    DS_DEFAULT_ANALYZERS: "gemnasium,retire-js"
+  
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_MERGE_REQUEST_ID
+
+# Secret Detection configuration
+secret_detection:
+  stage: test
+  variables:
+    # Exclude test fixtures that may contain mock credentials
+    SECRET_DETECTION_EXCLUDED_PATHS: >
+      tests/,
+      __tests__/,
+      test/,
+      e2e/,
+      **/fixtures/**,
+      **/mocks/**
+  
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_MERGE_REQUEST_ID
+
+# Custom security job for test organization validation
+validate_test_organization:
+  stage: test
+  script:
+    - echo "Validating test organization..."
+    # Check that no test files exist in src/
+    - |
+      if find src -name "*.test.ts" -o -name "*.spec.ts" | grep -q .; then
+        echo "ERROR: Test files found in src/ directory"
+        exit 1
+      fi
+    # Verify tests are in proper directories
+    - |
+      if ! find tests __tests__ test e2e -name "*.test.ts" -o -name "*.spec.ts" | grep -q .; then
+        echo "WARNING: No test files found in test directories"
+      fi
+    - echo "Test organization validation passed"
+  
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_MERGE_REQUEST_ID

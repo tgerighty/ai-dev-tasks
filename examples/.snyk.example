@@ -1,0 +1,74 @@
+# Snyk Configuration Example
+# Copy this to .snyk in your project root and customize as needed
+
+# Language settings
+language-settings:
+  typescript:
+    enabled: true
+    # Test exclusions for security scanning
+    exclude:
+      # Test directories
+      - tests/**
+      - __tests__/**
+      - test/**
+      - e2e/**
+      - cypress/**
+      - spec/**
+      
+      # Test files
+      - "**/*.test.ts"
+      - "**/*.test.tsx"
+      - "**/*.spec.ts"
+      - "**/*.spec.tsx"
+      - "**/*.e2e.test.ts"
+      - "**/*.e2e.spec.ts"
+      
+      # Test fixtures and mocks
+      - "**/fixtures/**"
+      - "**/mocks/**"
+      - "**/__mocks__/**"
+      - "**/test-utils/**"
+      - "**/test-helpers/**"
+
+# Vulnerability settings
+vulnerabilities:
+  # Ignore vulnerabilities in test dependencies
+  ignore:
+    # Example: Ignore vulnerabilities in testing libraries
+    # - id: SNYK-JS-JEST-1234567
+    #   reason: "Only used in tests"
+    #   expires: "2025-12-31"
+
+# Path exclusions for security scanning
+exclude:
+  # Test directories
+  - tests/**
+  - __tests__/**
+  - test/**
+  - e2e/**
+  - cypress/**
+  
+  # Test files
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+  - "**/*.e2e.test.ts"
+  
+  # Test fixtures and mocks
+  - "**/fixtures/**"
+  - "**/mocks/**"
+  - "**/__mocks__/**"
+  
+  # Build and distribution
+  - dist/**
+  - build/**
+  - .build/**
+  - out/**
+  
+  # Dependencies
+  - node_modules/**
+  
+  # Coverage reports
+  - coverage/**
+  - .nyc_output/**

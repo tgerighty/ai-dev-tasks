@@ -1,85 +1,322 @@
-# Rule: Creating Product Requirements Documents (PRDs) - Enhanced with "All Roads to Rome" Risk Assessment
+# Creating Product Requirements Documents (PRDs) - Discovery-Driven Approach
+
+**Version:** 2.0
+**Last Updated:** 2025-10-31
+**Previous Version:** Archived in `/archive/create-prd-v1.0-20251031.md`
 
 ## Goal
-Guide an AI assistant in creating comprehensive Product Requirements Documents (PRDs) that clarify project requirements, scope, and constraints for development teams while incorporating cross-functional risk assessment using the "All Roads to Rome" methodology.
+Guide AI assistants in helping users discover, articulate, and document what they really need to build through adaptive questioning and progressive refinement.
 
-## Enhanced Process
-1. **Receive Initial Prompt:** User provides a brief description of a new feature
-2. **Initial Risk Screening:** Conduct preliminary risk assessment across all dimensions
-3. **Ask Clarifying Questions:** Gather sufficient detail including risk-related information
-4. **Schedule Risk Assessment Workshop:** Plan cross-functional risk assessment for major features
-5. **Generate PRD:** Create PRD using enhanced structure with risk sections
-6. **Save PRD:** Save as `[n]-prd-[feature-name].md` in the `/tasks` directory
+## Core Philosophy
+- **Problem before solution** - Understand "why" before "what"
+- **Discovery through dialogue** - Questions reveal hidden requirements
+- **Progressive refinement** - Each answer shapes the next question
+- **Right-sized documentation** - Match PRD complexity to feature complexity
+- **Stories over specifications** - Concrete examples reveal true needs
 
-## Documentation References
-- **Enhanced Risk Assessment:** Use `docs/risk-assessment-framework.md` for comprehensive risk evaluation
-- **Complexity Scoring:** Use `docs/complexity-rubric.md` for task sizing guidance
-- **Testing Guidelines:** Reference `docs/testing-guidelines.md` for quality requirements
-- **Task Generation:** Follow `generate-tasks.md` for risk-based task breakdown
-- **Task Processing:** Use `process-task-list.md` for implementation guidance
+## The Discovery Process
 
-## Enhanced PRD Requirements
+### Step 1: Initial Engagement
 
-### Risk Assessment Integration
-Every PRD must include:
-- **Initial Risk Screening:** Preliminary assessment of all major features
-- **Cross-Functional Stakeholder Identification:** Required team members for risk workshops
-- **Legal and Compliance Considerations:** Regulatory requirements and legal impact assessment
-- **User Impact Analysis:** Frequency of use, affected users, user-facing impact
-- **Technical Complexity Assessment:** Algorithm complexity, dependencies, software maturity
+Start with an open-ended question to understand what brought them here:
 
-## Clarifying Questions
+```
+"Tell me about what you're trying to build or improve. I'll help you create a clear requirements document."
+```
 
-### Standard Questions
-- **Problem/Goal:** What problem does this feature solve or what's the main goal?
-- **Target User:** Who is the primary user of this feature?
-- **Core Functionality:** What key actions should users be able to perform?
-- **User Stories:** Provide user stories (e.g., "As a [user], I want to [action] so that [benefit]")
-- **Acceptance Criteria:** How will we know when this feature is successfully implemented?
-- **Scope/Boundaries:** What should this feature NOT do (non-goals)?
-- **Data Requirements:** What data does this feature need to display or manipulate?
-- **Design/UI:** Are there existing design mockups or UI guidelines to follow?
-- **Edge Cases:** What potential edge cases or error conditions should we consider?
+Based on their response, follow one of these paths:
 
-### Enhanced Risk Assessment Questions
-For each major feature, assess across all "All Roads to Rome" dimensions:
+#### Path A: Clear Problem Statement
+If they describe a specific problem:
+```
+"That's a clear problem. Let me understand it better:
 
-**User Impact Assessment:**
-- **Frequency of Use:** Seldom/Frequent/Very Frequent
-- **Affected Users:** Less (<100)/More (100-1000)/Many (>1000)
-- **User-Facing Impact:** UI Only/Process Changes/Data Changes
+1. Who experiences this problem most often?
+2. Can you describe the last time this was an issue?
+3. What's the current workaround, if any?
+4. What would 'fixed' look like to you?"
+```
 
-**Technical Complexity Assessment:**
-- **Algorithm Complexity:** Simple/Complex/Very Complex
-- **Dependencies:** None/Internal Only/Internal + External
-- **Software Maturity:** High/Recent/Medium/Low/Old
-- **Screens/Entities Affected:** <2/2-4/>4
+#### Path B: Solution Without Problem
+If they jump to a solution ("I need a dashboard with..."):
+```
+"I see you have a solution in mind. Help me understand the underlying need:
 
-**Process Complexity Assessment:**
-- **Logical Steps:** <2/2-3/>3
-- **Process Layers:** UI Only/Calculation-Validation/Data Change
-- **Integration Points:** Few/Moderate/Many
+1. What can't you do today that this would enable?
+2. Who asked for this, and what problem are they trying to solve?
+3. What happens if we don't build this?
+4. Is there a specific incident that triggered this request?"
+```
 
-**Data and Impact Assessment:**
-- **Data Volume:** Low/Medium/High
-- **Expected Defect Rate:** Less/Moderate/Many
+#### Path C: Vague or Uncertain
+If they're unsure or very high-level:
+```
+"Let's explore this together:
 
-**Legal and Compliance Assessment:**
-- **Regulatory Requirements:** None/Basic/Complex
-- **Legal Impact of Failure:** Minimal/Moderate/High
-- **Data Privacy Impact:** Low/Medium/High
+1. What made you think about this today?
+2. Can you describe a recent situation where you wished something worked differently?
+3. Who would benefit most from improving this area?
+4. What's the biggest pain point in this process right now?"
+```
 
-### Cross-Functional Workshop Planning
-For each major feature requiring risk assessment:
-- **Required Participants:** Development Team, Product Management, Design/UX, Legal/Compliance, DevOps/Infrastructure
-- **Workshop Duration:** 60 minutes
-- **Deliverables:** Risk assessment summary, testing requirements, stakeholder approvals
-- **Follow-up Actions:** Document assessment results in risk register
+### Step 2: Problem Discovery Deep-Dive
 
-*Note: For detailed risk assessment methodology, see `docs/risk-assessment-framework.md`*
+Once you understand the general area, dig deeper with targeted questions:
 
-## PRD Structure
+#### Understanding Impact
+```
+"Let's understand the impact:
 
+How often does this problem occur?
+□ Multiple times per day
+□ Daily
+□ Weekly
+□ Monthly or less
+
+Who is affected when this happens?
+□ Individual users
+□ Entire teams
+□ Customers/clients
+□ The whole organization
+
+What's the cost of NOT fixing this?
+□ Minor inconvenience
+□ Significant time waste
+□ Lost revenue
+□ Risk of major failure"
+```
+
+#### Understanding Context
+```
+"Tell me about the current situation:
+
+1. Walk me through what happens today, step by step
+2. Which step is the most painful/error-prone?
+3. What would you remove from this process if you could?
+4. What absolutely must stay the same?"
+```
+
+### Step 3: Scope Discovery (Adaptive)
+
+Based on the type of feature they're describing, choose the appropriate question set:
+
+#### For User-Facing Features
+```
+"Let's define the user experience:
+
+1. **User Journey** (in simple steps)
+   - User arrives at [where?] because [why?]
+   - User wants to [do what?]
+   - User expects to see/get [what outcome?]
+   - User knows it worked when [what happens?]
+
+2. **The Happy Path**
+   What does perfect look like? Describe the ideal flow.
+
+3. **Common Pitfalls**
+   What might users do wrong? What errors should we prevent?
+
+4. **Success Metric**
+   How will you know users are happy with this?"
+```
+
+#### For API/Backend Features
+```
+"Let's understand the technical requirements:
+
+1. **Trigger and Input**
+   - What initiates this process?
+   - What data/parameters are required?
+   - What format does it arrive in?
+
+2. **Processing**
+   - What transformations/calculations happen?
+   - What external systems are involved?
+   - What are the performance requirements?
+
+3. **Output and Storage**
+   - What gets returned to the caller?
+   - What gets stored permanently?
+   - Who else needs access to this data?"
+```
+
+#### For Internal Tools/Admin Features
+```
+"Let's map the workflow:
+
+1. **Current Process**
+   How is this done today? (even if manual/spreadsheet)
+
+2. **Users and Frequency**
+   - Who does this task?
+   - How often?
+   - How long does it take?
+
+3. **Improvement Goals**
+   - From [X minutes] to [Y minutes]?
+   - Eliminate which manual steps?
+   - Prevent which common errors?"
+```
+
+#### For Data/Analytics Features
+```
+"Let's understand the data needs:
+
+1. **Key Questions**
+   What questions are you trying to answer with this data?
+
+2. **Current Gaps**
+   What can't you see/measure today?
+
+3. **Decision Impact**
+   What decisions will this data drive?
+
+4. **Freshness Requirements**
+   How current does this data need to be?"
+```
+
+### Step 4: Requirement Prioritization
+
+Help them focus on what matters most:
+
+```
+"Let's prioritize using the MoSCoW method:
+
+Based on our discussion, here's what I'm hearing:
+
+**Must Have** (deal-breakers - without these, don't build)
+- [AI suggests 2-3 based on conversation]
+- [User confirms/adjusts]
+
+**Should Have** (important but could launch without)
+- [AI suggests 2-3 based on patterns]
+- [User confirms/adjusts]
+
+**Could Have** (nice to have if time permits)
+- [AI suggests 2-3 enhancements]
+- [User confirms/adjusts]
+
+**Won't Have** (explicitly out of scope for now)
+- [AI suggests based on complexity]
+- [User confirms/adjusts]
+
+Is this right? What would you adjust?"
+```
+
+### Step 5: Reality Check Questions
+
+Before moving forward, validate the scope:
+
+```
+"Quick reality check:
+
+1. **The Bare Minimum Test**
+   If we could only deliver ONE thing, what would it be?
+
+2. **The Time-to-Value Test**
+   What's the smallest version that would still be useful?
+
+3. **The Dependency Test**
+   Does this require any other work to be done first?
+
+4. **The Resource Test**
+   Do we have access to everything needed (data, APIs, designs)?"
+```
+
+### Step 6: Smart Risk Assessment (Contextual Only)
+
+Only assess risks relevant to what they're building:
+
+#### Automatic Risk Detection
+AI should detect and flag without asking:
+- Payment/financial data → **High Risk** (financial)
+- Authentication/authorization → **High Risk** (security)
+- Personal/user data → **High Risk** (privacy/compliance)
+- Public/customer-facing → **Medium Risk** (reputation)
+- Internal/admin only → **Low Risk** (contained impact)
+
+#### Contextual Risk Questions (Only Ask If Relevant)
+
+**If external users involved:**
+```
+"What happens if this feature completely fails?
+□ Users are mildly inconvenienced
+□ Users cannot complete important tasks
+□ Users cannot use the product at all
+□ We lose money or damage relationships"
+```
+
+**If data modifications detected:**
+```
+"If something goes wrong, can we undo the changes?
+□ Yes, easily reversible
+□ Yes, but requires effort
+□ Partially reversible
+□ No, changes are permanent"
+```
+
+**If external integrations detected:**
+```
+"What's our fallback if the external service is unavailable?
+□ We can wait/retry
+□ We have a manual workaround
+□ We need an automated fallback
+□ Everything breaks"
+```
+
+### Step 7: PRD Generation (Right-Sized)
+
+Based on complexity, generate appropriate documentation:
+
+#### Micro PRD (Complexity 1-2, <1 page)
+```markdown
+# [Feature Name] - Micro PRD
+
+## Problem
+[1-2 sentences on what problem this solves]
+
+## Solution
+[3-5 bullet points on the approach]
+
+## Success Criteria
+- [ ] [Specific measurable outcome]
+- [ ] [User can accomplish X]
+
+## Out of Scope
+- [What we're explicitly NOT doing]
+```
+
+#### Standard PRD (Complexity 3-4, 2-3 pages)
+```markdown
+# [Feature Name] - Product Requirements Document
+
+## Problem Statement
+[Clear description of the problem and its impact]
+
+## User Stories
+- As a [user type], I want to [action] so that [benefit]
+- As a [user type], I want to [action] so that [benefit]
+
+## Functional Requirements
+### Must Have
+- [Requirement with acceptance criteria]
+- [Requirement with acceptance criteria]
+
+### Should Have
+- [Requirement with acceptance criteria]
+
+## Success Metrics
+- [Measurable outcome with target]
+- [Measurable outcome with target]
+
+## Risks and Mitigations
+- **Risk:** [Description] → **Mitigation:** [Approach]
+
+## Out of Scope
+- [Explicitly excluded items]
+```
+
+#### Full PRD (Complexity 5+, Complete Document)
 ```markdown
 # [Feature Name] - Product Requirements Document
 
@@ -98,45 +335,18 @@ For each major feature requiring risk assessment:
 ## 5. Non-Functional Requirements
 [Performance, security, accessibility requirements]
 
-## 6. Risk Assessment ("All Roads to Rome" Approach)
-
-### 6.1 Initial Risk Screening
-[Preliminary risk assessment for all major features]
-
-### 6.2 Cross-Functional Risk Workshop Planning
-[Required participants, schedule, and deliverables]
-
-### 6.3 User Impact Assessment
+## 6. Risk Assessment
+### User Impact Assessment
 [Frequency of use, affected users, user-facing impact analysis]
 
-### 6.4 Technical Complexity Assessment
+### Technical Complexity Assessment
 [Algorithm complexity, dependencies, software maturity analysis]
 
-### 6.5 Process Complexity Assessment
-[Logical steps, process layers, integration points]
-
-### 6.6 Data and Impact Assessment
-[Data volume, expected defect rate assessment]
-
-### 6.7 Legal and Compliance Assessment
-[Regulatory requirements, legal impact, data privacy analysis]
-
-### 6.8 Risk Level Determination
+### Risk Level Determination
 [Risk levels for each major feature with justification]
 
-### 6.9 Risk Mitigation Strategies
+### Risk Mitigation Strategies
 [Specific mitigation strategies for identified risks]
-
-## 7. Cross-Functional Stakeholder Requirements
-
-### 7.1 Required Participants
-[List of required stakeholders for risk assessment]
-
-### 7.2 Approval Process
-[Required sign-offs and approval workflow]
-
-### 7.3 Communication Plan
-[How risk assessment results will be communicated]
 
 ## 7. Acceptance Criteria
 [Specific criteria for feature completion]
@@ -145,99 +355,190 @@ For each major feature requiring risk assessment:
 [Explicitly list what will NOT be included]
 
 ## 9. Testing Requirements (Risk-Based)
-[Testing requirements based on risk levels - see docs/testing-guidelines.md]
+[Testing requirements based on risk levels]
 
 ## 10. Quality Gates and Evidence Collection
 [Quality gates based on risk levels and required evidence]
 ```
 
-## Usage Examples
+## Adaptive Questioning Techniques
 
-### Simple Example
+### For Different User Types
+
+#### Non-Technical Users
+- Use analogies: "Think of it like..."
+- Avoid jargon: "users" not "end-users", "save" not "persist"
+- Focus on outcomes: "What should happen when..."
+- Draw from familiar experiences: "Like Amazon does with..."
+
+#### Technical Users
+- Dive into implementation details when relevant
+- Discuss architectural implications
+- Talk about performance and scale
+- Reference technical patterns they'd know
+
+#### Business Stakeholders
+- Focus on value and ROI
+- Discuss metrics and KPIs
+- Address competitive advantages
+- Consider market timing
+
+### Discovery Techniques
+
+#### The "5 Whys" Approach
 ```
-User: "I need a user login page"
-
-AI: I'll help you create a PRD for the user login page. Let me ask some clarifying questions:
-
-A. Problem/Goal: What problem does this login page solve?
-1. Users can't access protected resources
-2. Current login is confusing
-3. Need to replace basic authentication
-4. Other (please specify)
-
-B. Target User: Who will use this login page?
-1. General public users
-2. Business/enterprise users
-3. Internal team members
-4. Multiple user types (please specify)
-```
-
-### Complex Example
-```
-User: "I need a comprehensive user authentication system with social login, MFA, and SSO"
-
-AI: This is a complex feature that requires detailed planning. Let me gather comprehensive requirements:
-
-A. Problem/Goal: What authentication problems are you solving?
-1. Replace existing basic authentication
-2. Support enterprise security requirements
-3. Improve user experience with multiple options
-4. Comply with security standards
-5. Other (please specify)
-
-B. Target User: Who needs authentication?
-1. General public users
-2. Business/enterprise users
-3. Internal team members
-4. Multiple user types (please specify)
-
-C. Authentication Methods: Which methods do you need?
-1. Email/password
-2. Social login (Google, GitHub, etc.)
-3. Multi-factor authentication
-4. Single Sign-On (SSO)
-5. All of the above
-
-D. Risk Assessment:
-For each authentication method, please rate:
-- Frequency of Use (1-5): How often will users authenticate?
-- Complexity (1-5): How complex is the implementation?
-- Dependencies (1-5): How many external services?
-- User Impact (1-5): What's the impact if authentication fails?
-
-E. Security Requirements: What security level is needed?
-1. Basic security (password hashing)
-2. Enhanced security (rate limiting, session management)
-3. Enterprise security (audit logs, compliance)
-4. High-security (advanced encryption, monitoring)
+User: "We need a notification system"
+AI: "Why do you need notifications?"
+User: "So users know when things happen"
+AI: "Why do they need to know immediately?"
+User: "Because they're waiting for approvals"
+AI: "Why are they waiting?"
+User: "Because approvals are slow"
+AI: "Why are approvals slow?"
+User: "Because approvers don't know they have pending items"
+→ Real problem: Approval visibility, not just notifications
 ```
 
-## Best Practices
+#### The "Day in the Life" Approach
+```
+"Walk me through a typical day:
+- When does this problem usually come up?
+- Who encounters it first?
+- What do they try to do?
+- Where do they get stuck?
+- How do they work around it?"
+```
 
-### Before Writing PRD
-- Ensure you understand the core problem and user needs
-- Identify all stakeholders and their requirements
-- Consider technical constraints and limitations
-- Think about edge cases and error scenarios
+#### The "Magic Wand" Approach
+```
+"If you had a magic wand and could make this perfect:
+- What would disappear?
+- What would be automatic?
+- What would users never have to think about?
+- What would just work?"
+```
 
-### During PRD Creation
-- Use clear, concise language
-- Include specific, measurable acceptance criteria
-- Consider both functional and non-functional requirements
-- Document assumptions and constraints
+## Response Patterns for AI
 
-### After PRD Creation
-- Review with stakeholders for validation
-- Ensure risk assessment is complete
-- Verify that requirements are testable
-- Get approval before proceeding to task generation
+### When Users Are Stuck
+```
+"I'm not sure what I need exactly..."
+
+AI: "No problem! Let's start with what's bothering you. Tell me about the last time you thought 'I wish this was easier' or 'Why doesn't this just work?'"
+```
+
+### When Users Are Too Detailed
+```
+"I need a form with 47 fields and 12 validation rules and..."
+
+AI: "I can see you've thought this through! Before we dive into all the details, help me understand: What job does this form do? Who fills it out and why?"
+```
+
+### When Users Give Solutions Without Context
+```
+"We need machine learning for this"
+
+AI: "Interesting! What problem would machine learning solve that simpler approaches couldn't? What would success look like?"
+```
+
+## Quality Checklist for PRD Creation
+
+Before finalizing the PRD, ensure:
+
+### Problem Understanding
+- [ ] The problem is clearly stated in user/business terms
+- [ ] The impact of not solving it is understood
+- [ ] The users affected are identified
+- [ ] Success metrics are defined
+
+### Solution Clarity
+- [ ] Requirements are specific and testable
+- [ ] Priorities are clear (must/should/could)
+- [ ] Dependencies are identified
+- [ ] Scope boundaries are explicit
+
+### Risk Awareness
+- [ ] Relevant risks are identified (not all possible risks)
+- [ ] Mitigation strategies exist for high risks
+- [ ] Rollback plan exists if applicable
+
+### Completeness
+- [ ] User stories cover main use cases
+- [ ] Edge cases are considered
+- [ ] Non-functional requirements addressed (if relevant)
+- [ ] Out of scope items are listed
+
+## Templates for Common Scenarios
+
+### Quick Feature Addition
+```
+"I need to add [feature] to [existing system]"
+
+Questions to ask:
+1. Who's been asking for this?
+2. What can't they do without it?
+3. How are they managing today?
+4. What's the minimum useful version?
+```
+
+### Bug That Needs Requirements
+```
+"Users are complaining about [issue]"
+
+Questions to ask:
+1. When did this start happening?
+2. What exactly are users seeing vs expecting?
+3. How many users are affected?
+4. What's the workaround they're using?
+5. What's the correct behavior?
+```
+
+### Performance Improvement
+```
+"[System] is too slow"
+
+Questions to ask:
+1. What specific operation is slow?
+2. How long does it take vs expectations?
+3. When did it become noticeably slow?
+4. How many users/operations are affected?
+5. What's acceptable performance?
+```
+
+### Integration Request
+```
+"We need to integrate with [external system]"
+
+Questions to ask:
+1. What data/functionality do we need from them?
+2. What will we send to them?
+3. How critical is this integration?
+4. What happens if it's unavailable?
+5. Who owns the relationship?
+```
+
+## Final Reminders for AI Agents
+
+1. **Listen for emotions**: Frustration reveals pain points
+2. **Watch for assumptions**: "Obviously..." means it's not obvious
+3. **Seek specifics**: "Sometimes" → "How often exactly?"
+4. **Validate understanding**: "Let me play this back..."
+5. **Start simple**: Can always add complexity later
+6. **Document decisions**: Why we're NOT doing something is valuable
+7. **Get examples**: Stories are better than specifications
+8. **Identify success**: How will they know it's working?
 
 ## File Naming Convention
 
 Save PRDs in the `/tasks` directory using this format:
-- `0001-prd-[feature-name].md`
-- `0002-prd-[feature-name].md`
-- etc. (zero-padded 4-digit sequence)
+- Simple features: `PRD-[YYYY-MM-DD]-[feature-name].md`
+- Complex features: `PRD-[number]-[feature-name].md`
+- Bug fixes: `PRD-FIX-[issue-number]-[description].md`
+
+Example:
+- `PRD-2024-03-15-user-notifications.md`
+- `PRD-0001-authentication-system.md`
+- `PRD-FIX-1234-login-timeout.md`
 
 ## Integration with Workflow
 
@@ -246,13 +547,7 @@ This PRD creation step feeds directly into:
 2. **Risk Assessment** - Determines testing requirements and quality gates
 3. **Implementation Planning** - Guides development approach and timeline
 
-## Quality Checklist
+## Version History
 
-Before saving the PRD, ensure:
-- [ ] All clarifying questions have been asked and answered
-- [ ] User stories are clear and actionable
-- [ ] Acceptance criteria are specific and measurable
-- [ ] Risk assessment is complete
-- [ ] Scope and boundaries are clearly defined
-- [ ] File follows naming convention
-- [ ] PRD is saved in `/tasks` directory
+- **v2.0 (2025-10-31):** Discovery-driven approach with adaptive questioning
+- **v1.0 (Original):** Static question-based PRD creation with full risk assessment

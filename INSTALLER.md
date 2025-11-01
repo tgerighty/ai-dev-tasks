@@ -1,459 +1,350 @@
-# AI Dev Tasks Installer Guide
+# AI Dev Tasks - Installation Guide
 
-## Overview
+**Version**: 2.0.0
+**Last Updated**: 2025-10-31
 
-The AI Dev Tasks installer provides a simple, automated way to set up the AI Dev Tasks workflow in any project directory. It copies all necessary files, creates appropriate directory structure, and generates helpful setup scripts.
+## Quick Installation
 
-## Quick Start
+### Option 1: Installation Script (Recommended)
 
-### Interactive Installation
+**Minimal Install** (core workflow files only):
 ```bash
-# Clone the AI Dev Tasks repository
+# Clone the repository
 git clone https://github.com/snarktank/ai-dev-tasks.git
 cd ai-dev-tasks
 
-# Run installer (will prompt for installation location)
-./install.sh
+# Install to your project
+./install-to-project.sh /path/to/your/project
 ```
 
-### Installation with Options
+**Full Install** (includes docs and examples):
 ```bash
-# Install without .gitignore file creation (defaults to enabled)
-./install.sh --no-gitignore
-
-# Install without overwrite protection (defaults to enabled)
-./install.sh --no-overwrite
-
-# Dry run to see what would be installed
-./install.sh --dry-run --verbose
-
-# Show help and usage information
-./install.sh --help
+./install-to-project.sh /path/to/your/project --full
 ```
 
-## Installation Options
+**Install to current directory**:
+```bash
+./install-to-project.sh . --minimal
+```
 
-### Interactive Directory Selection
-- **Installation Location**: The installer will prompt you to specify where to install AI Dev Tasks files
-  - Supports absolute paths (e.g., `/home/user/my-project`)
-  - Supports relative paths (e.g., `./my-project`, `../workspace`)
-  - Shows directory contents if the location already exists
-  - Allows cancellation at any time by typing 'q'
-  - Provides confirmation before proceeding with installation
+### Option 2: Direct from GitHub
 
-### Options
-- `--gitignore`: Create a comprehensive .gitignore file for AI Dev Tasks projects (default: enabled)
-- `--no-gitignore`: Skip .gitignore file creation
-- `--overwrite`: Overwrite existing files in target directory (default: enabled)
-- `--no-overwrite`: Skip overwriting existing files (prevents accidental file loss)
-- `--dry-run`: Show what would be installed without actually installing
-- `--verbose`: Show detailed output during installation
-- `--help, -h`: Show help message and exit
+```bash
+curl -sSL https://raw.githubusercontent.com/snarktank/ai-dev-tasks/main/install-to-project.sh | bash -s /path/to/your/project
+```
 
-### Installation Prompts
-The installer will guide you through:
-1. **Location Selection**: Choose where to install AI Dev Tasks files
-2. **Directory Review**: See what exists in the selected location
-3. **Confirmation**: Confirm the installation location before proceeding
-4. **Installation**: Copy files and create setup structure
+### Option 3: Manual Copy
 
-## Files and Directories Installed
+Copy just the essentials:
+```bash
+# Create directory
+mkdir -p /path/to/your/project/ai-dev-tasks
 
-### Core Workflow Files
-- **`create-prd.md`**: Simplified PRD creation guide
-- **`generate-tasks.md`**: Task generation guide with risk assessment
-- **process-task-list.md`**: Implementation guide with testing protocols
-- **`README.md`**: Comprehensive usage guide
-- **`LICENSE`**: MIT license file
+# Copy core files
+cp create-prd.md generate-tasks.md process-task-list.md \
+   AGENTS.md context-template.md QUICK_REFERENCE.md \
+   /path/to/your/project/ai-dev-tasks/
 
-### Documentation Directory (`/docs`)
-- **`complexity-rubric.md`**: Task complexity scoring framework (1-10 scale)
-- **`risk-assessment-framework.md`**: Risk assessment protocols and quality gates
-- **testing-guidelines.md`**: Risk-based testing requirements
+# Create tasks directory
+mkdir -p /path/to/your/project/tasks
+```
 
-### Examples Directory (`/examples`)
-- **`workflow-integration-example.md`**: Complete end-to-end workflow demonstration
+## What Gets Installed
 
-### Generated Files
-- **`setup.sh`**: Automated setup script for the installed project
-- **`.gitignore`**: Comprehensive ignore patterns for AI development projects
+### Minimal Install (Default)
+```
+your-project/
+├── ai-dev-tasks/
+│   ├── create-prd.md          # PRD creation (v2.0)
+│   ├── generate-tasks.md      # Task generation (v2.0)
+│   ├── process-task-list.md   # Implementation (v2.1)
+│   ├── AGENTS.md              # Coding rules (v2.0)
+│   ├── context-template.md    # Context template
+│   ├── QUICK_REFERENCE.md     # Quick start guide
+│   └── README.md              # Integration guide
+└── tasks/                     # Your PRDs and task lists
+    └── README.md
+```
+
+### Full Install
+```
+your-project/
+├── ai-dev-tasks/
+│   ├── [all minimal files]
+│   ├── docs/                  # Full documentation
+│   ├── examples/              # Config examples
+│   ├── references/            # Code examples (if available)
+│   ├── README.md              # Full README
+│   └── WHATS_NEW_V2.md       # Migration guide
+└── tasks/
+```
+
+## Installation Features
+
+### Automatic Detection
+- **Claude Code**: Auto-creates slash commands if `.claude/` exists
+- **Directory structure**: Creates `/tasks` directory
+- **README files**: Generates helpful guides
+
+### Claude Code Integration
+
+If Claude Code is detected (`.claude` directory exists), the script creates:
+
+#### Custom Commands
+- `/create-prd` - Start PRD creation workflow
+- `/generate-tasks` - Generate tasks from PRD
+- `/process-tasks` - Begin implementation
+
+**Usage after installation:**
+1. Restart Claude Code: `/exit` then reopen
+2. Use commands: `/create-prd`, `/generate-tasks`, `/process-tasks`
+
+#### Manual Integration
+
+Add to your project's `CLAUDE.md`:
+```markdown
+# AI Dev Tasks
+When I request structured feature development:
+- Use /ai-dev-tasks/create-prd.md for requirements
+- Use /ai-dev-tasks/generate-tasks.md for task lists
+- Use /ai-dev-tasks/process-task-list.md for implementation
+```
+
+## Tool-Specific Usage
+
+### Cursor
+
+Reference files with `@` in chat:
+```
+@ai-dev-tasks/create-prd.md
+I want to build a notification system
+```
+
+### Claude Code
+
+Use custom commands:
+```
+/create-prd
+/generate-tasks
+/process-tasks
+```
+
+### Windsurf / Other Tools
+
+Reference according to your tool's syntax:
+```
+Use /ai-dev-tasks/create-prd.md
+Build a user authentication system
+```
 
 ## Usage Examples
 
-### Basic Setup
+### Complete Workflow
+
+**1. Create PRD:**
 ```bash
-# Clone and run interactive installer
-git clone https://github.com/snarktank/ai-dev-tasks.git
-cd ai-dev-tasks
-./install.sh
+# Cursor
+@ai-dev-tasks/create-prd.md
+I want to add dark mode to my app
 
-# The installer will prompt you for the installation location
-# For example, you might enter: ./my-project or /home/user/my-project
-
-# Run setup script in installed directory
-cd [your-chosen-directory]
-./setup.sh
+# Claude Code
+/create-prd
 ```
 
-### Custom Directory Setup
+**2. Generate Tasks:**
 ```bash
-# Install to existing project directory
-git clone https://github.com/snarktank/ai-dev-tasks.git
-cd ai-dev-tasks
-./install.sh
+# Cursor
+@ai-dev-tasks/generate-tasks.md @tasks/PRD-2025-10-31-dark-mode.md
 
-# When prompted, enter: ../my-project
-# The installer will show the directory contents and ask for confirmation
-
-# Navigate to your project
-cd ../my-project
-./setup.sh
+# Claude Code
+/generate-tasks
 ```
 
-### Development Setup
+**3. Implement:**
 ```bash
-# Install with verbose output for development setup
-git clone https://github.com/snarktank/ai-dev-tasks.git
-cd ai-dev-tasks
-./install.sh --verbose
+# Cursor
+@ai-dev-tasks/process-task-list.md @tasks/tasks-2025-10-31-dark-mode.md
+Start with task 1.1
 
-# When prompted, enter your desired directory (e.g., ./dev-project)
-# The installer will provide detailed information about the process
-
-# Run initial setup
-cd [your-chosen-directory]
-./setup.sh
+# Claude Code
+/process-tasks
 ```
 
-## Testing and Validation
+## Directory Organization
 
-### Dry Run Mode
+### Recommended Structure
+```
+your-project/
+├── ai-dev-tasks/           # Workflow files
+├── tasks/                  # Your PRDs and task lists
+│   ├── PRD-2025-10-31-dark-mode.md
+│   ├── tasks-2025-10-31-dark-mode.md
+│   ├── context-dark-mode.md (optional)
+│   └── completed/          # Archive completed work
+├── src/                    # Your source code
+└── .gitignore             # Generated suggestions
+```
+
+### Naming Conventions
+
+**PRDs:**
+- Simple: `PRD-YYYY-MM-DD-feature-name.md`
+- Complex: `PRD-0001-feature-name.md`
+
+**Tasks:**
+- Simple: `tasks-YYYY-MM-DD-feature-name.md`
+- Complex: `tasks-0001-feature-name.md`
+
+**Context (optional):**
+- `context-feature-name.md`
+
+## Updating
+
+To update to the latest version:
+
 ```bash
-# See what would be installed without actually installing
-./install.sh --dry-run --verbose
+# Backup your tasks first
+cp -r your-project/tasks your-project/tasks-backup
+
+# Remove old version
+rm -rf your-project/ai-dev-tasks
+
+# Install new version
+./install-to-project.sh your-project
+
+# Or with full docs
+./install-to-project.sh your-project --full
 ```
 
-### Verbose Installation
+## Uninstallation
+
+To remove AI Dev Tasks:
+
 ```bash
-# See detailed output during installation
-./install.sh --verbose
-# When prompted, enter your desired directory to see detailed installation process
-```
+# Remove workflow files
+rm -rf your-project/ai-dev-tasks
 
-### Overwrite Existing Files
-```bash
-# Replace existing files (use with caution)
-./install.sh --overwrite
-# When prompted, choose a directory that contains existing files
-```
+# Optionally remove tasks (your PRDs)
+rm -rf your-project/tasks
 
-### Interactive Testing
-```bash
-# Test the interactive prompts
-./install.sh --dry-run
-# This will show the prompt flow without actually installing files
-```
-
-## .gitignore Template
-
-The installer creates a comprehensive `.gitignore` file that includes:
-
-### AI Dev Tasks Specific Patterns
-```gitignore
-# Generated files
-tasks-*.md
-*-prd-*.md
-evidence/
-docs/generated-*.md
-
-# AI development artifacts
-.ai-dev-cache/
-.ai-dev-temp/
-.ai-dev-backup/
-```
-
-### Development Environment
-```gitignore
-# Node.js
-node_modules/
-*.log
-
-# Build outputs
-dist/
-build/
-coverage/
-.nyc_output/
-```
-
-### IDE and Editor Files
-```gitignore
-# IDE files
-.vscode/
-.idea/
-*.swp
-*~
-
-# OS files
-.DS_Store
-Thumbs.db
-```
-
-## Setup Script Features
-
-The generated `setup.sh` script provides:
-
-### Environment Detection
-- Checks for AI tools (Cursor, Claude Code)
-- Validates Node.js installation
-- Checks Git availability
-
-### Directory Structure
-- Creates `tasks/` directory for task lists
-- Creates `docs/` directory for documentation
-- Creates `evidence/` directory for testing artifacts
-
-### Quick Start Guidance
-- Provides next steps for AI development
-- References documentation locations
-- Includes tips for successful workflow usage
-
-## Advanced Usage
-
-### Multiple Project Setup
-```bash
-# Install to multiple projects (interactive for each)
-./install.sh
-# When prompted, enter: ./project-a
-
-./install.sh  
-# When prompted, enter: ./project-b
-
-./install.sh
-# When prompted, enter: ./project-c
-```
-
-### CI/CD Integration
-```bash
-# For CI/CD, use the dry-run mode to check installations
-./install.sh --dry-run --verbose
-
-# Or use non-interactive installation by piping responses
-echo "./project" | ./install.sh --gitignore
-```
-
-### Remote Installation
-```bash
-# Install from remote repository (interactive)
-curl -L https://raw.githubusercontent.com/snarktank/ai-dev-tasks/main/install.sh | bash
-
-# Or save and run locally
-curl -L https://raw.githubusercontent.com/snarktank/ai-dev-tasks/main/install.sh -o install.sh
-chmod +x install.sh
-./install.sh
+# Remove Claude Code commands (if applicable)
+rm -rf your-project/.claude/commands/create-prd.md
+rm -rf your-project/.claude/commands/generate-tasks.md
+rm -rf your-project/.claude/commands/process-tasks.md
 ```
 
 ## Troubleshooting
 
-### Permission Issues
-```bash
-# Make installer executable
-chmod +x install.sh
+### Script Won't Run
 
-# Or run with bash directly
-bash install.sh ./my-project
+```bash
+# Make executable
+chmod +x install-to-project.sh
+
+# Or run with bash
+bash install-to-project.sh /path/to/project
 ```
 
-### Directory Exists Error
+### Claude Code Commands Not Working
+
+1. Completely restart Claude Code (`/exit`)
+2. Check `.claude/commands/` directory exists
+3. Verify command files were created
+4. Try running commands with `/`
+
+### Files Not Found
+
 ```bash
-# The installer will show directory contents and ask for confirmation
-./install.sh
-
-# When prompted, if the directory exists, you can:
-# - Type 'y' to continue and overwrite files (default behavior)
-# - Type 'n' to choose a different directory
-# - Type 'q' to cancel installation
-
-# Or prevent overwriting with --no-overwrite flag
-./install.sh --no-overwrite
-```
-
-### File Not Found Errors
-```bash
-# Ensure you're running from the correct directory
-ls -la
+# Ensure you're in the ai-dev-tasks directory
 pwd
-
-# Check for required files
 ls -la create-prd.md generate-tasks.md process-task-list.md
-```
 
-### Git Integration
-```bash
-# Initialize git repository after installation
-cd my-project
-git init
-git add .
-git commit -m "feat: Add AI Dev Tasks workflow"
-
-# Create feature branch for development
-git checkout -b feature/user-authentication
-```
-
-## Best Practices
-
-### Directory Organization
-```bash
-# Recommended project structure
-my-project/
-├── ai-dev-tasks/          # AI Dev Tasks workflow files
-├── tasks/                  # Generated PRDs and task lists
-├── docs/                   # Generated documentation
-├── examples/               # Examples and demos
-├── src/                    # Your project source code
-└── .gitignore             # Git ignore patterns
-```
-
-### Team Collaboration
-```bash
-# Install for team environments (gitignore and overwrite are enabled by default)
-./install.sh ./team-project
-
-# Share setup instructions with team
-echo "Run ./setup.sh to configure your environment"
-```
-
-### Version Control
-```bash
-# Track AI Dev Tasks version in your project
-git add ai-dev-tasks/
-git commit -m "feat: Add AI Dev Tasks v1.0.0"
-
-# Update to latest version (overwrite is enabled by default)
-git pull origin main
-./install.sh .
-```
-
-### Backup and Restore
-```bash
-# Backup current installation
-cp -r ai-dev-tasks/ backup-ai-dev-tasks-$(date +%Y%m%d)
-
-# Restore from backup
-cp -r backup-ai-dev-tasks-20251015/ ./ai-dev-tasks
-```
-
-## Integration Examples
-
-### Next.js Project
-```bash
-./install.sh
-# When prompted, enter: ./my-nextjs-app
-cd my-nextjs-app
-./setup.sh
-```
-
-### React Project
-```bash
-./install.sh
-# When prompted, enter: ./my-react-app
-cd my-react-app
-./setup.sh
-```
-
-### TypeScript Project
-```bash
-./install.sh
-# When prompted, enter: ./my-ts-project
-cd my-ts-project
-./setup.sh
-```
-
-### Full-Stack Application
-```bash
-# Create project structure first
-mkdir -p fullstack-app/frontend
-mkdir -p fullstack-app/backend
-mkdir -p fullstack-app/docs
-
-# Install for frontend
-./install.sh
-# When prompted, enter: ./fullstack-app/frontend
-
-# Install for backend
-./install.sh
-# When prompted, enter: ./fullstack-app/backend
-
-# Install for docs
-./install.sh
-# When prompted, enter: ./fullstack-app/docs
-
-# Or install all at once in root directory
-./install.sh
-# When prompted, enter: ./fullstack-app
-```
-
-## Security Considerations
-
-### File Permissions
-- Installer script is executable by default
-- Setup script permissions are set automatically
-- All files maintain original permissions
-
-### Safe Installation
-- Dry run mode available for testing
-- Overwrite protection prevents accidental file loss
-- Comprehensive .gitignore prevents committing sensitive files
-
-### Validation
-- Checks for required files before installation
-- Validates directory structure
-- Provides clear error messages for troubleshooting
-
-## Contributing
-
-To contribute to the installer:
-
-1. **Test thoroughly**: Use dry-run mode before changes
-2. **Documentation**: Update this file for new features
-3. **Version control**: Commit changes with clear descriptions
-4. **Cross-platform**: Test on different operating systems
-
-### Development Setup
-```bash
-# Clone repository
-git clone https://github.com/snarktank/ai-dev-tasks.git
+# If cloned from git
 cd ai-dev-tasks
+./install-to-project.sh /path/to/project
+```
 
-# Test installer locally
-./install.sh --dry-run --verbose
+### Permission Denied
 
-# Test interactive prompts
-echo "/tmp/test" | ./install.sh --dry-run
+```bash
+# Fix permissions
+chmod +x install-to-project.sh
 
-# Test actual installation
-echo "/tmp/test" | ./install.sh --gitignore
+# Or use sudo if needed (not recommended)
+sudo ./install-to-project.sh /path/to/project
+```
 
-# Verify installation
-ls -la /tmp/test
+## Advanced Usage
+
+### Multiple Projects
+
+```bash
+# Install to multiple projects
+./install-to-project.sh ~/projects/app1
+./install-to-project.sh ~/projects/app2 --full
+./install-to-project.sh ~/projects/app3
+```
+
+### Custom Installation Location
+
+```bash
+# Install with custom name
+mkdir -p your-project/custom-ai-tools
+# Then manually copy files to custom location
+```
+
+### CI/CD Integration
+
+```bash
+# In your CI script
+curl -sSL https://raw.githubusercontent.com/snarktank/ai-dev-tasks/main/install-to-project.sh | \
+  bash -s /workspace/project --minimal
+```
+
+## Version Control
+
+### What to Commit
+
+**Commit:**
+- `/ai-dev-tasks/` - The workflow files
+- `/tasks/*.md` - Your PRDs and task lists (optional)
+- `.claude/commands/` - Custom commands (if using Claude Code)
+
+**Don't Commit:**
+- Temporary files
+- Generated evidence
+- Cache directories
+
+### .gitignore Suggestions
+
+Add to your `.gitignore`:
+```gitignore
+# AI Dev Tasks - Optional exclusions
+# Uncomment if you don't want to track PRDs/tasks
+# /tasks/*.md
+# !/tasks/README.md
+
+# Never commit these
+.ai-dev-cache/
+.ai-dev-temp/
+evidence/
 ```
 
 ## Support
 
-For issues, questions, or contributions:
+- **Quick Reference**: See `QUICK_REFERENCE.md` in your project
+- **Full Docs**: See `README.md` in ai-dev-tasks folder
+- **Migration Guide**: `WHATS_NEW_V2.md` for v1 to v2 changes
+- **Issues**: https://github.com/snarktank/ai-dev-tasks/issues
 
-1. **Check the documentation**: Read this file and related docs
-2. **Test with dry-run**: Use `--dry-run` flag to test changes
-3. **Report issues**: Include operating system and error messages
-4. **Request features**: Open an issue with detailed requirements
+## Best Practices
 
-## Version History
+1. **Start minimal**: Use `--minimal` until you need full docs
+2. **Version control**: Commit the ai-dev-tasks folder
+3. **Archive completed work**: Move finished PRDs to `/tasks/completed`
+4. **Keep it updated**: Check for updates periodically
+5. **Use the tools**: Reference files in your AI tool for best results
 
-- **v1.0.0**: Initial installer with basic functionality
-- **v1.1.0**: Added risk-based documentation structure
-- **v1.2.0**: Enhanced .gitignore template and setup script
-- **v1.3.0**: Added comprehensive testing and validation
-- **v1.4.0**: Added interactive directory selection with enhanced user experience
+---
 
-## License
-
-This installer is part of the AI Dev Tasks project and follows the MIT License.
+*AI Dev Tasks v2 - Simple, fast, effective*

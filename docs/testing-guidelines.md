@@ -5,30 +5,50 @@ This document provides comprehensive testing guidelines for AI-assisted developm
 
 ## Testing Philosophy
 
+### AI-Driven Development Testing
+**With AI development tools, comprehensive testing becomes not just feasible but essential:**
+
+- **Unit test for every task**: AI tools enable efficient test creation for every single coding task
+- **Tests document behavior**: Each test serves as living documentation of intended functionality
+- **Micro-task testing**: Every small change should have corresponding test coverage
+- **Test-first mindset**: Write tests alongside or before implementation
+- **Automated test generation**: Leverage AI to create comprehensive test suites efficiently
+
 ### Testing-as-Code Development
 - **Write tests alongside code**: Create test files as you implement functionality
-- **Test-first approach**: Write failing tests first, then make them pass (TDD)
-- **Risk-based testing**: Apply appropriate testing levels based on task risk assessment
-- **Evidence collection**: Generate and archive all testing evidence for audit and review
+- **Quality-first approach**: Focus tests on critical paths and business risks, not coverage targets
+- **Risk-proportional testing**: Match testing effort to actual risk assessment, not one-size-fits-all
+- **Evidence collection**: Generate focused evidence that proves critical functionality works
 
 ### Core Principles
-1. **Every new feature requires tests**
-2. **Bug fixes require regression tests**
-3. **Tests must be deterministic and independent**
-4. **Maintain appropriate coverage thresholds**
-5. **Validate functionality through automated testing**
+1. **Test what matters most**: Focus on high-impact functionality and failure scenarios
+2. **Risk-based test selection**: Choose test types based on actual risk assessment
+3. **Each test tells a story**: Tests should validate specific business risks or user scenarios
+4. **Quality gates over coverage percentages**: Use scenario-based success metrics
+5. **Efficiency over volume**: Right tests, not just more tests
+6. **Every task gets a test**: In AI-driven development, create unit tests for every coding task
 
 ## Risk-Based Testing Requirements
 
 ### Critical Risk Tasks (4.5-5.0)
 
+#### Quality-First Testing Strategy
+**Focus:** Proving correctness and resilience under all conditions, not achieving coverage numbers
+
 #### Testing Types Required
-- **Unit Tests:** 95%+ coverage of business logic
-- **Integration Tests:** All external integrations
-- **E2E Tests:** Complete user workflows
-- **Security Tests:** Vulnerability scanning and penetration testing
-- **Performance Tests:** Load testing and benchmarking
-- **Accessibility Tests:** WCAG AA compliance validation
+- **Unit Tests:** Exhaustive testing of all business logic, edge cases, and failure modes
+- **Integration Tests:** All external systems with failure simulation and error handling validation
+- **E2E Tests:** Critical user journeys spanning entire system, including error scenarios
+- **Security Tests:** Comprehensive vulnerability assessment and penetration testing
+- **Performance Tests:** Load testing under realistic conditions and benchmarking
+- **Accessibility Tests:** Full WCAG AA compliance with assistive technology validation
+
+#### Success Metrics
+- **Critical Path Coverage:** All identified critical scenarios tested and passing
+- **Edge Case Handling:** All identified edge cases properly handled
+- **Failure Recovery:** System gracefully recovers from simulated failures
+- **Security Audit:** No critical or high-severity vulnerabilities
+- **Performance Benchmarks:** Meets all defined performance criteria under load
 
 #### Testing Protocols
 ```bash
@@ -51,46 +71,53 @@ npm run test:load
 
 ### High Risk Tasks (3.6-4.4) - Orange Path
 
-#### Testing Types Required
-- **Unit Tests:** 90%+ coverage of business logic with security tests
-- **Integration Tests:** API testing with external dependencies and edge cases
-- **E2E Tests:** Critical user journeys and error scenarios
-- **Performance Tests:** Load testing and benchmarking
-- **Security Tests:** Security validation and vulnerability scanning
+#### Quality-First Testing Strategy
+**Focus:** Ensuring primary feature works correctly and integrates well under all conditions
 
-#### Enhanced Testing Protocol
-- **Code Review:** Security and architectural review required
-- **Evidence Collection:** Test reports, coverage reports, performance benchmarks
-- **Quality Gates:** All tests must pass before marking task complete
-- **Stakeholder Review:** Product management and security team review required
+#### Testing Types Required
+- **Unit Tests:** Full coverage of new business logic and important edge cases
+- **Integration Tests:** Key integration points with success and failure scenario testing
+- **E2E Tests:** "Happy path" and most common error-path user scenarios
+- **Performance Tests:** Load testing under expected usage conditions
+- **Security Tests:** Authentication and authorization validation with vulnerability scanning
+
+#### Success Metrics
+- **Feature Validation:** Primary functionality works as specified
+- **Integration Success:** All key dependencies communicate correctly
+- **User Journey Completion:** Critical user paths tested and working
+- **Security Compliance:** No unauthorized access or data exposure
 
 ### Medium Risk Tasks (2.1-3.5) - Yellow Path
 
-#### Testing Types Required
-- **Unit Tests:** 80%+ coverage of business logic with basic security tests
-- **Integration Tests:** Core API testing with internal systems
-- **E2E Tests:** Key user journeys and happy path testing
-- **Security Tests:** Basic security validation
-- **Data Privacy Tests:** Basic data handling validation
+#### Quality-First Testing Strategy
+**Focus:** Validating core functionality of the change works correctly
 
-#### Enhanced Testing Protocol
-- **Code Review:** Standard code review with security considerations
-- **Evidence Collection:** Test reports and coverage reports
-- **Quality Gates:** All tests must pass before marking task complete
-- **Team Review:** Development team review required
+#### Testing Types Required
+- **Unit Tests:** Coverage of main business logic and positive cases
+- **Integration Tests:** Verify direct dependencies work as expected
+- **E2E Tests:** Key functionality validation through user interface
+- **Security Tests:** Input validation and basic authorization checks
+
+#### Success Metrics
+- **Core Functionality:** Primary feature works as specified
+- **Integration Validation:** Direct dependencies communicate correctly
+- **User Acceptance:** Feature is usable through interface
+- **Basic Security:** No unauthorized access or data exposure
 
 ### Low Risk Tasks (0.0-2.0) - Green Path
 
-#### Testing Types Required
-- **Unit Tests:** 70%+ coverage of core functionality
-- **Basic Security Tests:** Input validation and authorization checks
-- **Manual Validation:** Key functionality verification
+#### Quality-First Testing Strategy
+**Focus:** Confirming change doesn't break anything obvious and works as intended
 
-#### Enhanced Testing Protocol
-- **Code Review:** Lightweight code review
-- **Evidence Collection:** Basic test reports and coverage reports
-- **Quality Gates:** Tests must pass before marking task complete
-- **Team Review:** Peer review sufficient for low risk tasks
+#### Testing Types Required
+- **Unit Tests:** Focused tests for specific code that was changed
+- **Basic Validation:** Quick checks that change functions correctly
+- **Manual Testing:** Developer or QA engineer verification of functionality
+
+#### Success Metrics
+- **Functionality Verification:** Change works as specified
+- **No Obvious Regressions:** Existing features continue to work
+- **Basic Security:** No unauthorized access or data exposure
 
 ### Enhanced Risk-Based Testing Protocol Workflow
 
@@ -100,48 +127,48 @@ npm run test:load
 RISK_LEVEL=$(node scripts/get-risk-level.js "$TASK_FILE")
 echo "Configuring testing for risk level: $RISK_LEVEL"
 
-# Set up testing environment based on risk level
+# Set up quality-based testing environment based on risk level
 case "$RISK_LEVEL" in
   "critical")
-    # Critical risk testing setup
+    # Critical risk testing setup - comprehensive coverage
     npm install --save-dev @types/jest @types/supertest
     npm install --save-dev @testing-library/jest-dom @testing-library/user-event
     npm install --save-dev @testing-library/cypress
     npm install --save-dev axe-core
     
-    # Configure comprehensive testing
+    # Comprehensive testing for all critical scenarios
     npm install --save-dev @typescript-eslint/eslint-plugin
     npm install --save-dev eslint-plugin-jest
     
-    # Performance and security tools
+    # Performance and security tools for thorough validation
     npm install --save-dev artillery lighthouse-ci
     npm install --save-dev axe-core
     
     ;;
   "high")
-    # High risk testing setup
+    # High risk testing setup - focused on critical paths
     npm install --save-dev @types/jest @types/supertest
     npm install --save-dev @testing-library/jest-dom @testing-library/user-event
     npm install --save-dev cypress
     
-    # Performance and security tools
+    # Performance tools for expected usage conditions
     npm install --save-dev artillery
     
     ;;
   "medium")
-    # Medium risk testing setup
+    # Medium risk testing setup - core functionality focus
     npm install --save-dev @types/jest @types/supertest
     npm install --save-dev @testing-library/jest-dom
     
-    # Basic security tools
+    # Basic validation tools
     npm install --save-dev eslint-plugin-jest
     
     ;;
   "low")
-    # Low risk testing setup
+    # Low risk testing setup - targeted change validation
     npm install --save-dev @types/jest @types/supertest
     
-    # Basic linting
+    # Minimal testing overhead
     npm install --save-dev eslint-plugin-jest
     
     ;;
@@ -656,6 +683,200 @@ describe('Utility Functions - Low Risk', () => {
 #### Evidence Collection
 - **Coverage Reports:** 70%+ coverage
 - **Basic Validation:** Manual verification
+
+## Test Organization and Security Scanning
+
+### Critical: Test Folder Structure
+**All tests MUST be organized in dedicated test folders to exclude from security scanning:**
+
+#### Standard Test Folder Patterns
+```
+project-root/
+├── src/
+│   ├── components/
+│   │   └── Button.tsx
+│   └── utils/
+│       └── formatters.ts
+├── tests/              # Unit tests
+│   ├── unit/
+│   │   ├── components/
+│   │   │   └── Button.test.tsx
+│   │   └── utils/
+│   │       └── formatters.test.ts
+│   ├── integration/
+│   │   └── api/
+│   │       └── users.integration.test.ts
+│   └── e2e/
+│       └── authentication.e2e.test.ts
+├── __tests__/          # Alternative Jest pattern
+│   ├── unit/
+│   └── integration/
+└── test/               # Alternative pattern
+    ├── fixtures/
+    └── helpers/
+```
+
+#### Framework-Specific Patterns
+
+**Jest/Vitest:**
+- Primary folder: `tests/` or `__tests__/`
+- Test files: `*.test.ts`, `*.test.tsx`, `*.spec.ts`
+- Location: Root-level test folders, NOT co-located with source
+
+**Playwright/Cypress:**
+- Primary folder: `tests/e2e/` or `e2e/`
+- Test files: `*.e2e.test.ts`, `*.spec.ts`
+- Location: Dedicated E2E test directory
+
+**React Testing Library:**
+- Primary folder: `tests/unit/` or `tests/integration/`
+- Test files: `*.test.tsx`, `*.test.ts`
+- Location: Organized by component/feature structure
+
+### Excluding Tests from Security Scans
+
+#### Why Exclude Test Folders?
+1. **False positives**: Test code often contains mock credentials, test data, and intentional vulnerabilities
+2. **Performance**: Reduces scan time and resource usage
+3. **Focus**: Security tools should focus on production code, not test fixtures
+4. **Noise reduction**: Eliminates irrelevant security warnings from test code
+
+#### Configuration for Security Tools
+
+**Snyk Configuration (.snyk):**
+```yaml
+# Snyk configuration
+exclude:
+  # Test directories
+  - tests/**
+  - __tests__/**
+  - test/**
+  - e2e/**
+  - cypress/**
+  
+  # Test files
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+  - "**/*.e2e.test.ts"
+  
+  # Test fixtures and mocks
+  - "**/fixtures/**"
+  - "**/mocks/**"
+  - "**/__mocks__/**"
+```
+
+**SonarCloud Configuration (sonar-project.properties):**
+```properties
+# SonarCloud exclusions
+sonar.exclusions=\
+  tests/**,\
+  __tests__/**,\
+  test/**,\
+  e2e/**,\
+  cypress/**,\
+  **/*.test.ts,\
+  **/*.test.tsx,\
+  **/*.spec.ts,\
+  **/*.spec.tsx,\
+  **/*.e2e.test.ts,\
+  **/fixtures/**,\
+  **/mocks/**,\
+  **/__mocks__/**
+
+# Coverage exclusions
+sonar.coverage.exclusions=\
+  tests/**,\
+  __tests__/**,\
+  test/**
+```
+
+**GitHub Advanced Security (CodeQL):**
+```yaml
+# .github/codeql/codeql-config.yml
+name: "CodeQL Configuration"
+
+paths-ignore:
+  - "tests/**"
+  - "__tests__/**"
+  - "test/**"
+  - "e2e/**"
+  - "cypress/**"
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.spec.ts"
+  - "**/*.e2e.test.ts"
+  - "**/fixtures/**"
+  - "**/mocks/**"
+```
+
+**GitLab Security Scanning (.gitlab-ci.yml):**
+```yaml
+sast:
+  variables:
+    SAST_EXCLUDED_PATHS: "tests/,__tests__/,test/,e2e/,cypress/,spec/,**/*.test.ts,**/*.spec.ts"
+
+dependency_scanning:
+  variables:
+    DS_EXCLUDED_PATHS: "tests/,__tests__/,test/,e2e/,cypress/"
+```
+
+**ESLint Configuration (.eslintrc.json):**
+```json
+{
+  "ignorePatterns": [
+    "tests/**",
+    "__tests__/**",
+    "test/**",
+    "e2e/**",
+    "cypress/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts"
+  ]
+}
+```
+
+#### Git Ignore Considerations
+**DO NOT** add test folders to `.gitignore`:
+- Tests should be version controlled
+- Security scan exclusions are separate from git tracking
+- Configure security tools directly, not via `.gitignore`
+
+#### Test Organization Checklist
+- [ ] All tests are in dedicated test folders (`tests/`, `__tests__/`, `test/`, `e2e/`)
+- [ ] No test files co-located with source code in `src/`
+- [ ] Test files follow naming convention (`*.test.ts`, `*.spec.ts`)
+- [ ] Security scanning tools configured to exclude test folders
+- [ ] `.snyk` file includes test exclusions
+- [ ] `sonar-project.properties` includes test exclusions
+- [ ] CI/CD pipelines configured to skip security scans on test folders
+- [ ] Tests are committed to version control
+- [ ] Test fixtures and mocks are in separate directories
+
+### Verification Commands
+
+**Verify test organization:**
+```bash
+# Find all test files
+find . -name "*.test.ts" -o -name "*.spec.ts" -o -name "*.e2e.test.ts"
+
+# Verify tests are in test folders
+find tests __tests__ test e2e -name "*.test.ts" -o -name "*.spec.ts"
+
+# Check for test files in src/ (should return empty)
+find src -name "*.test.ts" -o -name "*.spec.ts"
+```
+
+**Verify security scan exclusions:**
+```bash
+# Check Snyk exclusions
+snyk test --exclude=tests/,__tests__/,test/
+
+# Check SonarCloud exclusions
+sonar-scanner -Dsonar.exclusions="tests/**,__tests__/**,test/**"
+```
 
 ## Testing Best Practices
 

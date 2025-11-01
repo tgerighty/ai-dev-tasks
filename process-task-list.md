@@ -1,705 +1,453 @@
-# Rule: Processing Task Lists with Risk-Based Implementation
+# Processing Task Lists - Focused Micro-Task Approach
+
+**Version:** 2.1
+**Last Updated:** 2025-10-31
+**Previous Version:** Archived in `/archive/process-task-list-v1.0-20251031.md`
 
 ## Goal
-Guide an AI assistant in systematically implementing tasks from a generated task list, with comprehensive risk-based protocols, evidence collection, and progress tracking.
+Guide AI assistants in implementing tasks through focused micro-tasks, ensuring precise, surgical changes with minimal context to prevent errors and maintain quality.
 
-## Process Overview
-1. **Load Task List:** Read and analyze the task list structure
-2. **Assess Risk:** Determine highest risk level and setup appropriate protocols
-3. **Implement Sequentially:** Execute one task at a time with micro-task grinding
-4. **Test Thoroughly:** Apply risk-based testing requirements within micro-tasks
-5. **Collect Evidence:** Gather required testing evidence from all micro-tasks
-6. **Track Progress:** Update task completion status and seek user confirmation
+## Core Philosophy
+- **Micro-task precision** - Break everything into small, focused units
+- **One file per task** - Each micro-task touches one file when possible
+- **Minimal context** - Small context prevents drift and errors
+- **Surgical changes** - Specific, targeted modifications
+- **Quality through focus** - Better results from constrained scope
 
-**NEW: Micro-Task Grinding Approach**
-- **Grind Through:** Complete ALL micro-task work (breakdown, delegation, testing, validation) before user interaction
-- **Batch Processing:** Split → Execute → Test → Validate → THEN ask for confirmation
-- **mark as done:** mark in task list as done once validated test passes
-- **No Interruptions:** Only stop to ask user after full micro-task completion and testing
+## Why Micro-Tasks Matter
 
-## Documentation References
-- **Risk Assessment Framework:** Use `docs/risk-assessment-framework.md` for detailed protocols
-- **Testing Guidelines:** Follow `docs/testing-guidelines.md` for testing requirements
-- **Complexity Rubric:** Reference `docs/complexity-rubric.md` for task understanding
-- **Workflow Examples:** See `examples/workflow-integration-example.md` for complete implementation
+Micro-tasks are essential because:
+1. **Less sophisticated models need specificity** - Clear, narrow scope prevents confusion
+2. **Small context = better accuracy** - Models perform better with focused context
+3. **One task, one file** - Reduces chance of unintended side effects
+4. **Easier to validate** - Small changes are easier to test and verify
+5. **Prevents drift** - Constrained scope keeps models on track
 
-## Risk-Based Implementation Protocols
+## The Micro-Task Implementation Process
 
-### Quick Risk Assessment
-Before starting implementation, determine:
-- **Highest Risk Level:** Critical, High, Medium, or Low
-- **Testing Requirements:** Based on risk level (see docs/testing-guidelines.md)
-- **Evidence Collection:** Required evidence types for audit
-- **Quality Gates:** Validation checkpoints for completion
+### Step 1: Load and Analyze
 
-### Sequential Implementation Process (Updated - Micro-Task Grinding)
 ```
-Start Task → Break into Micro-Tasks → Delegate tdroids/agents → Execute in Parallel/Sequence → Integrate Results → Test End-to-End → Validate Quality Gates → Collect Evidence → Present to User for Confirmation → Commit → Next Task
+1. Load the task list
+2. Identify all tasks and their complexity
+3. Plan micro-task breakdown for EVERY task
+4. Map dependencies between micro-tasks
 ```
 
-**Key Rules:**
-- **One task at a time:** Complete current task before moving to next
-- **Micro-task grinding:** Complete ALL micro-task work before user interaction
-- **No interruptions during micro-task execution:** Continuous workflow through breakdown, delegation, testing, validation
-- **Batch confirmation:** Only ask user approval after complete micro-task implementation and testing
-- **Risk-aware testing:** Apply appropriate testing protocols within micro-task delegation
-- **Evidence collection:** Generate and archive all required evidence from all tools
-- **Quality gates:** Validate all requirements before presenting to user
+### Step 2: Universal Micro-Task Breakdown
 
-## Task Implementation Workflow
+**ALL tasks get broken into micro-tasks, regardless of complexity:**
 
-### 1. Pre-Implementation Setup
-```bash
-# Load task list
-TASK_FILE="tasks-[feature-name].md"
-
-# Validate task list structure
-node scripts/validate-task-list.js "$TASK_FILE"
-
-# Assess risk levels
-RISK_ANALYSIS=$(node scripts/analyze-risk-levels.js "$TASK_FILE")
-HIGHEST_RISK=$(echo "$RISK_ANALYSIS" | jq -r '.highest_risk')
-echo "Highest risk level: $HIGHEST_RISK"
+#### Simple Task (Complexity 1-2) → 2-3 Micro-tasks
+```
+Example: "Add dark mode toggle"
+├── Micro-task 1: Add toggle component to settings.tsx
+├── Micro-task 2: Connect toggle to theme context in theme.ts
+└── Micro-task 3: Add localStorage persistence in storage.ts
 ```
 
-### 2. Implementation Process (Updated - Micro-Task Grinding)
-For each task/subtask:
-
-**GRIND THROUGH APPROACH (Updated - Individual Micro-Task Quality Gates):**
-1. **Break down subtask into micro-tasks** (Complexity 1-2)
-2. **Match micro-tasks to appropriate droid/agent** based on capabilities
-3. **Execute micro-tasks with individual quality gates**:
-   - Execute micro-task
-   - Test micro-task individually
-   - Validate micro-task quality gate
-   - Collect micro-task evidence
-   - Mark micro-task complete only when passing
-4. **Integrate results automatically** as micro-tasks complete and pass validation
-5. **Run end-to-end integration testing** after all micro-tasks complete
-6. **Validate overall quality gates** automatically
-7. **Collect comprehensive evidence package** from all micro-tasks
-8. **Present complete results to user** for confirmation/commit decision
-
-#### A. Universal Micro-Task Delegation (All Complexity Levels 1-4)
-
-**Core Principle:** Every subtask (complexity 1, 2, 3, AND 4) must be broken down into micro-tasks of complexity 1-2 during execution. ALL micro-tasks are delegated to appropriate tools based on capability matching.
-
-**Process Flow:**
+#### Moderate Task (Complexity 3) → 4-6 Micro-tasks
 ```
-Load Subtask (Complexity 1-4) → Inventory Available droids or Agents → Break Subtask into Micro-Tasks (Complexity 1-2) → Match Micro-Tasks to droid or Agent Capabilities → Delegate All Micro-Tasks → Integration & Validation → Evidence Collection → Complete Subtask
+Example: "Implement form validation"
+├── Micro-task 1: Create validation rules in validators.ts
+├── Micro-task 2: Add validation to form component in form.tsx
+├── Micro-task 3: Create error display component in errors.tsx
+├── Micro-task 4: Add validation triggers in handlers.ts
+├── Micro-task 5: Update form styles in form.css
+└── Micro-task 6: Add validation tests in form.test.ts
 ```
 
-**droid or Agent Discovery and Matching Process:**
-
-1. **droid or Agent Inventory:** List all available coding droids or agents and document their specialized capabilities
-2. **Capability Assessment:** Document each droid or agent's expertise areas and complexity handling abilities
-3. **Micro-Task Matching:** Map micro-task types to appropriate droids or agents based on capabilities
-4. **Validation:** Ensure selected droids or agents can handle assigned complexity levels
-
-**Standard Micro-Task Types (droid or Agent-Agnostic):**
-
-| Category | Micro-Task | Complexity | Required droid or Agent Capability |
-|----------|------------|------------|--------------------------|
-| **Foundation** | Create interfaces/types | 1 | Strong typing support |
-| | Design component structure | 1 | UI framework expertise |
-| | Set up configuration | 1 | Environment management |
-| **Implementation** | Implement core logic | 2 | Domain-specific knowledge |
-| | Create API endpoints | 2 | API development expertise |
-| | Build database operations | 2 | Data persistence knowledge |
-| **Quality** | Add error handling | 1 | Code quality patterns |
-| | Write unit tests | 2 | Test automation knowledge |
-| | Create integration tests | 2 | Testing framework expertise |
-| **Review** | Code review | 1 | Code analysis capabilities |
-| | Security analysis | 1 | Security assessment skills |
-| | Performance analysis | 1 | Optimization expertise |
-| **Documentation** | Update documentation | 1 | Technical writing capabilities |
-
-**Micro-Task Breakdown by Subtask Complexity:**
-
-**Complexity 1 Subtask → 1-2 Micro-tasks**
+#### Complex Task (Complexity 4+) → 6-10 Micro-tasks
 ```
-Subtask: "Create user interface" (Complexity: 1)
-├── 1.1 Create component structure → [droid or Agent with UI framework expertise]
-└── 1.2 Add type definitions → [droid or Agent with strong typing capabilities]
+Example: "Add authentication"
+├── Micro-task 1: Create auth types in types/auth.ts
+├── Micro-task 2: Add auth context in contexts/auth.tsx
+├── Micro-task 3: Create login component in components/login.tsx
+├── Micro-task 4: Add auth API calls in api/auth.ts
+├── Micro-task 5: Create auth middleware in middleware/auth.ts
+├── Micro-task 6: Add protected route wrapper in routes/protected.tsx
+├── Micro-task 7: Update app router in app.tsx
+├── Micro-task 8: Add auth utils in utils/auth.ts
+├── Micro-task 9: Create auth tests in auth.test.ts
+└── Micro-task 10: Update main layout in layout.tsx
 ```
 
-**Complexity 2 Subtask → 2-4 Micro-tasks**
-```
-Subtask: "Implement form validation" (Complexity: 2)
-├── 2.1 Create validation rules → [droid or Agent with validation expertise]
-├── 2.2 Implement validation logic → [droid or Agent with form handling expertise]
-├── 2.3 Add error handling → [droid or Agent with error handling patterns]
-└── 2.4 Write tests → [droid or Agent with testing framework knowledge]
-```
+### Step 3: Micro-Task Execution Pattern
 
-**Complexity 3 Subtask → 3-6 Micro-tasks**
+For each micro-task, follow this focused pattern:
+
 ```
-Subtask: "Add authentication service" (Complexity: 3)
-├── 3.1 Create auth interfaces → [droid or Agent with type system expertise]
-├── 3.2 Implement auth logic → [droid or Agent with security/backend expertise]
-├── 3.3 Add middleware → [droid or Agent with middleware expertise]
-├── 3.4 Write tests → [droid or Agent with testing capabilities]
-├── 3.5 Security review → [droid or Agent with security analysis capabilities]
-└── 3.6 Update documentation → [droid or Agent with documentation generation]
+MICRO-TASK EXECUTION:
+1. Define specific change (1 file, 1 purpose)
+2. Load ONLY relevant context
+3. Make surgical change
+4. Verify change works
+5. Move to next micro-task
 ```
 
-**Complexity 4 Subtask → 4-8 Micro-tasks**
+#### Example Micro-Task Execution
+
 ```
-Subtask: "Implement OAuth2 integration" (Complexity: 4)
-├── 4.1 Design OAuth2 interfaces → [droid or Agent with type system expertise]
-├── 4.2 Create configuration → [droid or Agent with configuration expertise]
-├── 4.3 Implement provider 1 → [droid or Agent with OAuth expertise]
-├── 4.4 Implement provider 2 → [droid or Agent with OAuth expertise]
-├── 4.5 Create token management → [droid or Agent with security expertise]
-├── 4.6 Write comprehensive tests → [droid or Agent with testing expertise]
-├── 4.7 Security review → [droid or Agent with security analysis]
-└── 4.8 Update documentation → [droid or Agent with documentation capabilities]
-```
+Micro-task 2.3: Add email validation to form
+Target file: validators.ts
+Context needed: Email validation regex pattern
+Specific change: Add validateEmail function
+Lines affected: ~10-15 lines
 
-**Delegation Execution Protocol (Updated - Individual Micro-Task Quality Gates):**
-
-1. **Continuous Execution with Quality Gates:** Launch droids or agents and continue processing without user interruption
-2. **Individual Micro-Task Validation:** Each micro-task must pass its own quality gate before completion:
-   - **Execute micro-task** → **Test micro-task** → **Validate quality gate** → **Collect evidence** → **Mark complete**
-3. **Parallel Execution:** Launch multiple droids or agents simultaneously when micro-tasks are independent
-4. **Sequential Execution:** Wait for completion and validation of dependent micro-tasks before launching next droids or agents
-5. **Hybrid Execution:** Mix of parallel and sequential based on dependency analysis
-6. **Automated Integration:** Continuously integrate results as micro-tasks complete and pass validation
-
-**Expected Execution Times (Uninterrupted with Individual Quality Gates):**
-- **Complexity 1:** 5-10 minutes (1-2 micro-tasks, 1-2 droids or agents) - GRIND THROUGH with individual quality gates
-- **Complexity 2:** 15-20 minutes (2-4 micro-tasks, 2-3 droids or agents) - GRIND THROUGH with individual quality gates
-- **Complexity 3:** 30-45 minutes (3-6 micro-tasks, 4-5 droids or agents) - GRIND THROUGH with individual quality gates
-- **Complexity 4:** 60-90 minutes (4-8 micro-tasks, 5-6 droids or agents) - GRIND THROUGH with individual quality gates
-
-**Note:** Individual micro-task quality gates add ~2-5 minutes per micro-task for testing and validation
-
-**Automated Integration and Quality Assurance (Updated - Individual Micro-Task Validation):**
-
-**For Each Micro-Task (Must Pass Before Moving to Next):**
-- [ ] Execute micro-task with delegated droid or agent
-- [ ] Run micro-task specific tests (unit/integration based on micro-task type)
-- [ ] Validate micro-task quality gate (based on micro-task complexity and type)
-- [ ] Collect micro-task evidence (test results, coverage, performance if applicable)
-- [ ] Mark micro-task as complete only when all validations pass
-- [ ] Log micro-task completion status and evidence
-
-**After All Micro-Tasks Complete:**
-- [ ] Validate compatibility between all micro-task outputs
-- [ ] Run end-to-end integration testing across all micro-tasks
-- [ ] Apply overall risk-based testing protocols (maintain original risk level requirements)
-- [ ] Aggregate evidence from all micro-tasks into comprehensive package
-- [ ] Validate overall quality gates for complete subtask
-- [ ] Prepare complete implementation summary for user
-
-**Micro-Task Quality Gates (Each Micro-Task Must Pass):**
-
-**Complexity 1 Micro-Task Quality Gate:**
-- [ ] Micro-task executed successfully by delegated droid or agent
-- [ ] Basic functionality test passes
-- [ ] Code quality check passes
-- [ ] Documentation updated (if required)
-- [ ] Evidence collected and logged
-
-**Complexity 2 Micro-Task Quality Gate:**
-- [ ] Micro-task executed successfully by delegated droid or agent
-- [ ] Unit tests pass (80%+ coverage for micro-task)
-- [ ] Integration test with related components passes
-- [ ] Code quality and security check passes
-- [ ] Performance validation (if applicable)
-- [ ] Documentation updated
-- [ ] Evidence collected and logged
-
-**Subtask Completion Validation (Before User Interaction):**
-
-Before presenting to user, ensure ALL of the following are COMPLETE:
-- [ ] All micro-tasks completed and passed their individual quality gates
-- [ ] Integration testing passed with no conflicts between micro-task outputs
-- [ ] End-to-end functionality testing completed and passing
-- [ ] Risk-based testing requirements fully met (based on original subtask risk level)
-- [ ] All evidence collected from all micro-tasks and specialized tools
-- [ ] Documentation updated automatically across all micro-tasks
-- [ ] Overall quality gates validated automatically
-- [ ] Ready for user review and confirmation
-
-#### B. Code Implementation
-- Write code following established patterns
-- Implement functionality according to requirements
-- Follow coding standards and best practices
-- Ensure code is testable and maintainable
-
-#### B. Testing Implementation
-Based on risk level, implement appropriate tests:
-
-**Critical Risk (Testing-as-Code):**
-```typescript
-// Write tests alongside code
-describe('AuthService', () => {
-  it('should authenticate valid credentials', async () => {
-    // Test implementation
-  });
-  
-  it('should handle security edge cases', async () => {
-    // Security tests
-  });
-  
-  it('should meet performance requirements', async () => {
-    // Performance tests
-  });
-});
+Implementation:
+1. Open validators.ts
+2. Add email validation function
+3. Export the function
+4. Verify it validates correctly
+5. Done - move to next
 ```
 
-**High Risk:**
-- Unit tests (90%+ coverage)
-- Integration tests
-- E2E tests
-- Performance tests
+### Step 4: Context Management for Micro-Tasks
 
-**Medium Risk:**
-- Unit tests (80%+ coverage)
-- Integration tests
+Keep context minimal and focused:
 
-**Low Risk:**
-- Unit tests (70%+ coverage)
-
-#### C. Evidence Collection
-Generate required evidence based on risk level:
-
-**Critical Risk Evidence:**
-- Test reports (unit, integration, E2E, security, performance, accessibility)
-- Coverage reports (95%+)
-- Security audit results
-- Performance benchmarks
-- Accessibility compliance reports
-
-**High Risk Evidence:**
-- Test reports (unit, integration, E2E, performance)
-- Coverage reports (90%+)
-- Performance benchmarks
-
-**Medium Risk Evidence:**
-- Test reports (unit, integration)
-- Coverage reports (80%+)
-
-**Low Risk Evidence:**
-- Test reports (unit)
-- Coverage reports (70%+)
-
-### 3. Quality Gate Validation
-Before marking task complete, validate:
-
-**Universal Quality Gates (All Risk Levels with Micro-Task Delegation):**
-- [ ] All micro-tasks completed successfully by delegated droids or agents
-- [ ] Integration testing passed with no conflicts between droid or agent outputs
-- [ ] Risk-based testing requirements met (maintain original risk level protocols)
-- [ ] Evidence package complete from all specialized droids or agents
-- [ ] Documentation updated and validated
-
-**Critical Risk Quality Gates:**
-- [ ] Universal quality gates validated
-- [ ] All tests passing (95%+ coverage)
-- [ ] Security audit passed
-- [ ] Performance benchmarks met
-- [ ] Accessibility audit passed
-- [ ] All required reviews completed
-- [ ] Evidence collected and archived
-- [ ] Documentation updated
-- [ ] Stakeholder sign-offs obtained
-
-**High Risk Quality Gates:**
-- [ ] Universal quality gates validated
-- [ ] All tests passing (90%+ coverage)
-- [ ] Performance benchmarks met
-- [ ] Required reviews completed
-- [ ] Evidence collected and validated
-- [ ] Documentation updated
-- [ ] Stakeholder approvals obtained
-
-**Medium Risk Quality Gates:**
-- [ ] Universal quality gates validated
-- [ ] All tests passing (80%+ coverage)
-- [ ] Code review completed
-- [ ] Evidence collected and validated
-- [ ] Documentation updated
-
-**Low Risk Quality Gates:**
-- [ ] Universal quality gates validated
-- [ ] All tests passing (70%+ coverage)
-- [ ] Basic validation completed
-- [ ] Evidence collected
-- [ ] Documentation updated
-
-### 4. Git Workflow
-```bash
-# Commit with risk-based template
-git add .
-git commit -m "feat: [TASK-TITLE] - [RISK LEVEL] Implementation
-
-- Implementation details
-- Risk Level: [Critical/High/Medium/Low] ([Score]/5.0)
-- Testing: [Testing types and coverage]
-- Evidence: [Evidence collected]
-- Quality Gates: [Validation status]
-
-Related: [PRD-Reference] | Task-[Task-Number]"
+#### Good Context (Focused)
+```
+For micro-task: "Add user avatar to header"
+Context provided:
+- Current header.tsx structure
+- Avatar component API
+- User data shape
+- Where avatar should appear
+Total context: <500 lines
 ```
 
-## Testing Protocols by Risk Level
-
-### Critical Risk Testing Protocol
-```bash
-# Complete testing suite
-npm run test:unit -- --coverage --coverageThreshold='{"global":{"branches":95,"functions":95,"lines":95,"statements":95}}'
-npm run test:integration
-npm run test:e2e
-npm run test:security
-npm run test:performance
-npm run test:a11y
-
-# Collect evidence
-mkdir -p evidence/$(date +%Y%m%d_%H%M%S)
-cp coverage/ coverage.json evidence/$(date +%Y%m%d_%H%M%S)/
-cp test-results/ evidence/$(date +%Y%m%d_%H%M%S)/
-cp security-audit.json evidence/$(date +%Y%m%d_%H%M%S)/
+#### Bad Context (Too Broad)
+```
+For same micro-task:
+Context provided:
+- Entire application structure
+- All components
+- Full user system
+- Complete styling system
+Total context: >5000 lines (TOO MUCH!)
 ```
 
-### High Risk Testing Protocol
-```bash
-# Comprehensive testing
-npm run test:unit -- --coverage --coverageThreshold='{"global":{"branches":90,"functions":90,"lines":90,"statements":90}}'
-npm run test:integration
-npm run test:e2e
-npm run test:performance
+### Step 5: Micro-Task Templates by Type
 
-# Collect evidence
-mkdir -p evidence/$(date +%Y%m%d_%H%M%S)
-cp coverage/ coverage.json evidence/$(date +%Y%m%d_%H%M%S)/
-cp test-results/ evidence/$(date +%Y%m%d_%H%M%S)/
+Common micro-task patterns with specific focus:
+
+#### UI Component Micro-Tasks
+```
+1. Create component file (component.tsx)
+2. Add props interface (types.ts)
+3. Add styles (component.css)
+4. Add to parent (parent.tsx)
+5. Add story/demo (component.stories.tsx)
 ```
 
-### Medium Risk Testing Protocol
-```bash
-# Standard testing
-npm run test:unit -- --coverage --coverageThreshold='{"global":{"branches":80,"functions":80,"lines":80,"statements":80}}'
-npm run test:integration
-
-# Collect evidence
-mkdir -p evidence/$(date +%Y%m%d_%H%M%S)
-cp coverage/ coverage.json evidence/$(date +%Y%m%d_%H%M%S)/
+#### API Endpoint Micro-Tasks
+```
+1. Define route (routes.ts)
+2. Add types (api-types.ts)
+3. Create handler (handlers/endpoint.ts)
+4. Add validation (validators/endpoint.ts)
+5. Add to router (router.ts)
+6. Add tests (endpoint.test.ts)
 ```
 
-### Low Risk Testing Protocol
-```bash
-# Basic testing
-npm run test:unit -- --coverage --coverageThreshold='{"global":{"branches":70,"functions":70,"lines":70,"statements":70}}'
-
-# Collect evidence
-mkdir -p evidence/$(date +%Y%m%d_%H%M%S)
-cp coverage/ coverage.json evidence/$(date +%Y%m%d_%H%M%S)/
+#### Database Change Micro-Tasks
+```
+1. Create migration (migrations/001_change.sql)
+2. Update schema types (schema.ts)
+3. Update queries (queries/table.ts)
+4. Update models (models/table.ts)
+5. Run migration (execute)
+6. Verify data (test query)
 ```
 
-## Progress Tracking
+#### State Management Micro-Tasks
+```
+1. Add state slice (store/slice.ts)
+2. Create actions (actions/feature.ts)
+3. Create reducers (reducers/feature.ts)
+4. Add selectors (selectors/feature.ts)
+5. Connect to component (component.tsx)
+6. Add tests (slice.test.ts)
+```
 
-### Task Completion Tracking
-Update task list as tasks are completed:
+## AI Assistant Micro-Task Guide
+
+### Starting Implementation
+
+```
+"I'll implement this feature using focused micro-tasks for precision.
+
+Task: Add user profile editing (Complexity: 3)
+
+Breaking into 5 micro-tasks:
+1. Create profile form component - profile-form.tsx (20 min)
+2. Add validation rules - validators/profile.ts (15 min)
+3. Create API endpoint - api/profile.ts (20 min)
+4. Connect form to API - profile-form.tsx (15 min)
+5. Add success feedback - profile-form.tsx (10 min)
+
+Starting with Micro-task 1..."
+```
+
+### During Micro-Task Execution
+
+```
+"Micro-task 1: Create profile form component
+Target: components/profile-form.tsx
+Context: Need form with name, email, bio fields
+Action: Creating new component file
+
+[Make focused change]
+
+✓ Micro-task 1 complete: Form component created
+Moving to Micro-task 2..."
+```
+
+### Micro-Task Status Tracking
+
 ```markdown
-- [x] [Task Number] [Task Title] - **Completed:** [Date]
-  - [x] [Subtask Number] [Subtask Title] - **Evidence:** [path/to/evidence]
-  - [x] [Subtask Number] [Subtask Title] - **Evidence:** [path/to/evidence]
+## Task 2.0: User Profile Editing
+
+### Micro-Tasks:
+- [x] MT 2.1: Create form component (profile-form.tsx)
+- [x] MT 2.2: Add validation (validators/profile.ts)
+- [→] MT 2.3: Create API endpoint (api/profile.ts)
+- [ ] MT 2.4: Connect form to API
+- [ ] MT 2.5: Add success feedback
+
+Progress: 2/5 complete (40%)
+Current: Creating API endpoint
 ```
 
-### Risk-Based Progress Metrics
-Track progress by risk level:
+## Best Practices for Micro-Tasks
+
+### 1. Keep Scope Narrow
+```
+Good: "Add email validation function to validators.ts"
+Bad: "Add all validation to the form"
+```
+
+### 2. One File When Possible
+```
+Good: "Update header.tsx to include avatar"
+Bad: "Update header, nav, and footer components"
+```
+
+### 3. Specific Line Targets
+```
+Good: "Add validateEmail function at line 45 in validators.ts"
+Bad: "Add validation somewhere in the file"
+```
+
+### 4. Clear Success Criteria
+```
+Good: "Function returns true for valid@email.com"
+Bad: "Make validation work"
+```
+
+### 5. Minimal Dependencies
+```
+Good: "Import only EmailValidator type"
+Bad: "Import entire validation library"
+```
+
+## Micro-Task Patterns for Common Features
+
+### Adding a Button
+```
+Micro-tasks:
+1. Add button to UI file (button location)
+2. Add click handler (handler file)
+3. Add button styles (CSS file)
+Time: ~30 minutes total
+```
+
+### Creating a Form
+```
+Micro-tasks:
+1. Create form component structure
+2. Add form fields
+3. Add validation rules
+4. Create submit handler
+5. Add error display
+6. Add success feedback
+Time: ~2 hours total
+```
+
+### Adding API Endpoint
+```
+Micro-tasks:
+1. Define route in router
+2. Create handler function
+3. Add input validation
+4. Add business logic
+5. Add error handling
+6. Add response formatting
+7. Add endpoint tests
+Time: ~2-3 hours total
+```
+
+### Database Table Creation
+```
+Micro-tasks:
+1. Create migration file
+2. Define table schema
+3. Create model file
+4. Add CRUD queries
+5. Add model types
+6. Run migration
+7. Verify with test data
+Time: ~2-3 hours total
+```
+
+## Handling Dependencies Between Micro-Tasks
+
+Some micro-tasks depend on others:
+
+```
+Dependency Chain Example:
+MT 1: Create types (types.ts)
+    ↓ blocks
+MT 2: Create component using types (component.tsx)
+    ↓ blocks
+MT 3: Create tests for component (component.test.tsx)
+
+Parallel Example:
+MT 1: Add button ─┐
+MT 2: Add styles  ├─→ MT 4: Test complete feature
+MT 3: Add handler ─┘
+```
+
+## Risk-Based Testing Within Micro-Tasks
+
+Apply testing based on risk, but at micro-task level:
+
+#### High Risk Micro-Tasks
+```
+Example: Payment processing function
+Micro-task includes:
+- Implementation (10 lines)
+- Unit test (20 lines)
+- Edge case test (15 lines)
+- Security check (5 lines)
+```
+
+#### Medium Risk Micro-Tasks
+```
+Example: Form validation
+Micro-task includes:
+- Implementation (15 lines)
+- Basic test (10 lines)
+- Error case test (10 lines)
+```
+
+#### Low Risk Micro-Tasks
+```
+Example: Add CSS class
+Micro-task includes:
+- Implementation (2 lines)
+- Visual verification (manual)
+```
+
+## Progress Reporting Template
+
 ```markdown
-## Progress by Risk Level
+## Current Status
 
-### Critical Risk Tasks
-- **Total:** [X]
-- **Completed:** [Y]/[X] ([Z]%)
-- **In Progress:** [A]
-- **Testing Progress:** [0-100%]
+### Active Task: User Authentication
+Complexity: 4
+Total Micro-tasks: 8
+Completed: 5
+In Progress: 1
+Remaining: 2
 
-### High Risk Tasks
-- **Total:** [X]
-- **Completed:** [Y]/[X] ([Z]%)
-- **In Progress:** [A]
-- **Testing Progress:** [0-100%]
+### Completed Micro-Tasks:
+✓ MT 1: Auth types defined (types/auth.ts)
+✓ MT 2: Auth context created (contexts/auth.tsx)
+✓ MT 3: Login component built (components/login.tsx)
+✓ MT 4: API calls added (api/auth.ts)
+✓ MT 5: Middleware created (middleware/auth.ts)
+
+### Current Micro-Task:
+→ MT 6: Adding protected routes (routes/protected.tsx)
+  - Started: 10:30 AM
+  - Est. completion: 10:45 AM
+  - Status: 70% complete
+
+### Remaining:
+- MT 7: Update app router
+- MT 8: Add tests
+
+Estimated time to complete: 45 minutes
 ```
 
-## Error Handling and Recovery
+## Common Pitfalls to Avoid
 
-### Common Issues
-**Test Failures:**
-```bash
-# Debug test failures
-npm run test:debug -- --testNamePattern="[failing-test]"
-npm run test:verbose -- --testNamePattern="[failing-test]"
-```
+### 1. Micro-Tasks Too Large
+❌ "Implement entire authentication system"
+✓ "Add login function to auth.ts"
 
-**Coverage Issues:**
-```bash
-# Analyze coverage gaps
-npm run test:coverage -- --coverageReporters=text-lcov
-```
+### 2. Multiple Files in One Micro-Task
+❌ "Update all components to use new theme"
+✓ "Update header.tsx to use theme"
 
-**Performance Issues:**
-```bash
-# Profile performance
-npm run test:performance -- --profile
-```
+### 3. Vague Specifications
+❌ "Make it work better"
+✓ "Fix null check on line 45"
 
-### Recovery Procedures
-**Partial Failure Recovery:**
-```bash
-# Save current state
-git add .
-git commit -m "wip: partial implementation - checkpoint"
+### 4. Missing Context
+❌ "Add the thing"
+✓ "Add user avatar (32x32px) to header right corner"
 
-# Reset and retry
-git reset --hard HEAD~1
-```
+### 5. No Success Criteria
+❌ "Update the function"
+✓ "Function should return user object with id, name, email"
 
-## Usage Examples
+## Quick Reference
 
-### Enhanced Implementation Process - "All Roads to Rome"
+### Micro-Task Size Guide
+- **Tiny:** 1-10 lines (5 min)
+- **Small:** 10-30 lines (10-15 min)
+- **Medium:** 30-50 lines (15-30 min)
+- **Large:** 50-100 lines (30-45 min)
+- **Too Large:** >100 lines (SPLIT IT!)
 
-#### Pre-Implementation Risk Workshop
-```
-AI: I'll help you implement the user authentication system following enhanced risk-based protocols.
+### Files Per Micro-Task
+- **Ideal:** 1 file
+- **Acceptable:** 2 files (if tightly coupled)
+- **Maximum:** 3 files (only if necessary)
+- **Too Many:** 4+ files (SPLIT IT!)
 
-## Risk Assessment Summary - "All Roads to Rome" Approach
-- **Highest Risk Level:** Critical (4.7/5.0)
-- **Risk Path:** Very Frequent + Many Users + Complex Algorithm + Data Changes
-- **Testing Environment:** Configured for Critical Risk protocols
-- **Legal Review Required:** Yes (data privacy regulations)
-- **Git Branch:** feature/0001-prd-user-authentication
-- **Stakeholder Workshop:** Completed - Development, Product, Legal, DevOps teams participated
+### Context Size Guide
+- **Ideal:** <200 lines
+- **Good:** 200-500 lines
+- **Acceptable:** 500-1000 lines
+- **Too Much:** >1000 lines (REDUCE!)
 
-## Starting Task 1.0: Authentication Core Engine
+## Summary: Why This Approach Works
 
-**Risk Level:** Critical (4.7/5.0) - Red Path
-**Risk Path Characteristics:**
-- Very Frequent use + Many users affected
-- Complex algorithm + External dependencies  
-- Data changes + High data volume
-- Legal compliance requirements (GDPR/CCPA)
+**The Problem:**
+- Large tasks with broad context lead to errors
+- Less sophisticated models get confused with too much scope
+- Unfocused changes create unexpected side effects
 
-**Testing Requirements:** Unit + Integration + E2E + Security + Performance + Accessibility (95%+ coverage)
-**Evidence Required:** All test reports + security audit + performance benchmarks + accessibility compliance report
-**Stakeholder Approvals:** Legal Team, Security Team, Product Management
+**The Solution:**
+- Micro-tasks with focused scope
+- One file per change when possible
+- Minimal context prevents drift
+- Surgical precision improves quality
 
-I'll now implement subtask 1.1: "Design secure authentication architecture" using the micro-task grinding approach. I'll break it down into micro-tasks, delegate to appropriate tools, execute all work continuously, test thoroughly, and only return to you when the complete implementation is ready for your review.
+**The Result:**
+- More accurate implementation
+- Fewer errors and side effects
+- Easier to test and verify
+- Better results with any model sophistication level
 
-**Starting Micro-Task Grinding for Subtask 1.1...**
+The key is: **Small context + Specific task = Better results**
 
-*This will take approximately 30-45 minutes. I'll complete ALL work (breakdown → delegation → execution → testing → validation → evidence collection) before returning for your confirmation.*
-```
+## Version History
 
-### Risk-Based Task Completion Process
-```
-AI: Subtask 1.1 completed successfully.
-
-## Quality Gate Validation
-- [x] All tests passing (96.2% coverage) - ✅ Meets Critical Risk requirements
-- [x] Security audit passed - ✅ No vulnerabilities found
-- [x] Performance benchmarks met - ✅ <100ms response time
-- [x] Accessibility audit passed - ✅ All tests passed
-- [x] Evidence collected and archived - ✅ Complete documentation
-- [x] Documentation updated - ✅ API docs and user guides
-
-## Evidence Collected
-- **Test Reports:** path/to/test-reports
-- **Coverage Reports:** path/to/coverage (96.2%)
-- **Security Reports:** path/to/security-audit
-- **Performance Reports:** path/to/performance-benchmarks
-
-## Commit Details
-git commit -m "feat: Authentication Core Engine - Critical Risk Implementation
-
-- Implements secure authentication architecture with comprehensive testing
-- Risk Level: Critical (Score: 4.7/5.0)
-- Testing: Unit + Integration + E2E + Security + Performance + Accessibility
-- Coverage: 95%+ achieved
-- Evidence: Full test suite + security audit + performance benchmarks
-
-**Micro-Task Grinding Complete for Subtask 1.1!**
-
-## Implementation Summary
-All micro-tasks have been completed, tested, and validated. Here are the complete results:
-
-### Quality Gate Validation
-- [x] All micro-tasks completed successfully by delegated tools
-- [x] Integration testing passed with no conflicts
-- [x] All tests passing (96.2% coverage) - ✅ Meets Critical Risk requirements
-- [x] Security audit passed - ✅ No vulnerabilities found
-- [x] Performance benchmarks met - ✅ <100ms response time
-- [x] Accessibility audit passed - ✅ All tests passed
-- [x] Evidence collected and archived
-- [x] Documentation updated
-
-### Evidence Collected
-- **Test Reports:** path/to/test-reports
-- **Coverage Reports:** path/to/coverage (96.2%)
-- **Security Reports:** path/to/security-audit
-- **Performance Reports:** path/to/performance-benchmarks
-- **Integration Tests:** path/to/integration-results
-
-### Micro-Tasks Executed (Each with Individual Quality Gates)
-
-**1. Auth Interface Design** → TypeScript Specialist Droid
-- [x] Executed: TypeScript interfaces created ✅
-- [x] Tested: Type validation tests passing ✅
-- [x] Quality Gate: All interfaces compile without errors ✅
-- [x] Evidence: Type definitions + test results logged ✅
-
-**2. Security Architecture** → Backend Security Specialist
-- [x] Executed: Security patterns implemented ✅
-- [x] Tested: Security validation tests passing ✅
-- [x] Quality Gate: Security audit passed ✅
-- [x] Evidence: Architecture docs + security test results ✅
-
-**3. Database Schema Design** → Database Specialist
-- [x] Executed: Schema migrations created ✅
-- [x] Tested: Database integration tests passing ✅
-- [x] Quality Gate: Schema validation passed ✅
-- [x] Evidence: Schema files + integration test results ✅
-
-**4. Unit Test Implementation** → Testing Specialist
-- [x] Executed: Comprehensive unit tests created ✅
-- [x] Tested: All unit tests passing (95% coverage) ✅
-- [x] Quality Gate: Coverage threshold met ✅
-- [x] Evidence: Test suite + coverage report ✅
-
-**5. Security Review** → Code Reviewer
-- [x] Executed: Security review completed ✅
-- [x] Tested: Security scan passed ✅
-- [x] Quality Gate: No security vulnerabilities found ✅
-- [x] Evidence: Security audit report ✅
-
-**6. Documentation Update** → Documentation Generator
-- [x] Executed: API documentation updated ✅
-- [x] Tested: Documentation validation passed ✅
-- [x] Quality Gate: All examples compile and work ✅
-- [x] Evidence: Updated documentation files ✅
-
-**Would you like me to:**
-1. Commit these changes and proceed to subtask 1.2?
-2. Review any specific aspect before committing?
-3. Make any adjustments before proceeding?
-
-*All implementation work is complete - just need your confirmation to commit and continue.*
-```
-
-## Enhanced Quality Checklist - "All Roads to Rome" Approach
-
-### Pre-Implementation Quality Gates
-Before starting any task:
-- [ ] Risk assessment completed and documented
-- [ ] Cross-functional workshop conducted (if required)
-- [ ] Stakeholder approvals obtained (for high/critical risk)
-- [ ] Testing environment configured for risk level
-- [ ] Risk mitigation strategies identified and documented
-
-**NEW: Micro-Task Grinding Confirmation**
-- [ ] User confirms to start micro-task grinding (single confirmation for entire subtask)
-- [ ] AI commits to complete ALL micro-task work before next user interaction
-
-### During Implementation Quality Gates
-- [ ] Code follows established patterns and coding standards
-- [ ] Security best practices implemented (for critical/high risk)
-- [ ] Regular progress updates provided to stakeholders
-- [ ] Risk issues identified and addressed promptly
-
-### Post-Implementation Quality Gates (Updated - After Micro-Task Grinding)
-
-**Before presenting to user (Micro-Task Grinding Complete):**
-- [ ] All quality gates for current task are automatically validated
-- [ ] Required evidence collected and archived (based on risk level)
-- [ ] Documentation automatically updated
-- [ ] Comprehensive test results compiled
-- [ ] Integration testing completed
-- [ ] Performance benchmarks validated
-- [ ] Security/compliance checks completed
-- [ ] Ready for user review
-
-**User Interaction Phase (After Grinding Complete):**
-- [ ] Present complete implementation results to user
-- [ ] Show all evidence and test results
-- [ ] Request user confirmation for commit/documentation
-- [ ] Get user approval for next task
-- [ ] Obtain stakeholder sign-offs (for high/critical risk tasks)
-- [ ] Git commit made with enhanced risk-based template
-- [ ] Risk register updated with implementation learnings
-- [ ] Progress tracking updated by risk level
-
-### Risk-Specific Quality Gates
-
-#### Critical Risk Tasks (Red Path)
-- [ ] All micro-tasks completed successfully by delegated droids or agents
-- [ ] Integration testing passed with no conflicts between droid or agent outputs
-- [ ] All tests passing (95%+ coverage)
-- [ ] Security audit passed
-- [ ] Legal compliance verified
-- [ ] Performance benchmarks met
-- [ ] Accessibility audit passed (WCAG AA)
-- [ ] All required reviews completed (Security, Legal, Performance, Accessibility, Code, Architectural)
-- [ ] Evidence package complete from all specialized droids or agents
-- [ ] Documentation updated
-- [ ] Stakeholder sign-offs obtained
-
-#### High Risk Tasks (Orange Path)
-- [ ] All micro-tasks completed successfully by delegated droids or agents
-- [ ] Integration testing passed with no conflicts between droid or agent outputs
-- [ ] All tests passing (90%+ coverage)
-- [ ] Performance benchmarks met
-- [ ] Security testing passed
-- [ ] Required reviews completed (Performance, Code, Architectural)
-- [ ] Evidence package complete from all specialized droids or agents
-- [ ] Documentation updated
-- [ ] Stakeholder approvals obtained
-
-#### Medium Risk Tasks (Yellow Path)
-- [ ] All micro-tasks completed successfully by delegated droids or agents
-- [ ] Integration testing passed with no conflicts between droid or agent outputs
-- [ ] All tests passing (80%+ coverage)
-- [ ] Code review completed
-- [ ] Basic security validation
-- [ ] Evidence package complete from specialized droids or agents
-- [ ] Documentation updated
-
-#### Low Risk Tasks (Green Path)
-- [ ] All micro-tasks completed successfully by delegated droids or agents
-- [ ] Integration testing passed with no conflicts between droid or agent outputs
-- [ ] All tests passing (70%+ coverage)
-- [ ] Basic validation completed
-- [ ] Evidence collected from delegated droids or agents
-- [ ] Documentation updated (minimal)
-
-## Integration with Workflow
-
-This implementation step integrates with:
-1. **Task Generation** - Provides detailed task list with risk assessment
-2. **Risk Assessment Framework** - Determines testing protocols and quality gates
-3. **Testing Guidelines** - Provides specific testing requirements by risk level
-4. **Quality Assurance** - Ensures comprehensive validation and evidence collection
-
-## Best Practices
-
-### During Implementation
-- **Test-First Development:** Write tests before or alongside code
-- **Risk-Aware Approach:** Apply appropriate protocols based on risk level
-- **Evidence Collection:** Systematically collect and archive all required evidence
-- **Quality Gates:** Validate all requirements before marking tasks complete
-- **Progress Tracking:** Maintain accurate progress records by risk level
-
-### Error Handling
-- **Early Detection:** Identify issues early through comprehensive testing
-- **Systematic Debugging:** Use structured approach to identify and fix issues
-- **Recovery Procedures:** Have clear processes for handling failures
-- **Documentation:** Record issues and solutions for future reference
-
-### Continuous Improvement
-- **Process Refinement:** Continuously improve based on implementation experience
-- **Tool Updates:** Keep testing tools and frameworks up to date
-- **Pattern Recognition:** Identify and document common patterns and solutions
-- **Knowledge Sharing:** Share learnings across team members
+- **v2.1 (2025-10-31):** Focused micro-task approach with minimal context
+- **v2.0 (2025-10-31):** Implementation-focused approach with adaptive complexity
+- **v1.0 (Original):** Micro-task grinding with extensive delegation and evidence collection

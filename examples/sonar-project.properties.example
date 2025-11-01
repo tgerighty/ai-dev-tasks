@@ -1,0 +1,77 @@
+# SonarCloud Configuration Example
+# Copy this to sonar-project.properties in your project root and customize as needed
+
+# Project identification
+sonar.projectKey=your-organization_your-project
+sonar.organization=your-organization
+
+# Project metadata
+sonar.projectName=Your Project Name
+sonar.projectVersion=1.0
+
+# Source code location
+sonar.sources=src
+sonar.tests=tests,__tests__,test,e2e
+
+# Exclusions for security scanning
+sonar.exclusions=\
+  tests/**,\
+  __tests__/**,\
+  test/**,\
+  e2e/**,\
+  cypress/**,\
+  spec/**,\
+  **/*.test.ts,\
+  **/*.test.tsx,\
+  **/*.test.js,\
+  **/*.test.jsx,\
+  **/*.spec.ts,\
+  **/*.spec.tsx,\
+  **/*.spec.js,\
+  **/*.spec.jsx,\
+  **/*.e2e.test.ts,\
+  **/*.e2e.spec.ts,\
+  **/fixtures/**,\
+  **/mocks/**,\
+  **/__mocks__/**,\
+  **/test-utils/**,\
+  **/test-helpers/**,\
+  dist/**,\
+  build/**,\
+  .build/**,\
+  out/**,\
+  coverage/**,\
+  node_modules/**
+
+# Coverage exclusions
+sonar.coverage.exclusions=\
+  tests/**,\
+  __tests__/**,\
+  test/**,\
+  e2e/**,\
+  cypress/**,\
+  **/*.test.ts,\
+  **/*.test.tsx,\
+  **/*.spec.ts,\
+  **/*.spec.tsx,\
+  **/fixtures/**,\
+  **/mocks/**,\
+  **/__mocks__/**,\
+  **/test-utils/**
+
+# Test execution patterns
+sonar.test.inclusions=\
+  tests/**/*.test.ts,\
+  tests/**/*.test.tsx,\
+  tests/**/*.spec.ts,\
+  tests/**/*.spec.tsx,\
+  __tests__/**/*.test.ts,\
+  __tests__/**/*.test.tsx
+
+# Coverage paths
+sonar.javascript.lcov.reportPaths=coverage/lcov.info
+sonar.typescript.lcov.reportPaths=coverage/lcov.info
+
+# Language versions
+sonar.javascript.node.version=24
+sonar.typescript.node.version=24
