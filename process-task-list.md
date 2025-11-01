@@ -72,6 +72,15 @@ Example: "Add authentication"
 └── Micro-task 10: Update main layout in layout.tsx
 ```
 
+### Step 2.5: Identify Parallel Opportunities
+
+Before executing, check which micro-tasks can run in parallel:
+- Tasks in different files can run simultaneously
+- Tasks in different layers (UI, API, DB) can run together
+- Independent features can be implemented in parallel
+
+**For detailed patterns**: Load `/references/patterns/parallel-processing.md`
+
 ### Step 3: Micro-Task Execution Pattern
 
 For each micro-task, follow this focused pattern:

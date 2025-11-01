@@ -1,8 +1,15 @@
-# Ignore AGENTS.md file
-AGENTS.md
+# Task and PRD files (user-specific)
+/tasks/
+tasks/
 
-# Ignore references directory
-references/
+# Archive of old versions
+# Note: we DO track the archive/ directory for version history
+
+# Backup files
+*.bak
+*.bak*
+*.backup
+*.old
 
 # Dependencies
 node_modules/

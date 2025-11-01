@@ -260,6 +260,22 @@ throw new ResponseError(403, JSON.stringify({
 
 ---
 
+## 🔗 LAZY-LOADING REFERENCES
+
+**Token-optimized references** - Load only what you need:
+
+### Available References (~1-2K tokens each)
+- `/references/patterns/crud-operations.md` - Complete CRUD pattern
+- `/references/patterns/form-handling.md` - Form validation patterns
+- `/references/security/security-checklist.md` - Security validation
+- `/references/testing/testing-patterns.md` - Testing examples
+- `/references/git/commit-guidelines.md` - Git conventions
+- `/references/README.md` - Complete index of all references
+
+**Usage**: Load specific files when implementing that feature type
+
+---
+
 ## 📝 CHANGELOG FORMAT
 
 **Public packages** (have version in package.json):
