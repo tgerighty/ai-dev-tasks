@@ -24,19 +24,24 @@ This is NON-NEGOTIABLE. Break ALL work into atomic, surgical micro-tasks.
 
 ### When User Requests a Feature:
 
-1. **First, create a PRD**:
+1. **First, assign Feature ID and create PRD**:
    ```
+   ASSIGN NEXT SEQUENTIAL ID: 0001, 0002, 0003...
    Load: ai-dev-tasks/create-prd.md
    Use discovery questions (5-10) to understand the real need
-   Output: tasks/PRD-[date]-[feature].md
+   Create NEW PRD for EACH feature with unique ID
+   Output: tasks/PRD-[ID]-[feature].md
+   Example: PRD-0001-authentication.md
    ```
 
-2. **Then, generate tasks**:
+2. **Then, generate tasks with SAME ID**:
    ```
    Load: ai-dev-tasks/generate-tasks.md with the PRD
+   Use SAME ID as PRD (critical for traceability)
    Match patterns (CRUD, Forms, API, etc.)
    Score complexity and estimate time
-   Output: tasks/tasks-[date]-[feature].md
+   Output: tasks/tasks-[ID]-[feature].md
+   Example: tasks-0001-authentication.md
    ```
 
 3. **Finally, implement with microgrinding**:

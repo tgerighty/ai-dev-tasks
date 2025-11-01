@@ -38,20 +38,25 @@ This is NON-NEGOTIABLE. All work must be broken into atomic, surgical micro-task
 
 ### Phase 1: Discovery-Driven PRD Creation
 ```
-User Intent → Discovery Questions (5-10) → Problem Understanding → Right-Sized PRD
+User Intent → Assign Feature ID → Discovery Questions → Problem Understanding → Right-Sized PRD
 ```
+- **FIRST: Assign next sequential ID** (0001, 0002, 0003...)
 - Use `create-prd.md` guide
 - Progressive questioning: 5 Whys, Day in Life, Magic Wand
 - Output: Micro (<1 page), Standard (2-3), or Full (5+) PRD
+- **File naming**: PRD-[ID]-[feature-name].md
+- **Example**: PRD-0001-authentication.md, PRD-0002-payments.md
 
 ### Phase 2: Pattern-Based Task Generation
 ```
-PRD Analysis → Pattern Recognition → Task Generation → Complexity Scoring → Dependency Mapping
+PRD-[ID] → Pattern Recognition → Task Generation → Complexity Scoring → Dependency Mapping
 ```
-- Use `generate-tasks.md` guide
+- Use `generate-tasks.md` guide with SAME ID
 - Match patterns: CRUD, Forms, APIs, Reports, Auth (~70% match common patterns)
 - AI complexity scoring with reasoning (1-5 scale)
 - Time estimates with ranges
+- **File naming**: tasks-[ID]-[feature-name].md (MUST match PRD ID)
+- **Example**: PRD-0001-auth.md → tasks-0001-auth.md
 
 ### Phase 3: Universal Micro-Task Implementation
 ```
@@ -266,18 +271,23 @@ Score = (Single_File × 25) + (Small_Context × 25) +
 
 ## 🚀 EXECUTION COMMANDS
 
-### Start Workflow
+### Start Workflow (with ID System)
 ```bash
-# 1. Create PRD
-@create-prd.md  # Cursor
-/create-prd     # Claude Code slash command
+# 1. Assign ID and Create PRD
+Next ID: 0003 (if 0001, 0002 exist)
+@create-prd.md
+Output: PRD-0003-notifications.md
 
-# 2. Generate Tasks
-@generate-tasks.md @PRD-[date].md
+# 2. Generate Tasks (SAME ID)
+@generate-tasks.md @PRD-0003-notifications.md
+Output: tasks-0003-notifications.md
 
-# 3. Process with Microgrinding
-@process-task-list.md @tasks-[date].md
-# This automatically breaks into 1:1:1:1 micro-tasks
+# 3. Process with Microgrinding (SAME ID)
+@process-task-list.md @tasks-0003-notifications.md
+Creates: Micro-tasks all tagged with 0003
+
+# Optional: Design Decisions (SAME ID)
+If complex: context-0003-notifications.md
 ```
 
 ### Track Progress
@@ -307,6 +317,49 @@ Task 1.0: Add user profile [→] In Progress
 - **Easier validation** of small changes
 - **Better parallelization** of independent work
 - **Clear progress tracking** with atomic tasks
+
+---
+
+## 📁 PRD & TASK MANAGEMENT - FOUR-DIGIT ID SYSTEM
+
+### PRIMARY RULE: One ID Links Everything
+**EVERY feature gets a unique four-digit ID that links ALL related files:**
+
+```
+Feature ID: 0001
+├── PRD-0001-authentication.md         # Product requirements
+├── tasks-0001-authentication.md       # Task breakdown
+├── context-0001-authentication.md     # Design decisions (if needed)
+└── changelog-0001-authentication.md   # Completion tracking
+```
+
+### ID Assignment Rules
+- **ALL Features**: Sequential four-digit numbering (0001, 0002, 0003...)
+- **Bug Fixes**: Link to feature ID + fix number
+  - PRD-0001-FIX-01-login-timeout.md (Fix for feature 0001)
+  - PRD-0002-FIX-01-payment-retry.md (Fix for feature 0002)
+- **Enhancements**: Use base feature ID + enhancement
+  - PRD-0001-ENH-01-sso-support.md (Enhancement to auth feature)
+
+### Why This Matters
+- **Traceability**: Can find all related files with one ID
+- **Consistency**: PRD decisions flow to tasks to implementation
+- **Organization**: Easy to see what belongs together
+- **History**: Clear evolution of each feature
+
+### Directory Structure
+```
+tasks/
+├── 0001-authentication/       # All 0001 files together
+│   ├── PRD-0001-authentication.md
+│   ├── tasks-0001-authentication.md
+│   └── context-0001-authentication.md
+├── 0002-payment-system/       # All 0002 files together
+│   ├── PRD-0002-payment-system.md
+│   ├── tasks-0002-payment-system.md
+│   └── context-0002-payment-system.md
+└── archive/                   # Completed features
+```
 
 ---
 
