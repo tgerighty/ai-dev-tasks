@@ -319,7 +319,7 @@ copy_file() {
 
     if [[ "$DRY_RUN" == true ]]; then
         echo -e "${CYAN}[DRY-RUN]${NC} Would copy: $desc"
-        return
+        return 0
     fi
 
     if [[ -f "$src" ]]; then
@@ -327,15 +327,23 @@ copy_file() {
             read -p "File exists: $(basename "$dest"). Overwrite? (y/n): " overwrite
             if [[ "$overwrite" != "y" && "$overwrite" != "Y" ]]; then
                 print_warning "Skipped: $desc"
-                return
+                return 0
             fi
         fi
 
         cp "$src" "$dest"
-        print_success "$desc"
-        [[ "$VERBOSE" == true ]] && echo "    $src -> $dest"
+        local cp_result=$?
+        if [[ $cp_result -eq 0 ]]; then
+            print_success "$desc"
+            [[ "$VERBOSE" == true ]] && echo "    $src -> $dest"
+            return 0
+        else
+            print_error "Failed to copy: $desc (exit code: $cp_result)"
+            return $cp_result
+        fi
     else
         print_warning "Source not found: $desc"
+        return 1
     fi
 }
 
@@ -378,6 +386,7 @@ perform_installation() {
         copy_file "$SCRIPT_DIR/context-template.md" "$TARGET_DIR/context-template.md" "Context Template"
         copy_file "$SCRIPT_DIR/QUICK_REFERENCE.md" "$TARGET_DIR/QUICK_REFERENCE.md" "Quick Reference Guide"
         copy_file "$SCRIPT_DIR/WHATS_NEW_V2.md" "$TARGET_DIR/WHATS_NEW_V2.md" "What's New in v2"
+        copy_file "$SCRIPT_DIR/README.md" "$TARGET_DIR/README.md" "Main README"
     fi
 
     # Copy Nano-AGENTS.md if requested
@@ -386,37 +395,41 @@ perform_installation() {
         copy_file "$SCRIPT_DIR/Nano-AGENTS.md" "$TARGET_DIR/Nano-AGENTS.md" "Nano-AGENTS.md (2K tokens)"
     fi
 
-    # Install Claude Code agents
+    # Install Claude Code agents - GO TO PROJECT ROOT .claude/
     if [[ "$INSTALL_CLAUDE_AGENTS" == true ]]; then
-        print_status "🤖 Installing Claude Code nano-agents..."
-        create_dir "$TARGET_DIR/.claude/agents" "Claude agents directory"
+        # Extract project root directory (remove AI DevTools folder)
+        PROJECT_ROOT_DIR="$(dirname "$TARGET_DIR")"
+        print_status "🤖 Installing Claude Code nano-agents to project root..."
+        create_dir "$PROJECT_ROOT_DIR/.claude/agents" "Claude agents directory"
 
-        for agent_file in "$SCRIPT_DIR"/.claude/agents/*.md; do
+        for agent_file in "$SCRIPT_DIR/.claude/agents/"*.md; do
             if [[ -f "$agent_file" ]]; then
                 basename_file=$(basename "$agent_file")
-                copy_file "$agent_file" "$TARGET_DIR/.claude/agents/$basename_file" "Claude agent: $basename_file"
+                copy_file "$agent_file" "$PROJECT_ROOT_DIR/.claude/agents/$basename_file" "Claude agent: $basename_file"
             fi
         done
 
         # Install CLAUDE.md configuration for Claude Code
         print_status "📄 Installing CLAUDE.md for Claude Code..."
         if [[ -f "$SCRIPT_DIR/.claude/CLAUDE.md" ]]; then
-            copy_file "$SCRIPT_DIR/.claude/CLAUDE.md" "$TARGET_DIR/.claude/CLAUDE.md" "Claude Code configuration"
+            copy_file "$SCRIPT_DIR/.claude/CLAUDE.md" "$PROJECT_ROOT_DIR/.claude/CLAUDE.md" "Claude Code configuration"
         elif [[ -f "$SCRIPT_DIR/CLAUDE.md" ]]; then
-            create_dir "$TARGET_DIR/.claude" "Claude configuration directory"
-            copy_file "$SCRIPT_DIR/CLAUDE.md" "$TARGET_DIR/.claude/CLAUDE.md" "Claude Code configuration"
+            create_dir "$PROJECT_ROOT_DIR/.claude" "Claude configuration directory"
+            copy_file "$SCRIPT_DIR/CLAUDE.md" "$PROJECT_ROOT_DIR/.claude/CLAUDE.md" "Claude Code configuration"
         fi
     fi
 
-    # Install Factory.ai droids
+    # Install Factory.ai droids - GO TO PROJECT ROOT .factory/
     if [[ "$INSTALL_FACTORY_DROIDS" == true ]]; then
-        print_status "🏭 Installing Factory.ai nano-droids..."
-        create_dir "$TARGET_DIR/.factory/droids" "Factory droids directory"
+        # Extract project root directory (remove AI DevTools folder)
+        PROJECT_ROOT_DIR="$(dirname "$TARGET_DIR")"
+        print_status "🏭 Installing Factory.ai nano-droids to project root..."
+        create_dir "$PROJECT_ROOT_DIR/.factory/droids" "Factory droids directory"
 
-        for droid_file in "$SCRIPT_DIR"/.factory/droids/*.md; do
+        for droid_file in "$SCRIPT_DIR/.factory/droids/"*.md; do
             if [[ -f "$droid_file" ]]; then
                 basename_file=$(basename "$droid_file")
-                copy_file "$droid_file" "$TARGET_DIR/.factory/droids/$basename_file" "Factory droid: $basename_file"
+                copy_file "$droid_file" "$PROJECT_ROOT_DIR/.factory/droids/$basename_file" "Factory droid: $basename_file"
             fi
         done
     fi
@@ -430,7 +443,7 @@ perform_installation() {
         create_dir "$TARGET_DIR/references" "References directory"
 
         # Copy docs
-        for doc_file in "$SCRIPT_DIR"/docs/*.md; do
+        for doc_file in "$SCRIPT_DIR/docs/"*.md; do
             if [[ -f "$doc_file" ]]; then
                 basename_file=$(basename "$doc_file")
                 copy_file "$doc_file" "$TARGET_DIR/docs/$basename_file" "Doc: $basename_file"
@@ -438,7 +451,7 @@ perform_installation() {
         done
 
         # Copy examples
-        for example_file in "$SCRIPT_DIR"/examples/*; do
+        for example_file in "$SCRIPT_DIR/examples/"*; do
             if [[ -f "$example_file" ]]; then
                 basename_file=$(basename "$example_file")
                 copy_file "$example_file" "$TARGET_DIR/examples/$basename_file" "Example: $basename_file"
@@ -446,7 +459,7 @@ perform_installation() {
         done
 
         # Copy archive
-        for archive_file in "$SCRIPT_DIR"/archive/*.md; do
+        for archive_file in "$SCRIPT_DIR/archive/"*.md; do
             if [[ -f "$archive_file" ]]; then
                 basename_file=$(basename "$archive_file")
                 copy_file "$archive_file" "$TARGET_DIR/archive/$basename_file" "Archive: $basename_file"
@@ -454,16 +467,23 @@ perform_installation() {
         done
     fi
 
-    # Create/update .gitignore
+    # Create .gitignore (only if it doesn't exist)
     if [[ "$CREATE_GITIGNORE" == true && "$DRY_RUN" == false ]]; then
-        print_status "📝 Updating .gitignore..."
-
         GITIGNORE_FILE="$TARGET_DIR/.gitignore"
-        if [[ ! -f "$GITIGNORE_FILE" ]]; then
+        
+        if [[ -f "$GITIGNORE_FILE" ]]; then
+            print_status ".gitignore already exists in $TARGET_DIR. Skipping creation."
+        else
+            print_status "📝 Creating .gitignore..."
             cat > "$GITIGNORE_FILE" << 'EOF'
-# Task and PRD files (user-specific)
+# AI Dev Tasks - task and PRD files
 /tasks/
 tasks/
+
+# AI Dev Tasks - cache and temp files
+.ai-dev-cache/
+.ai-dev-temp/
+.ai-dev-backup/
 
 # Backup files
 *.bak
@@ -485,13 +505,7 @@ Thumbs.db
 .env
 .env.local
 EOF
-            print_success "Created .gitignore"
-        else
-            # Check if tasks/ is already ignored
-            if ! grep -q "^/tasks/" "$GITIGNORE_FILE" 2>/dev/null; then
-                echo -e "\n# AI Dev Tasks\n/tasks/" >> "$GITIGNORE_FILE"
-                print_success "Updated .gitignore"
-            fi
+            print_success "Created .gitignore file"
         fi
     fi
 }
@@ -504,15 +518,17 @@ post_install_setup() {
 
     # Show tool-specific instructions
     if [[ "$CLAUDE_CODE_DETECTED" == true && "$INSTALL_CLAUDE_AGENTS" == true ]]; then
+        PROJECT_ROOT_DIR="$(dirname "$TARGET_DIR")"
         echo -e "${CYAN}Claude Code Setup:${NC}"
-        echo "  Your nano-agents are installed in: $TARGET_DIR/.claude/agents/"
+        echo "  Your nano-agents are installed in: $PROJECT_ROOT_DIR/.claude/agents/"
         echo "  Use them with: Task tool with subagent_type"
         echo ""
     fi
 
     if [[ "$FACTORY_AI_DETECTED" == true && "$INSTALL_FACTORY_DROIDS" == true ]]; then
+        PROJECT_ROOT_DIR="$(dirname "$TARGET_DIR")"
         echo -e "${CYAN}Factory.ai Setup:${NC}"
-        echo "  Your nano-droids are installed in: $TARGET_DIR/.factory/droids/"
+        echo "  Your nano-droids are installed in: $PROJECT_ROOT_DIR/.factory/droids/"
         echo "  They will be automatically detected by Factory.ai"
         echo ""
     fi
